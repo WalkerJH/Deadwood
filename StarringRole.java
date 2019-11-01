@@ -4,7 +4,7 @@
 public class StarringRole extends Role {
     public void payout(){}
 
-    public boolean actAttempt(int roll){
+    public boolean actAttempt(){
         return false;
     }
 }

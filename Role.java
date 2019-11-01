@@ -6,12 +6,15 @@ public abstract class Role {
     protected String desc;
     protected int rehearsalBonus;
     protected int rankRequirement;
+    protected Player currentActor;
+
+    public void setCurrentActor(Player currentActor) {
+        this.currentActor = currentActor;
+    }
 
     public void rehearse(){}
 
     public abstract void payout();
 
-    public abstract boolean actAttempt(int roll);
-
-
+    public abstract boolean actAttempt();
 }
