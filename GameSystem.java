@@ -1,11 +1,13 @@
 /**
  * Keeps track of game state and performs basic game operations
- **/
+ */
+import java.util.ArrayList;
+
 public class GameSystem {
     private Player[] players;
     private int numPlayers;
     private Board board;
-    private Card[] deck;
+    private ArrayList<Card> deck;
     private int numWrapped;
     private int day;
     private int turn;
