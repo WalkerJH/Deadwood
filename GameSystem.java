@@ -44,7 +44,4 @@ public class GameSystem {
     }
 
     public void endGame(){}
-
 }
-
-
