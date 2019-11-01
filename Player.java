@@ -25,7 +25,9 @@ public class Player {
 
     public void takeRole(Role newRole) {}
 
-    public void rankUp(int cash, int credits) {}
+    public void rankUpWithCash(int cash) {}
+
+    public void rankUpWithCredits(int credits) {}
 
     public int getVictoryPoints() {
         return -1;
