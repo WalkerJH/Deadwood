@@ -1,10 +1,11 @@
-/*******************
- *
- *******************/
+/**
+ * Keeps track of game state and performs basic game operations
+ **/
 public class GameSystem {
     private Player[] players;
     private Board board;
     private Card[] deck;
+    private int numWrapped;
     private int day;
     private int turn;
     public final int NUM_DAYS = 3;
