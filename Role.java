@@ -1,5 +1,5 @@
 /*******************
- *
+ * Defines base fields and behaviors for a role (starring or extra)
  *******************/
 public abstract class Role {
     protected String name;

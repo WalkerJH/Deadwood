@@ -1,5 +1,5 @@
 /*******************
- *
+ * Performs functions of an starring (non-extra) role
  *******************/
 public class StarringRole extends Role {
     public void payout(){}

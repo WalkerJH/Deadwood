@@ -1,5 +1,5 @@
 /*******************
- *
+ * Represents a card in the Deadwood deck
  *******************/
 public class Card {
     private String name;

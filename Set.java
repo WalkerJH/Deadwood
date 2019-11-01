@@ -1,5 +1,5 @@
 /*******************
- *
+ * A location that contains roles
  *******************/
 public class Set extends Location {
     private Card card;
