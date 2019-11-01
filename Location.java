@@ -2,5 +2,9 @@
  *
  *******************/
 public class Location {
-    private String name;
+    protected String name;
+
+    public Location(String name) {
+        this.name = name;
+    }
 }
