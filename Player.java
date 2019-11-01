@@ -17,9 +17,9 @@ public class Player {
         return null;
     }
 
-    public void payCash(int payment){};
+    public void payCash(int payment){}
 
-    public void payCredits(int payment){};
+    public void payCredits(int payment){}
 
     public void move(Location destination) {}
 

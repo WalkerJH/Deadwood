@@ -27,7 +27,7 @@ public class GameSystem {
         return numPlayers;
     }
 
-    public void printPlayersStatus(){}
+    public void printAllPlayersStatus(){}
 
     public void nextTurn(){}
 
