@@ -1,11 +1,9 @@
 /*******************
  * Main class for deadwood game
  *******************/
-public class Main {
+public class Deadwood {
 
-    public static void main(String[] args) {
-
-    }
+    public static void main(String[] args) { }
 
     public void takeInput() {}
 }
