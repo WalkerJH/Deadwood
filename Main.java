@@ -1,5 +1,5 @@
 /*******************
- *
+ * Main class for deadwood game
  *******************/
 public class Main {
 
