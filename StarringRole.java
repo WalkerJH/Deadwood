@@ -7,5 +7,7 @@ public class StarringRole extends Role {
         super(name, desc, rehearsalBonus, rankRequirement);
     }
 
-    public int payout() { return 0; }
+    public Payout payout(boolean success) {
+        return new Payout(0, 0);
+    }
 }
