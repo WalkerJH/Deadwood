@@ -1,6 +1,6 @@
-/*******************
+/**
  * Implements player behaviors and stores player info
- *******************/
+**/
 public class Player {
     private String name;
     private int cash;
@@ -24,6 +24,10 @@ public class Player {
     public void move(Location destination) {}
 
     public void takeRole(Role newRole) {}
+
+    public void rehearse(){}
+
+    public boolean actAttempt() { return false; };
 
     public void rankUpWithCash(int cash, int targetRank) {}
 

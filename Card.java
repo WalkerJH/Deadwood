@@ -1,6 +1,6 @@
-/*******************
+/**
  * Represents a card in the Deadwood deck
- *******************/
+**/
 public class Card {
     private String name;
     private String desc;
@@ -22,5 +22,4 @@ public class Card {
     public int getBudget() {
         return budget;
     }
-
 }
