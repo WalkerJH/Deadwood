@@ -17,4 +17,8 @@ public abstract class Role {
 
     //public void setCurrentActor(Player currentActor) { this.currentActor = currentActor; }
     public abstract int payout();
+
+    public String toString() {
+        return String.format("%s\n%s", name, desc);
+    }
 }
