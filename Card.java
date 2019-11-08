@@ -7,6 +7,13 @@ public class Card {
     private StarringRole[] roles;
     private int budget;
 
+    public Card(String name, String desc, StarringRole[] roles, int budget) {
+        this.name = name;
+        this.desc = desc;
+        this.roles = roles;
+        this.budget = budget;
+    }
+
     public String getName() {
         return name;
     }
