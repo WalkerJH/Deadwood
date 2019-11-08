@@ -1,13 +1,13 @@
 /**
  * Keeps track of game state and performs basic game operations
  */
-import java.util.ArrayList;
+import java.util.Stack;
 
 public class GameSystem {
     private Player[] players;
     private int numPlayers;
     private Board board;
-    private ArrayList<Card> deck;
+    private Deck deck;
     private int numWrapped;
     private int day;
     private int turn;
@@ -39,8 +39,8 @@ public class GameSystem {
 
     public void nextDay(){}
 
-    public Card drawCard(){
-        return null;
+    public Deck getDeck() {
+        return deck;
     }
 
     public void endGame(){}

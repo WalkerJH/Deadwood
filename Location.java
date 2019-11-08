@@ -7,6 +7,10 @@ public class Location {
     protected String name;
     protected ArrayList<Location> neighbors;
 
+    public Card getCard() { return card; }
+
+    protected Card card;
+
     public Location(String name) {
         this.name = name;
     }
@@ -16,5 +20,9 @@ public class Location {
         this.neighbors = neighbors;
     }
 
-    public void addNeighbor() {}
+    public String toString() { return name; };
+
+    public void addNeighbor(Location neighbor) {
+        neighbors.add(neighbor);
+    }
 }
