@@ -16,5 +16,7 @@ public class Location {
         this.neighbors = neighbors;
     }
 
-    public void addNeighbor() {}
+    public void addNeighbor(Location neighbor) {
+        neighbors.add(neighbor);
+    }
 }

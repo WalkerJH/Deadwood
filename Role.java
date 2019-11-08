@@ -6,7 +6,6 @@ public abstract class Role {
     protected String desc;
     protected int rehearsalBonus;
     protected int rankRequirement;
-    //protected Player currentActor;
 
     public Role(String name, String desc, int rehearsalBonus, int rankRequirement) {
         this.name = name;
@@ -15,6 +14,5 @@ public abstract class Role {
         this.rankRequirement = rankRequirement;
     }
 
-    //public void setCurrentActor(Player currentActor) { this.currentActor = currentActor; }
-    public abstract int payout();
+    public abstract Payout payout(boolean success);
 }
