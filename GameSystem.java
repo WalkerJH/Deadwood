@@ -29,9 +29,18 @@ public class GameSystem {
         return numPlayers;
     }
 
-    public void printAllPlayersStatus(){}
+    public void printAllPlayersStatus() {
+        for (Player p : players) {
+            p.printStatus();
+        }
+    }
 
-    public void nextTurn(){}
+    public void nextTurn(){
+        if (turn < numPlayers-1)
+            turn ++;
+        else
+            turn = 0;
+    }
 
     public int getDay() {
         return day;
