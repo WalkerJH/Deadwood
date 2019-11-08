@@ -20,7 +20,7 @@ public class Location {
         this.neighbors = neighbors;
     }
 
-    public String toString() { return name; };
+    public String toString() { return name; }
 
     public void addNeighbor(Location neighbor) {
         neighbors.add(neighbor);
