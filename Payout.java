@@ -2,11 +2,11 @@
  * Payout for a scene
  **/
 public class Payout {
-    private int tokens;
+    private int credits;
     private int cash;
 
     public Payout(int tokens, int cash) {
-        this.tokens = tokens;
+        this.credits = tokens;
         this.cash = cash;
     }
 
@@ -14,7 +14,7 @@ public class Payout {
         return cash;
     }
 
-    public int getTokens() {
-        return tokens;
+    public int getCredits() {
+        return credits;
     }
 }

@@ -41,11 +41,11 @@ public class Player {
     public boolean actAttempt() {
         //TODO: Fix this
         boolean success = (Dice.rollDice() > currentLocation.getCard().getBudget());
-        //Payout p = currentRole.payout(success);
-        //credits += p.getCredits();
-        //cash += p.getCash();
+        Payout p = currentRole.payout(success);
+        credits += p.getCredits();
+        cash += p.getCash();
         return success;
-    };
+    }
 
     public void rankUpWithCash(int cash, int targetRank) {}
 
