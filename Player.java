@@ -39,7 +39,6 @@ public class Player {
     }
 
     public boolean actAttempt() {
-        //TODO: Fix this
         boolean success = (Dice.rollDice() > currentLocation.getCard().getBudget());
         Payout p = currentRole.payout(success);
         credits += p.getCredits();

@@ -3,14 +3,17 @@
 **/
 public class StarringRole extends Role {
 
+    private final static Payout SUCCESS = new Payout(2, 0);
+    private final static Payout FAIL = new Payout(0,0);
+
     public StarringRole(String name, String desc, int rankRequirement) {
         super(name, desc, rankRequirement);
     }
 
     public Payout payout(boolean success) {
         if (success)
-            return new Payout(2, 0);
+            return SUCCESS;
         else
-            return new Payout(0,0);
+            return FAIL;
     }
 }
