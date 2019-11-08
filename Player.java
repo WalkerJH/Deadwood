@@ -8,6 +8,7 @@ public class Player {
     private int credits;
     private int rehearsalTokens;
     private Role currentRole;
+
     private Location currentLocation;
 
     public Player(String name, Location location) {
@@ -19,9 +20,13 @@ public class Player {
         this.currentLocation = location;
     }
 
+    public String toString() {
+        return name;
+    }
+
     public void printStatus() {
         System.out.printf("Player %s, Rank %d\n" +
-                "Set: %s, Role: %s \n -----\n" +
+                "Set: %s, Role: %s\n" +
                 "%d dollars, %d credits\n",
                 name, rank, currentLocation, currentRole, cash, credits);
     }
@@ -38,12 +43,12 @@ public class Player {
         rehearsalTokens ++;
     }
 
-    public boolean actAttempt() {
-        boolean success = (Dice.rollDice() > currentLocation.getCard().getBudget());
+    public Payout actAttempt() {
+        boolean success = (Dice.rollDice() > currentLocation.getSet().getCard().getBudget());
         Payout p = currentRole.payout(success);
         credits += p.getCredits();
         cash += p.getCash();
-        return success;
+        return p;
     }
 
     public void rankUpWithCash(int cash, int targetRank) {}
@@ -58,7 +63,10 @@ public class Player {
         this.currentLocation = currentLocation;
     }
 
+    public Location getCurrentLocation() { return currentLocation; }
+
     public String getName() {
         return name;
     }
+
 }

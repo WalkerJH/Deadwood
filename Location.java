@@ -4,12 +4,9 @@
 import java.util.ArrayList;
 
 public class Location {
-    protected String name;
-    protected ArrayList<Location> neighbors;
-
-    public Card getCard() { return card; }
-
-    protected Card card;
+    private String name;
+    private ArrayList<Location> neighbors;
+    private Set set;
 
     public Location(String name) {
         this.name = name;
@@ -25,4 +22,8 @@ public class Location {
     public void addNeighbor(Location neighbor) {
         neighbors.add(neighbor);
     }
+
+    public Set getSet() { return set; }
+
+    public void setSet(Set set) { this.set = set; }
 }
