@@ -8,6 +8,9 @@ public class ExtraRole extends Role{
     }
 
     public Payout payout(boolean success) {
-        return new Payout(0,1);
+        if (success)
+            return new Payout(1, 1);
+        else
+            return new Payout(0,1);
     }
 }

@@ -14,6 +14,5 @@ public abstract class Role {
         this.rankRequirement = rankRequirement;
     }
 
-    //public void setCurrentActor(Player currentActor) { this.currentActor = currentActor; }
-    public abstract int payout();
+    public abstract Payout payout(boolean success);
 }

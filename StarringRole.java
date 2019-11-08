@@ -8,6 +8,9 @@ public class StarringRole extends Role {
     }
 
     public Payout payout(boolean success) {
-        return new Payout(0, 0);
+        if (success)
+            return new Payout(2, 0);
+        else
+            return new Payout(0,0);
     }
 }
