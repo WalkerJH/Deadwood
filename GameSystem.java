@@ -39,8 +39,8 @@ public class GameSystem {
 
     public void nextDay(){}
 
-    public Card drawCard(){
-        return null;
+    public Deck getDeck() {
+        return deck;
     }
 
     public void endGame(){}
