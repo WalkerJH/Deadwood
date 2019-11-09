@@ -24,10 +24,9 @@ public class Deadwood {
         System.out.printf("Beginning %d player game...\n", game.getNumPlayers());
         game.setUpGame();
         printHelp();
-        while (game.getDay() < 4) {
+        while (true) {
             takeGameInput();
         }
-        game.endGame();
     }
 
     public static void takeGameInput() {
