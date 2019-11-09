@@ -19,19 +19,41 @@ public class GameSystem {
         this.numPlayers = numPlayers;
     }
 
-    public void setUpGame(){}
+    public void setUpGame(){
+        day = 1;
+        turn = 0;
+        board = new Board();
+        deck = new Deck();
+        numWrapped = 0;
+        Location trailer = new Location("Trailer");
+        //TODO: initialize other locations
+        players = new Player[numPlayers];
+        for (int i = 0; i < numPlayers; i++) {
+            players[i] = new Player(Integer.toString(i), trailer);
+        }
+    }
 
-    public int getCurrentPlayer(){
-        return -1;
+    public Player getCurrentPlayer(){
+        return players[turn];
     }
 
     public int getNumPlayers() {
         return numPlayers;
     }
 
-    public void printAllPlayersStatus(){}
+    public void printAllPlayersStatus() {
+        for (Player p : players) {
+            p.printStatus();
+        }
+    }
 
-    public void nextTurn(){}
+    public int nextTurn(){
+        if (turn < numPlayers-1)
+            turn ++;
+        else
+            turn = 0;
+        return turn;
+    }
 
     public int getDay() {
         return day;

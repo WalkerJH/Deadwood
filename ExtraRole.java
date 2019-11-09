@@ -3,8 +3,8 @@
 **/
 public class ExtraRole extends Role{
 
-    private final static Payout SUCCESS = new Payout(1, 1);
-    private final static Payout FAIL = new Payout(0,1);
+    private final static Payout SUCCESS = new Payout(true,1, 1);
+    private final static Payout FAIL = new Payout(false,0,1);
 
     public ExtraRole(String name, String desc, int rankRequirement) {
         super(name, desc, rankRequirement);

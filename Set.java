@@ -1,19 +1,14 @@
 /**
  * A location that contains roles
  **/
-public class Set extends Location {
+public class Set {
     private Card card;
     private Role[] localRoles;
     private int shotCounters;
 
-    public Set(String name, int shotCounters, Role[] localRoles) {
-        super(name);
+    public Set(int shotCounters, Role[] localRoles) {
         this.shotCounters = shotCounters;
         this.localRoles = localRoles;
-    }
-
-    public Set(String name) {
-        super(name);
     }
 
     public Role[] getLocalRoles() {
@@ -24,7 +19,7 @@ public class Set extends Location {
 
     public void removeShot(){}
 
-    public void getNewCard(){}
+    public Card getCard(){ return card; }
 
     public void discardCard(){}
 }
