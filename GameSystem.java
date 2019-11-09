@@ -1,13 +1,13 @@
 /**
  * Keeps track of game state and performs basic game operations
  */
-import java.util.Stack;
+import java.util.*;
 
 public class GameSystem {
     private Player[] players;
     private int numPlayers;
-    private Board board;
-    private Deck deck;
+    private ArrayList<Location> board;
+    private CardDeck cardDeck;
     private int numWrapped;
     private int day;
     private int turn;
@@ -22,11 +22,24 @@ public class GameSystem {
     public void setUpGame(){
         day = 1;
         turn = 0;
-        board = new Board();
-        deck = new Deck();
+        cardDeck = new CardDeck();
+        board = new ArrayList<Location>();
         numWrapped = 0;
         Location trailer = new Location("Trailer");
-        //TODO: initialize other locations
+        board.add(trailer);
+
+        //TODO: initialize other locations. Fake testing locations below:
+        Location flavortown = new Location("Flavortown");
+        board.add(flavortown);
+        Location pit = new Location("Pit of Despair");
+        board.add(pit);
+        Location jonesTruckRental = new Location("Jones Truck Rental and Storage");
+        board.add(jonesTruckRental);
+        trailer.addNeighbors(pit, flavortown);
+        pit.addNeighbors(trailer);
+        flavortown.addNeighbors(trailer, jonesTruckRental);
+        jonesTruckRental.addNeighbors(flavortown);
+
         players = new Player[numPlayers];
         for (int i = 0; i < numPlayers; i++) {
             players[i] = new Player(Integer.toString(i), trailer);
@@ -55,14 +68,24 @@ public class GameSystem {
         return turn;
     }
 
+    public Location findLocation(String locationName) {
+        Location found = null;
+        for (Location l : board) {
+            if (l.getName().equalsIgnoreCase(locationName)) {
+                found = l;
+            }
+        }
+        return found;
+    }
+
     public int getDay() {
         return day;
     }
 
     public void nextDay(){}
 
-    public Deck getDeck() {
-        return deck;
+    public CardDeck getCardDeck() {
+        return cardDeck;
     }
 
     public void endGame(){}

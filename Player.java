@@ -8,7 +8,6 @@ public class Player {
     private int credits;
     private int rehearsalTokens;
     private Role currentRole;
-
     private Location currentLocation;
 
     public Player(String name, Location location) {
@@ -35,7 +34,14 @@ public class Player {
 
     public void payCredits(int payment){}
 
-    public void move(Location destination) {}
+    public boolean move(Location destination) {
+        if (currentLocation.hasNeighbor(destination)) {
+            currentLocation = destination;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public void takeRole(Role newRole) {}
 

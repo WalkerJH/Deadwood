@@ -10,20 +10,32 @@ public class Location {
 
     public Location(String name) {
         this.name = name;
-    }
-
-    public Location(String name, ArrayList<Location> neighbors) {
-        this.name = name;
-        this.neighbors = neighbors;
+        neighbors = new ArrayList<Location>();
     }
 
     public String toString() { return name; }
 
-    public void addNeighbor(Location neighbor) {
-        neighbors.add(neighbor);
+    public void addNeighbors(Location ... args) {
+        for (int i = 0; i < args.length; i++) {
+            neighbors.add(args[i]);
+        }
+    }
+
+    public void printNeighbors() {
+        for (Location l : neighbors) {
+            System.out.printf(" %s,", l);
+        }
+        System.out.println();
+    }
+
+    public boolean hasNeighbor(Location destination) {
+        return (neighbors.contains(destination));
     }
 
     public Set getSet() { return set; }
 
+    public String getName() { return name; }
+
     public void setSet(Set set) { this.set = set; }
+
 }
