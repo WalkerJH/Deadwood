@@ -8,13 +8,14 @@ public class Deadwood {
     private static GameSystem game;
     private static Scanner input;
 
-    public static final String HELPTEXT =
-            "player -> print player info\n" +
-            "where -> print current location\n" +
-            "move <new location> -> move to a new location\n" +
-            "take role <role> -> take a role\n" +
-            "act -> act in current role\n" +
-            "end -> end active player's turn\n";
+    public static void  printHelp() {
+        System.out.println("player -> print player info\n" +
+                "where -> print current location\n" +
+                "move <new location> -> move to a new location\n" +
+                "take role <role> -> take a role\n" +
+                "act -> act in current role\n" +
+                "end -> end active player's turn\n");
+    }
 
     public static void main(String[] args) {
         input = new Scanner(System.in);
@@ -22,6 +23,7 @@ public class Deadwood {
         game = new GameSystem(input.nextInt());
         System.out.printf("Beginning %d player game...\n", game.getNumPlayers());
         game.setUpGame();
+        printHelp();
         while (game.getDay() < 4) {
             takeGameInput();
         }
@@ -31,7 +33,7 @@ public class Deadwood {
     public static void takeGameInput() {
          switch (input.nextLine()) {
              case "help":
-                System.out.print(HELPTEXT);
+                printHelp();
                 break;
              case "player":
                  game.getCurrentPlayer().printStatus();
