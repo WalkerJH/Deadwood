@@ -37,6 +37,9 @@ public class Deadwood {
              case "player":
                  game.getCurrentPlayer().printStatus();
                  break;
+             case "players":
+                 game.printAllPlayersStatus();
+                 break;
              case "where":
                  System.out.println(game.getCurrentPlayer().getCurrentLocation());
                  break;
