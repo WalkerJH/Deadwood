@@ -11,6 +11,7 @@ public class GameSystem {
     private int numWrapped;
     private int day;
     private int turn;
+    private boolean action;
     public final int NUM_DAYS = 3;
     public final int[] RANK_UP_REQUIREMENTS_CASH = {4, 10, 18, 28, 40};
     public final int[] RANK_UP_REQUIREMENTS_CREDITS = {5, 10, 15, 20, 25};
@@ -25,6 +26,7 @@ public class GameSystem {
         cardDeck = new CardDeck();
         board = new ArrayList<Location>();
         numWrapped = 0;
+        action = true;
         Location trailer = new Location("Trailer");
         board.add(trailer);
 
@@ -61,6 +63,18 @@ public class GameSystem {
         return numPlayers;
     }
 
+    public CardDeck getCardDeck() {
+        return cardDeck;
+    }
+
+    public boolean hasAction() {
+        return action;
+    }
+
+    public void setAction(boolean action) {
+        this.action = action;
+    }
+
     public void printAllPlayersStatus() {
         for (Player p : players) {
             p.printStatus();
@@ -85,15 +99,7 @@ public class GameSystem {
         return found;
     }
 
-    public int getDay() {
-        return day;
-    }
-
     public void nextDay(){}
-
-    public CardDeck getCardDeck() {
-        return cardDeck;
-    }
 
     public void endGame(){}
 }

@@ -53,16 +53,20 @@ public class Deadwood {
                 currentPlayer.getCurrentLocation().printNeighbors();
                 break;
             case "move":
-                System.out.print("Where?");
-                currentPlayer.getCurrentLocation().printNeighbors();
-                System.out.println("Enter location name to move there or 'cancel' to cancel move");
-                String destination = input.nextLine();
-                if (!destination.equalsIgnoreCase("cancel")) {
-                    Location l = game.findLocation(destination);
-                    if (l != null && currentPlayer.move(l))
-                        System.out.printf("Moved to %s\n", destination);
-                    else
-                        System.out.printf("Can't move to %s\n", destination);
+                if(game.hasAction()) {
+                    System.out.print("Where?");
+                    currentPlayer.getCurrentLocation().printNeighbors();
+                    System.out.println("Enter location name to move there or 'cancel' to cancel move");
+                    String destination = input.nextLine();
+                    if (!destination.equalsIgnoreCase("cancel")) {
+                        Location l = game.findLocation(destination);
+                        if (l != null && currentPlayer.move(l)) {
+                            game.setAction(false);
+                            System.out.printf("Moved to %s\n", destination);
+                        } else {
+                            System.out.printf("Can't move to %s\n", destination);
+                        }
+                    }
                 }
                 break;
             case "role":
@@ -80,11 +84,14 @@ public class Deadwood {
                 }
                 break;
             case "act":
-                Payout p = currentPlayer.actAttempt();
-                if (p.getSuccess())
-                    System.out.printf("Success! + %d credits, + %d cash\n", p.getCredits(), p.getCash());
-                else
-                    System.out.printf("Failure! + %d credits, + %d cash\n", p.getCredits(), p.getCash());
+                if(game.hasAction()) {
+                    Payout p = currentPlayer.actAttempt();
+                    if (p.getSuccess())
+                        System.out.printf("Success! + %d credits, + %d cash\n", p.getCredits(), p.getCash());
+                    else
+                        System.out.printf("Failure! + %d credits, + %d cash\n", p.getCredits(), p.getCash());
+                    game.setAction(false);
+                }
                 break;
             case "end":
                 game.nextTurn();
