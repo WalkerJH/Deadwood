@@ -34,7 +34,7 @@ public class GameSystem {
         Location flavortown = new Location("Flavortown");
         Role fieri = new StarringRole("Guy Fieri", "We’re takin’ you on a road rockin’ trip down to Flavortown, " +
                 "where the gravitational force of bacon warps the laws of space and time.", 6);
-        Role chef = new ExtraRole("Linguini", "Thanks Mr. Fieri, very cool.", 1);
+        Role chef = new ExtraRole("Chef", "Thanks Mr. Fieri, very cool.", 1);
         ArrayList<Role> flavortownRoles = new ArrayList<>();
         flavortownRoles.add(fieri);
         flavortownRoles.add(chef);
