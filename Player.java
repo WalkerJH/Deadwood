@@ -74,6 +74,8 @@ public class Player {
 
     public Location getCurrentLocation() { return currentLocation; }
 
+    public Role getCurrentRole() { return currentRole; }
+
     public String getName() {
         return name;
     }
