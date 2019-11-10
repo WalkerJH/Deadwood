@@ -39,8 +39,13 @@ public class Player {
         }
     }
 
-    public void takeRole(Role newRole) {
-        this.currentRole = newRole;
+    public boolean takeRole(Role newRole) {
+        if(currentRole == null && rank >= newRole.getRankRequirement()) {
+            this.currentRole = newRole;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void rehearse(){
