@@ -30,10 +30,6 @@ public class Player {
                 name, rank, currentLocation, currentRole, cash, credits);
     }
 
-    public void payCash(int payment){}
-
-    public void payCredits(int payment){}
-
     public boolean move(Location destination) {
         if (currentLocation.hasNeighbor(destination)) {
             currentLocation = destination;
