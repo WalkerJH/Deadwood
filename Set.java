@@ -15,6 +15,14 @@ public class Set {
         return localRoles;
     }
 
+    public boolean containsRole(Role role) {
+        for (Role r : localRoles) {
+            if(r.equals(role))
+                return true;
+        }
+        return false;
+    }
+
     public void wrap(){}
 
     public void removeShot(){}

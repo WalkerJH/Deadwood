@@ -4,10 +4,10 @@
 
 import java.util.Stack;
 
-public class Deck {
+public class CardDeck {
     private static Stack<Card> deck;
 
-    public Deck() {
+    public CardDeck() {
 
     }
 
