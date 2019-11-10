@@ -36,38 +36,40 @@ public class Deadwood {
 
     public static void takeGameInput() {
         String in = input.nextLine();
+        Player currentPlayer = game.getCurrentPlayer();
         switch (in) {
             case "help":
                 printHelp();
                 break;
             case "player":
-                game.getCurrentPlayer().printStatus();
+                currentPlayer.printStatus();
                 break;
             case "players":
                 game.printAllPlayersStatus();
                 break;
             case "where":
-                System.out.println(game.getCurrentPlayer().getCurrentLocation());
+                System.out.println(currentPlayer.getCurrentLocation());
                 System.out.print("Neighboring Spaces:");
-                game.getCurrentPlayer().getCurrentLocation().printNeighbors();
+                currentPlayer.getCurrentLocation().printNeighbors();
                 break;
             case "move":
-                System.out.printf("Where?");
-                game.getCurrentPlayer().getCurrentLocation().printNeighbors();
+                System.out.print("Where?");
+                currentPlayer.getCurrentLocation().printNeighbors();
                 System.out.println("Enter location or 'cancel' to cancel move");
                 String destination = input.nextLine();
                 if (!destination.equalsIgnoreCase("cancel")) {
                     Location l = game.findLocation(destination);
-                    if (l != null && game.getCurrentPlayer().move(l))
+                    if (l != null && currentPlayer.move(l))
                         System.out.printf("Moved to %s\n", destination);
                     else
                         System.out.printf("Can't move to %s\n", destination);
                 }
                 break;
             case "role":
+                System.out.print("Which Role?");
                 break;
             case "act":
-                Payout p = game.getCurrentPlayer().actAttempt();
+                Payout p = currentPlayer.actAttempt();
                 if (p.getSuccess())
                     System.out.printf("Success! + %d credits, + %d cash\n", p.getCredits(), p.getCash());
                 else
@@ -75,7 +77,7 @@ public class Deadwood {
                 break;
             case "end":
                 game.nextTurn();
-                System.out.printf("Ending turn. Now it is player %s's turn\n", game.getCurrentPlayer());
+                System.out.printf("Ending turn. Now it is player %s's turn\n", currentPlayer);
                 break;
         }
     }
