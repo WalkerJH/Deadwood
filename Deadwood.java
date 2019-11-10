@@ -55,7 +55,7 @@ public class Deadwood {
             case "move":
                 System.out.print("Where?");
                 currentPlayer.getCurrentLocation().printNeighbors();
-                System.out.println("Enter location or 'cancel' to cancel move");
+                System.out.println("Enter location name to move there or 'cancel' to cancel move");
                 String destination = input.nextLine();
                 if (!destination.equalsIgnoreCase("cancel")) {
                     Location l = game.findLocation(destination);
@@ -66,7 +66,18 @@ public class Deadwood {
                 }
                 break;
             case "role":
-                System.out.print("Which Role?");
+                System.out.println("Which Role?");
+                Set s =  currentPlayer.getCurrentLocation().getSet();
+                s.printRoles();
+                System.out.println("Enter role name to take role or 'cancel' to cancel taking a role");
+                String roleName = input.nextLine();
+                if(!roleName.equalsIgnoreCase("cancel")) {
+                    Role r = s.findRole(roleName);
+                    if (r != null && currentPlayer.takeRole(r))
+                        System.out.printf("You are now working on %s\n", r.getName());
+                    else
+                        System.out.printf("Can't take role %s (Rank %d)\n", r.getName(), r.getRankRequirement());
+                }
                 break;
             case "act":
                 Payout p = currentPlayer.actAttempt();
