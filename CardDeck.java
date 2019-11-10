@@ -9,6 +9,7 @@ public class CardDeck {
     private static Stack<Card> deck;
 
     public CardDeck(Card ... args) {
+        deck = new Stack<Card>();
         for (int i = 0; i < args.length; i++) {
             deck.push(args[i]);
         }

@@ -27,9 +27,8 @@ public class Deadwood {
         System.out.println("Welcome to Deadwood. 2 or 3 Players?");
         game = new GameSystem(input.nextInt());
         game.setUpGame();
-        System.out.printf("Initialized %d player game.\n" +
-                "--------------------\n" +
-                "\n", game.getNumPlayers());
+        System.out.printf("Initialized %d player game.\n--------------------\n",
+                game.getNumPlayers());
         while (true) {
             takeGameInput();
         }
@@ -39,6 +38,8 @@ public class Deadwood {
         String in = input.nextLine();
         Player currentPlayer = game.getCurrentPlayer();
         switch (in) {
+            case "":
+                break;
             case "help":
                 printHelp();
                 break;
@@ -99,7 +100,7 @@ public class Deadwood {
                 System.out.printf("Ending turn. Now it is player %s's turn\n", currentPlayer);
                 break;
             default:
-                System.out.println("Type help for list of commands");
+                System.out.println("Invalid input. Type help for list of commands");
                 break;
         }
     }
