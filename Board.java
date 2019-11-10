@@ -1,5 +1,5 @@
 /**
- * Board class to keep track of Location positions
+ * Game board; unused for now
  **/
 public class Board {
     public Board(){}
