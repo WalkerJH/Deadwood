@@ -10,11 +10,16 @@ public class Deadwood {
 
     public static void  printHelp() {
         System.out.print("player -> print player info\n" +
-                "where -> print current, neighboring locations\n" +
-                "move: <new location> -> move to a new location\n" +
-                "take role: <role> -> take a role\n" +
+                "where -> print current and neighboring locations, roles\n" +
+                "move -> move to a new location\n" +
+                "role -> take a role\n" +
                 "act -> act in current role\n" +
                 "end -> end active player's turn\n");
+    }
+
+    public static void printOptions() {
+        System.out.print("You can: ");
+        //TODO: Print out what the player can still do
     }
 
     public static void main(String[] args) {
@@ -31,8 +36,7 @@ public class Deadwood {
 
     public static void takeGameInput() {
         String in = input.nextLine();
-        String [] inArgs = in.split(": ");
-        switch (inArgs[0]) {
+        switch (in) {
             case "help":
                 printHelp();
                 break;
@@ -48,11 +52,16 @@ public class Deadwood {
                 game.getCurrentPlayer().getCurrentLocation().printNeighbors();
                 break;
             case "move":
-                Location l = game.findLocation(inArgs[1]);
-                if (l != null && game.getCurrentPlayer().move(l))
-                    System.out.printf("Moved to %s\n", inArgs[1]);
-                else
-                    System.out.printf("Can't move to %s\n", inArgs[1]);
+                System.out.printf("Where?");
+                game.getCurrentPlayer().getCurrentLocation().printNeighbors();
+                String destination = input.nextLine();
+                if (!destination.equalsIgnoreCase("cancel")) {
+                    Location l = game.findLocation(destination);
+                    if (l != null && game.getCurrentPlayer().move(l))
+                        System.out.printf("Moved to %s\n", destination);
+                    else
+                        System.out.printf("Can't move to %s\n", destination);
+                }
                 break;
             case "role":
                 break;
