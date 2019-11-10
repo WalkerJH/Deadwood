@@ -54,6 +54,7 @@ public class Deadwood {
             case "move":
                 System.out.printf("Where?");
                 game.getCurrentPlayer().getCurrentLocation().printNeighbors();
+                System.out.println("Enter location or 'cancel' to cancel move");
                 String destination = input.nextLine();
                 if (!destination.equalsIgnoreCase("cancel")) {
                     Location l = game.findLocation(destination);
