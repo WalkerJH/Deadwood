@@ -39,7 +39,9 @@ public class Player {
         }
     }
 
-    public void takeRole(Role newRole) {}
+    public void takeRole(Role newRole) {
+        this.currentRole = newRole;
+    }
 
     public void rehearse(){
         rehearsalTokens ++;

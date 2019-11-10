@@ -12,5 +12,9 @@ public abstract class Role {
         this.rankRequirement = rankRequirement;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public abstract Payout payout(boolean success);
 }
