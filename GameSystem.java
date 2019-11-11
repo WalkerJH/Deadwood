@@ -30,7 +30,7 @@ public class GameSystem {
         Location trailer = new Location("Trailer");
         board.add(trailer);
 
-        //TODO: initialize other locations. Fake testing locations below:
+        //TODO: initialize real board. Fake testing initialization below
         Location flavortown = new Location("Flavortown");
         Role fieri = new StarringRole("Guy Fieri", "We’re takin’ you on a road rockin’ trip down to Flavortown, " +
                 "where the gravitational force of bacon warps the laws of space and time.", 6);
@@ -48,6 +48,7 @@ public class GameSystem {
         pit.addNeighbors(trailer);
         flavortown.addNeighbors(trailer, jonesTruckRental);
         jonesTruckRental.addNeighbors(flavortown);
+        //End fake stuff
 
         players = new Player[numPlayers];
         for (int i = 0; i < numPlayers; i++) {
@@ -86,6 +87,7 @@ public class GameSystem {
             turn ++;
         else
             turn = 0;
+        action = true;
         return turn;
     }
 
