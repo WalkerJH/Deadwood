@@ -1,7 +1,8 @@
-import java.util.ArrayList;
 /**
  * Represents a location on the game board
  */
+import java.util.ArrayList;
+
 public class Location {
     private String name;
     private ArrayList<Location> neighbors;

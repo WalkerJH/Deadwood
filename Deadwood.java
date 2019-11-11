@@ -1,8 +1,8 @@
-import java.util.Scanner;
-
 /**
  * Main class for deadwood game
  **/
+
+import java.util.Scanner;
 public class Deadwood {
 
     private static GameSystem game;
