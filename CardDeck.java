@@ -1,8 +1,8 @@
-import java.util.Stack;
-
 /**
  * Maintains a Deck of scene cards (Card.java) to draw from
  */
+
+import java.util.Stack;
 
 public class CardDeck {
     private static Stack<Card> deck;
