@@ -51,7 +51,7 @@ public class GameSystem {
 
         players = new Player[numPlayers];
         for (int i = 0; i < numPlayers; i++) {
-            players[i] = new Player(Integer.toString(i), trailer);
+            players[i] = new Player(Integer.toString(i + 1), trailer);
         }
     }
 

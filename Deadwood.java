@@ -95,7 +95,7 @@ public class Deadwood {
                 break;
             case "end":
                 game.nextTurn();
-                System.out.printf("Ending turn. Now it is player %s's turn\n", currentPlayer);
+                System.out.printf("Ending turn. Now it is player %s's turn\n", game.getCurrentPlayer());
                 break;
         }
     }
