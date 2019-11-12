@@ -57,6 +57,8 @@ public class Player {
         Payout p = currentRole.payout(success);
         credits += p.getCredits();
         cash += p.getCash();
+        if(success)
+            rehearsalTokens = 0;
         return p;
     }
 
@@ -93,6 +95,7 @@ public class Player {
     }
 
     public int getVictoryPoints() {
+        //TODO
         return -1;
     }
 

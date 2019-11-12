@@ -130,7 +130,6 @@ public class ParseXML{
                     Node role = children.item(k);
                     String roleName = role.getAttributes().getNamedItem("name").getNodeValue();
                     int rank = Integer.parseInt(role.getAttributes().getNamedItem("level").getNodeValue());
-                    NodeList roleDetails = role.getChildNodes();
                     Node line = role.getFirstChild().getNextSibling().getNextSibling().getNextSibling().getFirstChild();
                     String roleDesc = line.getNodeValue();
                     roles.add(new StarringRole(roleName, roleDesc, rank));

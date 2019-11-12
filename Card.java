@@ -15,6 +15,10 @@ public class Card {
         this.budget = budget;
     }
 
+    public void printCard() {
+        //TODO
+    }
+
     public String getName() {
         return name;
     }

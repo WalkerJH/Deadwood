@@ -25,7 +25,9 @@ public class Board {
         locations.add(newLocation);
     }
 
-    public void resetBoard(){}
+    public void resetBoard(){
+        locations.clear();
+    }
 
     public ArrayList<Location> getLocations() {
         return locations;

@@ -28,6 +28,7 @@ public class GameSystem {
         board = parser.readBoardData();
         parser.setDocument("cards.xml");
         cardDeck = parser.readCardData();
+        //TODO: populate Cards into Locations
         numWrapped = 0;
         action = true;
 
@@ -92,7 +93,11 @@ public class GameSystem {
         return turn;
     }
 
-    public void nextDay(){}
+    public void nextDay(){
+        //TODO
+    }
 
-    public void endGame(){}
+    public void endGame(){
+        //TODO
+    }
 }

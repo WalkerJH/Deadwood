@@ -46,11 +46,17 @@ public class Set {
         System.out.println();
     }
 
-    public void wrap(){}
+    public void wrap(){
+        //TODO
+    }
 
-    public void removeShot(){}
+    public void removeShot(){
+        //TODO
+    }
 
     public Card getCard(){ return card; }
 
-    public void discardCard(){}
+    public void discardCard(){
+        //TODO
+    }
 }
