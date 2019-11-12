@@ -6,7 +6,7 @@ import java.util.*;
 public class GameSystem {
     private Player[] players;
     private int numPlayers;
-    private ArrayList<Location> board;
+    private Board board;
     private CardDeck cardDeck;
     private int numWrapped;
     private int day;
@@ -24,7 +24,7 @@ public class GameSystem {
         day = 1;
         turn = 0;
         cardDeck = new CardDeck();
-        board = new ArrayList<Location>();
+        board = new Board();
         numWrapped = 0;
         action = true;
         Location trailer = new Location("Trailers");
@@ -89,16 +89,6 @@ public class GameSystem {
             turn = 0;
         action = true;
         return turn;
-    }
-
-    public Location findLocation(String locationName) {
-        Location found = null;
-        for (Location l : board) {
-            if (l.getName().equalsIgnoreCase(locationName)) {
-                found = l;
-            }
-        }
-        return found;
     }
 
     public void nextDay(){}
