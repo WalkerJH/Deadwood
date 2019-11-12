@@ -1,17 +1,17 @@
 import java.util.ArrayList;
 
 /**
- * Game locations; unused for now
+ * Game locations
  **/
 public class Board {
 
-    private static ArrayList<Location> locations;
+    private ArrayList<Location> locations;
 
     public Board(){
         locations = new ArrayList<>();
     }
 
-    public static Location findLocation(String locationName) {
+    public Location findLocation(String locationName) {
         Location found = null;
         for (Location l : locations) {
             if (l.getName().equalsIgnoreCase(locationName)) {
@@ -21,9 +21,13 @@ public class Board {
         return found;
     }
 
-    public static void add (Location newLocation) {
+    public void add (Location newLocation) {
         locations.add(newLocation);
     }
 
     public void resetBoard(){}
+
+    public ArrayList<Location> getLocations() {
+        return locations;
+    }
 }

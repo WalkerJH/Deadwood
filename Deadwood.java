@@ -17,7 +17,7 @@ public class Deadwood {
                 "end -> end active player's turn\n");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         input = new Scanner(System.in);
         System.out.println("Welcome to Deadwood. 2 or 3 Players?");
         game = new GameSystem(input.nextInt());
@@ -56,7 +56,7 @@ public class Deadwood {
                     System.out.println("Enter location name to move there or 'cancel' to cancel move");
                     String destination = input.nextLine();
                     if (!destination.equalsIgnoreCase("cancel")) {
-                        Location l = Board.findLocation(destination);
+                        Location l = game.findLocation(destination);
                         if (l != null && currentPlayer.move(l) && currentPlayer.getCurrentRole() == null) {
                             game.setAction(false);
                             System.out.printf("Moved to %s\n", destination);

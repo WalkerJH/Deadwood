@@ -20,17 +20,16 @@ public class GameSystem {
         this.numPlayers = numPlayers;
     }
 
-    public void setUpGame(){
+    public void setUpGame() throws Exception{
         day = 1;
         turn = 0;
         cardDeck = new CardDeck();
-        board = new Board();
+        ParseXML parser = new ParseXML("board.xml");
+        board = parser.readBoardData();
         numWrapped = 0;
         action = true;
-        Location trailer = new Location("Trailers");
-        board.add(trailer);
 
-        //TODO: initialize real board. Fake testing initialization below
+        //Fake testing initialization below
         Location flavortown = new Location("Flavortown");
         Role fieri = new StarringRole("Guy Fieri", "We’re takin’ you on a road rockin’ trip down to Flavortown, " +
                 "where the gravitational force of bacon warps the laws of space and time.", 6);
@@ -44,15 +43,11 @@ public class GameSystem {
         board.add(pit);
         Location jonesTruckRental = new Location("Jones Truck Rental and Storage");
         board.add(jonesTruckRental);
-        trailer.addNeighbors(pit, flavortown);
-        pit.addNeighbors(trailer);
-        flavortown.addNeighbors(trailer, jonesTruckRental);
-        jonesTruckRental.addNeighbors(flavortown);
         //End fake stuff
 
         players = new Player[numPlayers];
         for (int i = 0; i < numPlayers; i++) {
-            players[i] = new Player(Integer.toString(i + 1), trailer);
+            players[i] = new Player(Integer.toString(i + 1), board.findLocation("Trailer"));
         }
     }
 
@@ -74,6 +69,10 @@ public class GameSystem {
 
     public void setAction(boolean action) {
         this.action = action;
+    }
+
+    public Location findLocation(String locationName) {
+        return board.findLocation(locationName);
     }
 
     public void printAllPlayersStatus() {

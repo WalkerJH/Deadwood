@@ -9,13 +9,25 @@ public class Set {
     private ArrayList<Role> localRoles;
     private int shotCounters;
 
+    public Set() {
+        this.localRoles = new ArrayList<>();
+    }
+
     public Set(int shotCounters, ArrayList<Role> localRoles) {
         this.shotCounters = shotCounters;
         this.localRoles = localRoles;
     }
 
+    public void setShotCounters(int shotCounters) {
+        this.shotCounters = shotCounters;
+    }
+
     public ArrayList<Role> getLocalRoles() {
         return localRoles;
+    }
+
+    public void addRole(Role r) {
+        localRoles.add(r);
     }
 
     public Role findRole(String roleName) {
