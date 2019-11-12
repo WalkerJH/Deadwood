@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 /**
- * A location that contains roles
+ * Keeps track of the role info for for a Location
  **/
 
 public class Set {

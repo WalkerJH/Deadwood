@@ -10,15 +10,18 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
-import java.io.File;
 import java.util.ArrayList;
 
 public class ParseXML{
 
-    private Document d;
+    private Document document;
 
     public ParseXML(String filename) throws Exception {
-        d = getDocFromFile(filename);
+        document = getDocFromFile(filename);
+    }
+
+    public void setDocument(String filename) throws ParserConfigurationException {
+        document = getDocFromFile(filename);
     }
 
     // building a document from the XML file
@@ -40,7 +43,7 @@ public class ParseXML{
         
         // reads data from XML file and prints data
         public Board readBoardData() {
-            Element root = d.getDocumentElement();
+            Element root = document.getDocumentElement();
             Board board = new Board();
             NodeList sets = root.getElementsByTagName("set");
 
@@ -106,5 +109,35 @@ public class ParseXML{
             office.setName("Casting Office");
             trailer.setName("Trailer");
             return board;
+        }
+
+        public CardDeck readCardData() {
+            Element root = document.getDocumentElement();
+            NodeList cards = root.getElementsByTagName("card");
+            CardDeck deck = new CardDeck();
+            Card currentCard;
+            for (int i = 0; i < cards.getLength(); i++) {
+                //reads data from the nodes
+                ArrayList<StarringRole> roles = new ArrayList<>();
+                Node currentNode = cards.item(i);
+                String name = currentNode.getAttributes().getNamedItem("name").getNodeValue();
+                int budget =  Integer.parseInt(currentNode.getAttributes().getNamedItem("budget").getNodeValue());
+                NodeList children = currentNode.getChildNodes();
+                String sceneNum = children.item(1).getAttributes().getNamedItem("number").getNodeValue();
+                String flavorText = currentNode.getFirstChild().getNextSibling().getFirstChild().getNodeValue();
+                String desc = String.format("Scene %s: %s", sceneNum, flavorText);
+                for (int k = 3; k < children.getLength(); k+=2) {
+                    Node role = children.item(k);
+                    String roleName = role.getAttributes().getNamedItem("name").getNodeValue();
+                    int rank = Integer.parseInt(role.getAttributes().getNamedItem("level").getNodeValue());
+                    NodeList roleDetails = role.getChildNodes();
+                    Node line = role.getFirstChild().getNextSibling().getNextSibling().getNextSibling().getFirstChild();
+                    String roleDesc = line.getNodeValue();
+                    roles.add(new StarringRole(roleName, roleDesc, rank));
+                }
+                currentCard = new Card(name, desc, roles, budget);
+                deck.addCard(currentCard);
+            }
+            return deck;
         }
 }//class

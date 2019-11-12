@@ -26,6 +26,8 @@ public class GameSystem {
         cardDeck = new CardDeck();
         ParseXML parser = new ParseXML("board.xml");
         board = parser.readBoardData();
+        parser.setDocument("cards.xml");
+        cardDeck = parser.readCardData();
         numWrapped = 0;
         action = true;
 
