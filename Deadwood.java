@@ -91,7 +91,7 @@ public class Deadwood {
                 }
                 break;
             case "rank":
-                if(currentPlayer.getCurrentLocation().getName().equals("Trailers") && game.hasAction()) { //TODO: change to "Casting Office"
+                if(currentPlayer.getCurrentLocation().getName().equals("Casting Office") && game.hasAction()) {
                     printRankRequirements();
                     System.out.println("Current Rank: " + currentPlayer.getRank());
                     System.out.print("Desired Rank: ");
@@ -101,11 +101,22 @@ public class Deadwood {
                     String paymentMethod = input.nextLine();
                     switch(paymentMethod) {
                         case "cash":
-                            currentPlayer.rankUpWithCash(rank);
+                            if(currentPlayer.rankUpWithCash(rank)) {
+                                System.out.println("Rank Increased to " + currentPlayer.getRank() +
+                                        ". You now have $" + currentPlayer.getCash());
+                                game.setAction(false);
+                            }
+                            else {
+                                System.out.println("Rank Up Failed");
+                            }
                             break;
                         case "credit":
                         case "credits":
-                            currentPlayer.rankUpWithCredits(rank);
+                            if(currentPlayer.rankUpWithCredits(rank)) {
+                                System.out.println("Rank Increased to " + currentPlayer.getRank() +
+                                        ". You now have " + currentPlayer.getCredits() + "credits");
+                                game.setAction(false);
+                            }
                             break;
                         default:
                             System.out.println("Invalid Input: Please enter either 'cash' or 'credits' as your payment method");

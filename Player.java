@@ -60,9 +60,37 @@ public class Player {
         return p;
     }
 
-    public void rankUpWithCash(int targetRank) {}
+    public boolean rankUpWithCash(int targetRank) {
+        int diff = targetRank - rank;
+        if(diff > 0 && rank != 6) {
+            int cost = 0;
+            for(int i = 0; i < diff; i++) {
+                cost += GameSystem.RANK_UP_REQUIREMENTS_CASH[rank - 1 + i];
+            }
+            if(cash >= cost) {
+                cash -= cost;
+                rank = targetRank;
+                return true;
+            }
+        }
+        return false;
+    }
 
-    public void rankUpWithCredits(int targetRank) {}
+    public boolean rankUpWithCredits(int targetRank) {
+        int diff = targetRank - rank;
+        if(diff > 0 && rank != 6) {
+            int cost = 0;
+            for(int i = 0; i < diff; i++) {
+                cost += GameSystem.RANK_UP_REQUIREMENTS_CREDITS[rank - 1 + i];
+            }
+            if(credits >= cost) {
+                credits -= cost;
+                rank = targetRank;
+                return true;
+            }
+        }
+        return false;
+    }
 
     public int getVictoryPoints() {
         return -1;
@@ -82,5 +110,13 @@ public class Player {
 
     public int getRank() {
         return rank;
+    }
+
+    public int getCash() {
+        return cash;
+    }
+
+    public int getCredits() {
+        return credits;
     }
 }
