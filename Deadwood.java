@@ -90,6 +90,9 @@ public class Deadwood {
                     game.setAction(false);
                 }
                 break;
+            case "rehearse":
+                //TODO
+                break;
             case "rank":
                 if(currentPlayer.getCurrentLocation().getName().equals("Casting Office") && game.hasAction()) {
                     printRankRequirements();
