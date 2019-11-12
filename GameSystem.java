@@ -12,7 +12,7 @@ public class GameSystem {
     private int day;
     private int turn;
     private boolean action;
-    public final int NUM_DAYS = 3;
+    private final int NUM_DAYS = 3;
     public final int[] RANK_UP_REQUIREMENTS_CASH = {4, 10, 18, 28, 40};
     public final int[] RANK_UP_REQUIREMENTS_CREDITS = {5, 10, 15, 20, 25};
 
@@ -27,7 +27,7 @@ public class GameSystem {
         board = new ArrayList<Location>();
         numWrapped = 0;
         action = true;
-        Location trailer = new Location("Trailer");
+        Location trailer = new Location("Trailers");
         board.add(trailer);
 
         //TODO: initialize real board. Fake testing initialization below

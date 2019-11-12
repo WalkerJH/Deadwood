@@ -17,11 +17,6 @@ public class Deadwood {
                 "end -> end active player's turn\n");
     }
 
-    public static void printOptions() {
-        System.out.print("You can: ");
-        //TODO: Print out what the player can still do
-    }
-
     public static void main(String[] args) {
         input = new Scanner(System.in);
         System.out.println("Welcome to Deadwood. 2 or 3 Players?");
@@ -95,6 +90,32 @@ public class Deadwood {
                     game.setAction(false);
                 }
                 break;
+            case "rank":
+                if(currentPlayer.getCurrentLocation().getName().equals("Trailers") && game.hasAction()) { //TODO: change to "Casting Office"
+                    printRankRequirements();
+                    System.out.println("Current Rank: " + currentPlayer.getRank());
+                    System.out.print("Desired Rank: ");
+                    int rank = input.nextInt();
+                    input.nextLine();
+                    System.out.println("Paying with cash or credits?");
+                    String paymentMethod = input.nextLine();
+                    switch(paymentMethod) {
+                        case "cash":
+                            currentPlayer.rankUpWithCash(rank);
+                            break;
+                        case "credit":
+                        case "credits":
+                            currentPlayer.rankUpWithCredits(rank);
+                            break;
+                        default:
+                            System.out.println("Invalid Input: Please enter either 'cash' or 'credits' as your payment method");
+                            break;
+                    }
+                }
+                else {
+                    System.out.println("Cannot rank up right now");
+                }
+                break;
             case "end":
                 game.nextTurn();
                 System.out.printf("Ending turn. Now it is player %s's turn\n", game.getCurrentPlayer());
@@ -102,6 +123,19 @@ public class Deadwood {
             default:
                 System.out.println("Invalid input. Type help for list of commands");
                 break;
+        }
+    }
+
+    public static void printOptions() {
+        System.out.print("You can: ");
+        //TODO: Print out what the player can still do
+    }
+
+    public static void printRankRequirements() {
+        System.out.println("Cost per Rank:");
+        System.out.println("Rank\tCredits\t\tCash");
+        for(int i = 0; i < 5; i++) {
+            System.out.printf("%d\t\t%d\t\t\t%d\n", i + 2, game.RANK_UP_REQUIREMENTS_CREDITS[i], game.RANK_UP_REQUIREMENTS_CASH[i]);
         }
     }
 }

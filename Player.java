@@ -53,16 +53,16 @@ public class Player {
     }
 
     public Payout actAttempt() {
-        boolean success = (Dice.rollDice() > currentLocation.getSet().getCard().getBudget());
+        boolean success = (Dice.rollDice() + rehearsalTokens > currentLocation.getSet().getCard().getBudget());
         Payout p = currentRole.payout(success);
         credits += p.getCredits();
         cash += p.getCash();
         return p;
     }
 
-    public void rankUpWithCash(int cash, int targetRank) {}
+    public void rankUpWithCash(int targetRank) {}
 
-    public void rankUpWithCredits(int credits, int targetRank) {}
+    public void rankUpWithCredits(int targetRank) {}
 
     public int getVictoryPoints() {
         return -1;
@@ -80,4 +80,7 @@ public class Player {
         return name;
     }
 
+    public int getRank() {
+        return rank;
+    }
 }
