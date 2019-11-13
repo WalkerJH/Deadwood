@@ -91,7 +91,12 @@ public class Deadwood {
                 }
                 break;
             case "rehearse":
-                //TODO
+                if(currentPlayer.getCurrentRole() != null && game.hasAction()) {
+                    System.out.printf("You rehearsed, you have + %d to acting rolls\n", currentPlayer.rehearse());
+                    game.setAction(false);
+                } else {
+                    System.out.println("You can't rehearse");
+                }
                 break;
             case "rank":
                 if(currentPlayer.getCurrentLocation().getName().equals("Casting Office") && game.hasAction()) {
