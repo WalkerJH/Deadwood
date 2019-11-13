@@ -92,7 +92,8 @@ public class Deadwood {
                 break;
             case "rehearse":
                 if(currentPlayer.getCurrentRole() != null && game.hasAction()) {
-                    System.out.printf("You rehearsed, you have + %d to acting rolls", currentPlayer.rehearse());
+                    System.out.printf("You rehearsed, you have + %d to acting rolls\n", currentPlayer.rehearse());
+                    game.setAction(false);
                 } else {
                     System.out.println("You can't rehearse");
                 }
