@@ -17,18 +17,13 @@ public class Deadwood {
                 "end -> end active player's turn\n");
     }
 
-    public static void printOptions() {
-        System.out.print("You can: ");
-        //TODO: Print out what the player can still do
-    }
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         input = new Scanner(System.in);
         System.out.println("Welcome to Deadwood. 2 or 3 Players?");
         game = new GameSystem(input.nextInt());
-        System.out.printf("Beginning %d player game...\n", game.getNumPlayers());
         game.setUpGame();
-        printHelp();
+        System.out.printf("Initialized %d player game.\n--------------------\n",
+                game.getNumPlayers());
         while (true) {
             takeGameInput();
         }
@@ -38,6 +33,8 @@ public class Deadwood {
         String in = input.nextLine();
         Player currentPlayer = game.getCurrentPlayer();
         switch (in) {
+            case "":
+                break;
             case "help":
                 printHelp();
                 break;
@@ -60,7 +57,7 @@ public class Deadwood {
                     String destination = input.nextLine();
                     if (!destination.equalsIgnoreCase("cancel")) {
                         Location l = game.findLocation(destination);
-                        if (l != null && currentPlayer.move(l)) {
+                        if (l != null && currentPlayer.move(l) && currentPlayer.getCurrentRole() == null) {
                             game.setAction(false);
                             System.out.printf("Moved to %s\n", destination);
                         } else {
@@ -93,10 +90,66 @@ public class Deadwood {
                     game.setAction(false);
                 }
                 break;
+            case "rehearse":
+                //TODO
+                break;
+            case "rank":
+                if(currentPlayer.getCurrentLocation().getName().equals("Casting Office") && game.hasAction()) {
+                    printRankRequirements();
+                    System.out.println("Current Rank: " + currentPlayer.getRank());
+                    System.out.print("Desired Rank: ");
+                    int rank = input.nextInt();
+                    input.nextLine();
+                    System.out.println("Paying with cash or credits?");
+                    String paymentMethod = input.nextLine();
+                    switch(paymentMethod) {
+                        case "cash":
+                            if(currentPlayer.rankUpWithCash(rank)) {
+                                System.out.println("Rank Increased to " + currentPlayer.getRank() +
+                                        ". You now have $" + currentPlayer.getCash());
+                                game.setAction(false);
+                            }
+                            else {
+                                System.out.println("Rank Up Failed");
+                            }
+                            break;
+                        case "credit":
+                        case "credits":
+                            if(currentPlayer.rankUpWithCredits(rank)) {
+                                System.out.println("Rank Increased to " + currentPlayer.getRank() +
+                                        ". You now have " + currentPlayer.getCredits() + "credits");
+                                game.setAction(false);
+                            }
+                            break;
+                        default:
+                            System.out.println("Invalid Input: Please enter either 'cash' or 'credits' as your payment method");
+                            break;
+                    }
+                }
+                else {
+                    System.out.println("Cannot rank up right now");
+                }
+                break;
             case "end":
                 game.nextTurn();
-                System.out.printf("Ending turn. Now it is player %s's turn\n", currentPlayer);
+                System.out.printf("Ending turn. Now it is player %s's turn\n", game.getCurrentPlayer());
                 break;
+            default:
+                System.out.println("Invalid input. Type help for list of commands");
+                break;
+        }
+    }
+
+    public static void printOptions() {
+        System.out.print("You can: ");
+        //TODO: Print out what the player can still do
+    }
+
+    public static void printRankRequirements() {
+        System.out.println("Cost per Rank:");
+        System.out.println("Rank\tCredits\t\tCash");
+        for(int i = 0; i < 5; i++) {
+            System.out.printf("%d\t\t%d\t\t\t%d\n", i + 2, game.RANK_UP_REQUIREMENTS_CREDITS[i], game.RANK_UP_REQUIREMENTS_CASH[i]);
         }
     }
 }

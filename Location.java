@@ -32,6 +32,10 @@ public class Location {
         return (neighbors.contains(destination));
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Set getSet() { return set; }
 
     public String getName() { return name; }

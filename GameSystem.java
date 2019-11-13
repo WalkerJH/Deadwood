@@ -6,31 +6,33 @@ import java.util.*;
 public class GameSystem {
     private Player[] players;
     private int numPlayers;
-    private ArrayList<Location> board;
+    private Board board;
     private CardDeck cardDeck;
     private int numWrapped;
     private int day;
     private int turn;
     private boolean action;
-    public final int NUM_DAYS = 3;
-    public final int[] RANK_UP_REQUIREMENTS_CASH = {4, 10, 18, 28, 40};
-    public final int[] RANK_UP_REQUIREMENTS_CREDITS = {5, 10, 15, 20, 25};
+    private final int NUM_DAYS = 3;
+    public static final int[] RANK_UP_REQUIREMENTS_CASH = {4, 10, 18, 28, 40};
+    public static int[] RANK_UP_REQUIREMENTS_CREDITS = {5, 10, 15, 20, 25};
 
     public GameSystem(int numPlayers){
         this.numPlayers = numPlayers;
     }
 
-    public void setUpGame(){
+    public void setUpGame() throws Exception{
         day = 1;
         turn = 0;
         cardDeck = new CardDeck();
-        board = new ArrayList<Location>();
+        ParseXML parser = new ParseXML("board.xml");
+        board = parser.readBoardData();
+        parser.setDocument("cards.xml");
+        cardDeck = parser.readCardData();
+        //TODO: populate Cards into Locations
         numWrapped = 0;
         action = true;
-        Location trailer = new Location("Trailer");
-        board.add(trailer);
 
-        //TODO: initialize other locations. Fake testing locations below:
+        //Fake testing initialization below
         Location flavortown = new Location("Flavortown");
         Role fieri = new StarringRole("Guy Fieri", "We’re takin’ you on a road rockin’ trip down to Flavortown, " +
                 "where the gravitational force of bacon warps the laws of space and time.", 6);
@@ -44,14 +46,11 @@ public class GameSystem {
         board.add(pit);
         Location jonesTruckRental = new Location("Jones Truck Rental and Storage");
         board.add(jonesTruckRental);
-        trailer.addNeighbors(pit, flavortown);
-        pit.addNeighbors(trailer);
-        flavortown.addNeighbors(trailer, jonesTruckRental);
-        jonesTruckRental.addNeighbors(flavortown);
+        //End fake stuff
 
         players = new Player[numPlayers];
         for (int i = 0; i < numPlayers; i++) {
-            players[i] = new Player(Integer.toString(i), trailer);
+            players[i] = new Player(Integer.toString(i + 1), board.findLocation("Trailer"));
         }
     }
 
@@ -75,6 +74,10 @@ public class GameSystem {
         this.action = action;
     }
 
+    public Location findLocation(String locationName) {
+        return board.findLocation(locationName);
+    }
+
     public void printAllPlayersStatus() {
         for (Player p : players) {
             p.printStatus();
@@ -86,20 +89,15 @@ public class GameSystem {
             turn ++;
         else
             turn = 0;
+        action = true;
         return turn;
     }
 
-    public Location findLocation(String locationName) {
-        Location found = null;
-        for (Location l : board) {
-            if (l.getName().equalsIgnoreCase(locationName)) {
-                found = l;
-            }
-        }
-        return found;
+    public void nextDay(){
+        //TODO
     }
 
-    public void nextDay(){}
-
-    public void endGame(){}
+    public void endGame(){
+        //TODO
+    }
 }

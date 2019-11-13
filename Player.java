@@ -53,18 +53,49 @@ public class Player {
     }
 
     public Payout actAttempt() {
-        boolean success = (Dice.rollDice() > currentLocation.getSet().getCard().getBudget());
+        boolean success = (Dice.rollDice() + rehearsalTokens > currentLocation.getSet().getCard().getBudget());
         Payout p = currentRole.payout(success);
         credits += p.getCredits();
         cash += p.getCash();
+        if(success)
+            rehearsalTokens = 0;
         return p;
     }
 
-    public void rankUpWithCash(int cash, int targetRank) {}
+    public boolean rankUpWithCash(int targetRank) {
+        int diff = targetRank - rank;
+        if(diff > 0 && rank != 6) {
+            int cost = 0;
+            for(int i = 0; i < diff; i++) {
+                cost += GameSystem.RANK_UP_REQUIREMENTS_CASH[rank - 1 + i];
+            }
+            if(cash >= cost) {
+                cash -= cost;
+                rank = targetRank;
+                return true;
+            }
+        }
+        return false;
+    }
 
-    public void rankUpWithCredits(int credits, int targetRank) {}
+    public boolean rankUpWithCredits(int targetRank) {
+        int diff = targetRank - rank;
+        if(diff > 0 && rank != 6) {
+            int cost = 0;
+            for(int i = 0; i < diff; i++) {
+                cost += GameSystem.RANK_UP_REQUIREMENTS_CREDITS[rank - 1 + i];
+            }
+            if(credits >= cost) {
+                credits -= cost;
+                rank = targetRank;
+                return true;
+            }
+        }
+        return false;
+    }
 
     public int getVictoryPoints() {
+        //TODO
         return -1;
     }
 
@@ -74,8 +105,21 @@ public class Player {
 
     public Location getCurrentLocation() { return currentLocation; }
 
+    public Role getCurrentRole() { return currentRole; }
+
     public String getName() {
         return name;
     }
 
+    public int getRank() {
+        return rank;
+    }
+
+    public int getCash() {
+        return cash;
+    }
+
+    public int getCredits() {
+        return credits;
+    }
 }
