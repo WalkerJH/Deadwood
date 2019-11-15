@@ -1,5 +1,7 @@
 /**
- * Main class for deadwood game
+ * Plays the game Deadwood
+ * Code Authors: Kai Broach and Walker Herring, Western Washington University
+ * Deadwood is © and ™ 1999, 2011 James Ernest and Cheapass Games: www.cheapass.com.
  **/
 
 import java.util.Scanner;
@@ -53,7 +55,7 @@ public class Deadwood {
                     currentPlayer.getCurrentLocation().printNeighbors();
                     break;
                 case "move":
-                    if (game.hasAction()) {
+                    if (currentPlayer.canMove()) {
                         System.out.print("Where?");
                         currentPlayer.getCurrentLocation().printNeighbors();
                         System.out.println("Enter location name to move there or 'cancel' to cancel move");
@@ -61,7 +63,6 @@ public class Deadwood {
                         if (!destination.equalsIgnoreCase("cancel")) {
                             Location l = game.findLocation(destination);
                             if (l != null && currentPlayer.move(l) && currentPlayer.getCurrentRole() == null) {
-                                game.setAction(false);
                                 System.out.printf("Moved to %s\n", destination);
                             } else {
                                 System.out.printf("Can't move to %s\n", destination);
@@ -70,6 +71,7 @@ public class Deadwood {
                     }
                     break;
                 case "role":
+                    //TODO: use currentPlayer.canTakeRole() here
                     Set s = currentPlayer.getCurrentLocation().getSet();
                     if (s != null) {
                         System.out.println("Which Role?");
@@ -89,25 +91,23 @@ public class Deadwood {
                     }
                     break;
                 case "act":
-                    if (game.hasAction()) {
+                    if (currentPlayer.canAct()) {
                         Payout p = currentPlayer.actAttempt();
                         if (p.getSuccess())
                             System.out.printf("Success! + %d credits, + %d cash\n", p.getCredits(), p.getCash());
                         else
                             System.out.printf("Failure! + %d credits, + %d cash\n", p.getCredits(), p.getCash());
-                        game.setAction(false);
                     }
                     break;
                 case "rehearse":
-                    if (currentPlayer.getCurrentRole() != null && game.hasAction()) {
+                    if (currentPlayer.canRehearse()) {
                         System.out.printf("You rehearsed, you have + %d to acting rolls\n", currentPlayer.rehearse());
-                        game.setAction(false);
                     } else {
                         System.out.println("You can't rehearse");
                     }
                     break;
                 case "rank":
-                    if (currentPlayer.getCurrentLocation().getName().equals("Casting Office") && game.hasAction()) {
+                    if (currentPlayer.canRankUp()) {
                         printRankRequirements();
                         System.out.println("Current Rank: " + currentPlayer.getRank());
                         System.out.print("Desired Rank: ");
@@ -120,7 +120,6 @@ public class Deadwood {
                                 if (currentPlayer.rankUpWithCash(rank)) {
                                     System.out.println("Rank Increased to " + currentPlayer.getRank() +
                                             ". You now have $ " + currentPlayer.getCash());
-                                    game.setAction(false);
                                 } else {
                                     System.out.println("Rank Up Failed");
                                 }
@@ -130,7 +129,6 @@ public class Deadwood {
                                 if (currentPlayer.rankUpWithCredits(rank)) {
                                     System.out.println("Rank Increased to " + currentPlayer.getRank() +
                                             ". You now have " + currentPlayer.getCredits() + "credits");
-                                    game.setAction(false);
                                 }
                                 break;
                             default:
@@ -162,9 +160,6 @@ public class Deadwood {
                     break;
                 case "cheat-riches":
                     currentPlayer.riches(10,10);
-                    break;
-                case "cheat-action":
-                    game.setAction(true);
                     break;
                 //End cheats
 

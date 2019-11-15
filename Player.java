@@ -10,6 +10,9 @@ public class Player {
     private Role currentRole;
     private Location currentLocation;
 
+    private boolean hasAction;
+    private boolean working;
+
     public Player(String name, Location location) {
         this.name = name;
         this.rank = 1;
@@ -17,6 +20,8 @@ public class Player {
         this.credits = 0;
         this.rehearsalTokens = 0;
         this.currentLocation = location;
+        this.hasAction = false;
+        this.working = false;
     }
 
     public String toString() {
@@ -28,6 +33,14 @@ public class Player {
                 "Set: %s, Role: %s\n" +
                 "%d dollars, %d credits\n",
                 name, rank, currentLocation, currentRole, cash, credits);
+    }
+
+    public void beginTurn() {
+        hasAction = true;
+    }
+
+    public void fly(Location destination) {
+        currentLocation = destination;
     }
 
     public boolean move(Location destination) {
@@ -122,10 +135,29 @@ public class Player {
 
     public int getCredits() { return credits; }
 
-    //Cheat code methods
-    public void fly(Location destination) {
-        currentLocation = destination;
+    public boolean canMove() {
+        return (!working && hasAction);
     }
+
+    public boolean canAct() {
+        return (working && hasAction);
+    }
+
+    public boolean canTakeRole() {
+        //TODO: needs to be tinkered with
+        return (!working);
+    }
+
+    public boolean canRehearse() {
+        return (working && hasAction);
+    }
+
+    public boolean canRankUp() {
+        //TODO: return true if we are in the casting office and hasAction
+        return false;
+    }
+
+    //Cheat code methods
     public void riches(int cheatCash, int cheatCredits) {
         cash += cheatCash;
         credits += cheatCredits;
