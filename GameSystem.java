@@ -93,7 +93,15 @@ public class GameSystem {
     }
 
     public void endGame(){
-        //TODO
+        System.out.println("The game is over!\n");
+        //TODO: (optional): sortPlayersByPoints() to rank how players finished
+        int highPoints = 0;
+        int winningPlayer = 1;
+        for (int i = 0; i < players.length; i++) {
+            if (players[i].getVictoryPoints() > highPoints)
+                winningPlayer = i;
+        }
+        System.out.printf("Player %d is the winner!\n", winningPlayer);
     }
 
     private void testingLocations() {
