@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
 /**
- * Game locations
+ * Stores game locations
  **/
 public class Board {
 
     private ArrayList<Location> locations;
 
-    public Board(){
+    public Board() {
         locations = new ArrayList<>();
     }
 
@@ -29,7 +29,5 @@ public class Board {
         locations.clear();
     }
 
-    public ArrayList<Location> getLocations() {
-        return locations;
-    }
+    public ArrayList<Location> getLocations() { return locations; }
 }

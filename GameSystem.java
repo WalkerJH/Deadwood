@@ -4,11 +4,11 @@
 import java.util.*;
 
 public class GameSystem {
+
     private Player[] players;
     private int numPlayers;
     private Board board;
     private CardDeck cardDeck;
-    private int numWrapped;
 
     private int day;
     private int turn;
@@ -31,7 +31,6 @@ public class GameSystem {
         cardDeck = parser.readCardData();
         cardDeck.shuffle();
         distributeCards();
-        numWrapped = 0;
         action = true;
 
         players = new Player[numPlayers];
@@ -94,10 +93,19 @@ public class GameSystem {
     }
 
     public void endGame(){
-        //TODO
+        System.out.println("The game is over!\n");
+        //TODO: (optional): sortPlayersByPoints() to rank how players finished
+        int highPoints = 0;
+        int winningPlayer = 1;
+        for (int i = 0; i < players.length; i++) {
+            if (players[i].getVictoryPoints() > highPoints)
+                winningPlayer = i;
+        }
+        System.out.printf("Player %d is the winner!\n", winningPlayer);
     }
 
     private void testingLocations() {
+        /*
         Location flavortown = new Location("Flavortown");
         Role fieri = new StarringRole("Guy Fieri", "We’re takin’ you on a road rockin’ trip down to Flavortown, " +
                 "where the gravitational force of bacon warps the laws of space and time.", 6);
@@ -111,5 +119,6 @@ public class GameSystem {
         board.add(pit);
         Location jonesTruckRental = new Location("Jones Truck Rental and Storage");
         board.add(jonesTruckRental);
+        */
     }
 }

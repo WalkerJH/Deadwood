@@ -122,7 +122,14 @@ public class Player {
         return cash;
     }
 
-    public int getCredits() {
-        return credits;
+    public int getCredits() { return credits; }
+
+    //Cheat code methods
+    public void fly(Location destination) {
+        currentLocation = destination;
+    }
+    public void riches(int cheatCash, int cheatCredits) {
+        cash += cheatCash;
+        credits += cheatCredits;
     }
 }
