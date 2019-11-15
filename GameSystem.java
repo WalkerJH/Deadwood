@@ -28,7 +28,7 @@ public class GameSystem {
         board = parser.readBoardData();
         parser.setDocument("cards.xml");
         cardDeck = parser.readCardData();
-        distributeCards();
+        //TODO: populate Cards into Locations
         numWrapped = 0;
         action = true;
 
@@ -99,13 +99,5 @@ public class GameSystem {
 
     public void endGame(){
         //TODO
-    }
-
-    private void distributeCards() {
-        for(Location l : board.getLocations()) {
-            if(l.hasSet()) {
-                l.getSet().setCard(cardDeck.drawCard());
-            }
-        }
     }
 }

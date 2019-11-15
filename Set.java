@@ -56,10 +56,6 @@ public class Set {
 
     public Card getCard(){ return card; }
 
-    public void setCard(Card card) {
-        this.card = card;
-    }
-
     public void discardCard(){
         //TODO
     }
