@@ -54,7 +54,7 @@ public class Player {
     }
 
     public Payout actAttempt() {
-        boolean success = (Dice.rollDice() + rehearsalTokens > currentLocation.getSet().getCard().getBudget());
+        boolean success = ((Dice.rollDice() + rehearsalTokens) > currentLocation.getSet().getCard().getBudget());
         Payout p = currentRole.payout(success);
         credits += p.getCredits();
         cash += p.getCash();
