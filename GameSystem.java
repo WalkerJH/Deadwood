@@ -9,6 +9,7 @@ public class GameSystem {
     private Board board;
     private CardDeck cardDeck;
     private int numWrapped;
+
     private int day;
     private int turn;
     private boolean action;
@@ -24,14 +25,12 @@ public class GameSystem {
         day = 1;
         turn = 0;
         cardDeck = new CardDeck();
-        System.out.println("Created Game Board");
         ParseXML parser = new ParseXML("board.xml");
         board = parser.readBoardData();
         parser.setDocument("cards.xml");
         cardDeck = parser.readCardData();
-        System.out.println("Loaded in XML Data");
+        cardDeck.shuffle();
         distributeCards();
-        System.out.println("Distributed Cards");
         numWrapped = 0;
         action = true;
 
@@ -44,6 +43,8 @@ public class GameSystem {
     public Player getCurrentPlayer(){
         return players[turn];
     }
+
+    public int getDay() { return day; }
 
     public int getNumPlayers() {
         return numPlayers;

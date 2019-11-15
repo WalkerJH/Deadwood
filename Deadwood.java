@@ -141,18 +141,17 @@ public class Deadwood {
                 }
                 break;
             case "end":
-                game.nextTurn();
-                System.out.printf("Ending turn. Now it is player %s's turn\n", game.getCurrentPlayer());
+                if (game.getDay() > 3) {
+                    game.endGame();
+                } else {
+                    game.nextTurn();
+                    System.out.printf("Ending turn. Now it is player %s's turn\n", game.getCurrentPlayer());
+                }
                 break;
             default:
                 System.out.println("Invalid input. Type help for list of commands");
                 break;
         }
-    }
-
-    public static void printOptions() {
-        System.out.print("You can: ");
-        //TODO: Print out what the player can still do
     }
 
     public static void printRankRequirements() {
