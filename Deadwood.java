@@ -67,17 +67,22 @@ public class Deadwood {
                 }
                 break;
             case "role":
-                System.out.println("Which Role?");
                 Set s =  currentPlayer.getCurrentLocation().getSet();
-                s.printRoles();
-                System.out.println("Enter role name to take role or 'cancel' to cancel taking a role");
-                String roleName = input.nextLine();
-                if(!roleName.equalsIgnoreCase("cancel")) {
-                    Role r = s.findRole(roleName);
-                    if (r != null && currentPlayer.takeRole(r))
-                        System.out.printf("You are now working on %s\n", r.getName());
-                    else
-                        System.out.printf("Can't take role %s (Rank %d)\n", r.getName(), r.getRankRequirement());
+                if (s != null) {
+                    System.out.println("Which Role?");
+
+                    s.printRoles();
+                    System.out.println("Enter role name to take role or 'cancel' to cancel taking a role");
+                    String roleName = input.nextLine();
+                    if (!roleName.equalsIgnoreCase("cancel")) {
+                        Role r = s.findRole(roleName);
+                        if (r != null && currentPlayer.takeRole(r))
+                            System.out.printf("You are now working on %s\n", r.getName());
+                        else
+                            System.out.printf("Can't take role %s (Rank %d)\n", r.getName(), r.getRankRequirement());
+                    }
+                } else {
+                    System.out.println("There are no roles here");
                 }
                 break;
             case "act":
@@ -136,18 +141,17 @@ public class Deadwood {
                 }
                 break;
             case "end":
-                game.nextTurn();
-                System.out.printf("Ending turn. Now it is player %s's turn\n", game.getCurrentPlayer());
+                if (game.getDay() > 3) {
+                    game.endGame();
+                } else {
+                    game.nextTurn();
+                    System.out.printf("Ending turn. Now it is player %s's turn\n", game.getCurrentPlayer());
+                }
                 break;
             default:
                 System.out.println("Invalid input. Type help for list of commands");
                 break;
         }
-    }
-
-    public static void printOptions() {
-        System.out.print("You can: ");
-        //TODO: Print out what the player can still do
     }
 
     public static void printRankRequirements() {

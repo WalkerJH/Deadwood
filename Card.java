@@ -16,7 +16,7 @@ public class Card {
     }
 
     public void printCard() {
-        //TODO
+        System.out.printf("%s - \"%s\"\n", name, desc);
     }
 
     public String getName() {
