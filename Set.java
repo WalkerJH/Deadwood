@@ -10,10 +10,12 @@ public class Set {
     private int shotCounters;
 
     public Set() {
+        this.card = null;
         this.localRoles = new ArrayList<>();
     }
 
     public Set(int shotCounters, ArrayList<Role> localRoles) {
+        this.card = null;
         this.shotCounters = shotCounters;
         this.localRoles = localRoles;
     }
@@ -30,6 +32,8 @@ public class Set {
         localRoles.add(r);
     }
 
+    public void setCard(Card card) { this.card = card; }
+
     public Role findRole(String roleName) {
         for (Role r : localRoles) {
             if (r.getName().equalsIgnoreCase(roleName)) {
@@ -43,6 +47,9 @@ public class Set {
         for (Role r : localRoles) {
             System.out.printf(" %s\n", r);
         }
+        for (Role r : card.getRoles()) {
+            System.out.printf(" %s\n", r);
+        }
         System.out.println();
     }
 
@@ -51,12 +58,11 @@ public class Set {
     }
 
     public void removeShot(){
-        //TODO
+        if (shotCounters > 0)
+            shotCounters --;
     }
 
     public Card getCard(){ return card; }
 
-    public void discardCard(){
-        //TODO
-    }
+    public void discardCard(){ card = null; }
 }

@@ -24,11 +24,14 @@ public class GameSystem {
         day = 1;
         turn = 0;
         cardDeck = new CardDeck();
+        System.out.println("Created Game Board");
         ParseXML parser = new ParseXML("board.xml");
         board = parser.readBoardData();
         parser.setDocument("cards.xml");
         cardDeck = parser.readCardData();
-        //TODO: populate Cards into Locations
+        System.out.println("Loaded in XML Data");
+        distributeCards();
+        System.out.println("Distributed Cards");
         numWrapped = 0;
         action = true;
 
@@ -60,6 +63,14 @@ public class GameSystem {
 
     public Location findLocation(String locationName) {
         return board.findLocation(locationName);
+    }
+
+    private void distributeCards() {
+        for (int i = 0; i < board.getLocations().size(); i++) {
+            Set s = board.getLocations().get(i).getSet();
+            if (s != null)
+                s.setCard(cardDeck.drawCard());
+        }
     }
 
     public void printAllPlayersStatus() {
