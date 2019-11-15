@@ -8,16 +8,20 @@ import java.util.Collections;
 public class CardDeck {
     private static Stack<Card> deck;
 
+    int numCards;
+
     public CardDeck() {
         deck = new Stack<>();
     }
 
     public CardDeck(Card ... args) {
         deck = new Stack<Card>();
+        numCards = 0;
         for (int i = 0; i < args.length; i++) {
             deck.push(args[i]);
+            numCards ++;
         }
-        Collections.shuffle(deck);
+        shuffle();
     }
 
     public void shuffle() {
@@ -25,8 +29,13 @@ public class CardDeck {
     }
 
     public Card drawCard(){
-        return deck.pop();
+        if (!deck.empty())
+            return deck.pop();
+        else
+            return null;
     }
+
+    public int getNumCards() { return numCards; }
 
     public void addCard(Card c) { deck.push(c); }
 }

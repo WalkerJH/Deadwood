@@ -10,6 +10,10 @@ public class StarringRole extends Role {
         super(name, desc, rankRequirement);
     }
 
+    public String toString() {
+        return "\u2605 " + super.toString();
+    }
+
     public Payout payout(boolean success) {
         if (success)
             return SUCCESS;
