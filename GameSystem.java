@@ -89,7 +89,25 @@ public class GameSystem {
     }
 
     public void nextDay(){
-        //TODO
+        day++;
+        if(day <= NUM_DAYS) {
+            //move all players to trailer
+            for (Player p : players) {
+                p.move(board.findLocation("Trailer"));
+            }
+            //discard all remaining cards
+            for (Location l : board.getLocations()) {
+                Set s = l.getSet();
+                if (s != null) {
+                    s.discardCard();
+                }
+            }
+            //distribute new cards
+            distributeCards();
+        }
+        else {
+            endGame();
+        }
     }
 
     public void endGame(){
