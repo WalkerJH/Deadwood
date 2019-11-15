@@ -38,10 +38,6 @@ public class Location {
 
     public Set getSet() { return set; }
 
-    public boolean hasSet() {
-        return set != null;
-    }
-
     public String getName() { return name; }
 
     public void setSet(Set set) { this.set = set; }

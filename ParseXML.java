@@ -126,7 +126,6 @@ public class ParseXML{
                 String sceneNum = children.item(1).getAttributes().getNamedItem("number").getNodeValue();
                 String flavorText = currentNode.getFirstChild().getNextSibling().getFirstChild().getNodeValue();
                 String desc = String.format("Scene %s: %s", sceneNum, flavorText);
-                desc = desc.replace("\n", "");
                 for (int k = 3; k < children.getLength(); k+=2) {
                     Node role = children.item(k);
                     String roleName = role.getAttributes().getNamedItem("name").getNodeValue();
