@@ -48,8 +48,9 @@ public class Player {
         }
     }
 
-    public void rehearse(){
+    public int rehearse(){
         rehearsalTokens ++;
+        return rehearsalTokens;
     }
 
     public Payout actAttempt() {
