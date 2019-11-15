@@ -59,9 +59,7 @@ public class Player {
         credits += p.getCredits();
         cash += p.getCash();
         if(success)
-            rehearsalTokens = 0;
             currentLocation.getSet().removeShot();
-            currentRole = null;
         return p;
     }
 
