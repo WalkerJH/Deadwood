@@ -67,17 +67,22 @@ public class Deadwood {
                 }
                 break;
             case "role":
-                System.out.println("Which Role?");
                 Set s =  currentPlayer.getCurrentLocation().getSet();
-                s.printRoles();
-                System.out.println("Enter role name to take role or 'cancel' to cancel taking a role");
-                String roleName = input.nextLine();
-                if(!roleName.equalsIgnoreCase("cancel")) {
-                    Role r = s.findRole(roleName);
-                    if (r != null && currentPlayer.takeRole(r))
-                        System.out.printf("You are now working on %s\n", r.getName());
-                    else
-                        System.out.printf("Can't take role %s (Rank %d)\n", r.getName(), r.getRankRequirement());
+                if (s != null) {
+                    System.out.println("Which Role?");
+
+                    s.printRoles();
+                    System.out.println("Enter role name to take role or 'cancel' to cancel taking a role");
+                    String roleName = input.nextLine();
+                    if (!roleName.equalsIgnoreCase("cancel")) {
+                        Role r = s.findRole(roleName);
+                        if (r != null && currentPlayer.takeRole(r))
+                            System.out.printf("You are now working on %s\n", r.getName());
+                        else
+                            System.out.printf("Can't take role %s (Rank %d)\n", r.getName(), r.getRankRequirement());
+                    }
+                } else {
+                    System.out.println("There are no roles here");
                 }
                 break;
             case "act":
