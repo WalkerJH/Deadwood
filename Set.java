@@ -40,6 +40,11 @@ public class Set {
                 return r;
             }
         }
+        for (Role r : card.getRoles()) {
+            if (r.getName().equalsIgnoreCase(roleName)) {
+                return r;
+            }
+        }
         return null;
     }
 
