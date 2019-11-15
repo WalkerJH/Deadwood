@@ -60,7 +60,8 @@ public class Deadwood {
                         if (l != null && currentPlayer.move(l) && currentPlayer.getCurrentRole() == null) {
                             game.setAction(false);
                             System.out.printf("Moved to %s\n", destination);
-                        } else {
+                        }
+                        else {
                             System.out.printf("Can't move to %s\n", destination);
                         }
                     }
@@ -70,6 +71,7 @@ public class Deadwood {
                 System.out.println("Which Role?");
                 Set s =  currentPlayer.getCurrentLocation().getSet();
                 s.printRoles();
+                System.out.print("Budget: " + s.getCard().getBudget());
                 System.out.println("Enter role name to take role or 'cancel' to cancel taking a role");
                 String roleName = input.nextLine();
                 if(!roleName.equalsIgnoreCase("cancel")) {

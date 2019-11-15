@@ -15,8 +15,8 @@ public class Card {
         this.budget = budget;
     }
 
-    public void printCard() {
-        //TODO
+    public String toString() {
+        return String.format("%s\n%s\nBudget: %d");
     }
 
     public String getName() {
