@@ -21,7 +21,7 @@ public class CardDeck {
             deck.push(args[i]);
             numCards ++;
         }
-        Collections.shuffle(deck);
+        shuffle();
     }
 
     public void shuffle() {
