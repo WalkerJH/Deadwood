@@ -32,22 +32,6 @@ public class GameSystem {
         numWrapped = 0;
         action = true;
 
-        //Fake testing initialization below
-        Location flavortown = new Location("Flavortown");
-        Role fieri = new StarringRole("Guy Fieri", "We’re takin’ you on a road rockin’ trip down to Flavortown, " +
-                "where the gravitational force of bacon warps the laws of space and time.", 6);
-        Role chef = new ExtraRole("Chef", "Thanks Mr. Fieri, very cool.", 1);
-        ArrayList<Role> flavortownRoles = new ArrayList<>();
-        flavortownRoles.add(fieri);
-        flavortownRoles.add(chef);
-        flavortown.setSet(new Set(1, flavortownRoles));
-        board.add(flavortown);
-        Location pit = new Location("Pit of Despair");
-        board.add(pit);
-        Location jonesTruckRental = new Location("Jones Truck Rental and Storage");
-        board.add(jonesTruckRental);
-        //End fake stuff
-
         players = new Player[numPlayers];
         for (int i = 0; i < numPlayers; i++) {
             players[i] = new Player(Integer.toString(i + 1), board.findLocation("Trailer"));
@@ -99,5 +83,21 @@ public class GameSystem {
 
     public void endGame(){
         //TODO
+    }
+
+    private void testingLocations() {
+        Location flavortown = new Location("Flavortown");
+        Role fieri = new StarringRole("Guy Fieri", "We’re takin’ you on a road rockin’ trip down to Flavortown, " +
+                "where the gravitational force of bacon warps the laws of space and time.", 6);
+        Role chef = new ExtraRole("Chef", "Thanks Mr. Fieri, very cool.", 1);
+        ArrayList<Role> flavortownRoles = new ArrayList<>();
+        flavortownRoles.add(fieri);
+        flavortownRoles.add(chef);
+        flavortown.setSet(new Set(1, flavortownRoles));
+        board.add(flavortown);
+        Location pit = new Location("Pit of Despair");
+        board.add(pit);
+        Location jonesTruckRental = new Location("Jones Truck Rental and Storage");
+        board.add(jonesTruckRental);
     }
 }
