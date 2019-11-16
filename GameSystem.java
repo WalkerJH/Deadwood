@@ -12,7 +12,6 @@ public class GameSystem {
     private int day;
     private int turn;
 
-    private final int NUM_DAYS = 3;
     public static final int[] RANK_UP_REQUIREMENTS_CASH = {4, 10, 18, 28, 40};
     public static int[] RANK_UP_REQUIREMENTS_CREDITS = {5, 10, 15, 20, 25};
 
@@ -30,15 +29,20 @@ public class GameSystem {
         cardDeck = parser.readCardData();
         cardDeck.shuffle();
         distributeCards();
+        testingLocations();
 
         players = new Player[numPlayers];
         for (int i = 0; i < numPlayers; i++) {
-            players[i] = new Player(Integer.toString(i + 1), board.findLocation("Trailer"));
+            players[i] = new Player("Player " + Integer.toString(i + 1), board.findLocation("Trailer"));
         }
     }
 
     public Player getCurrentPlayer(){
         return players[turn];
+    }
+
+    public Player[] getPlayers() {
+        return players;
     }
 
     public int getDay() { return day; }
@@ -66,49 +70,51 @@ public class GameSystem {
     public void printAllPlayersStatus() {
         for (Player p : players) {
             p.printStatus();
+            System.out.println();
         }
     }
 
-    public int nextTurn(){
+    public boolean nextTurn(){
         if (turn < numPlayers-1)
             turn ++;
         else
             turn = 0;
-        players[turn].beginTurn();
-        return turn;
+        if(board.dayOver()) {
+            return nextDay();
+        }
+        else {
+            players[turn].beginTurn();
+            return true;
+        }
     }
 
-    public void nextDay(){
+    public boolean nextDay() {
         day++;
-        if(day <= NUM_DAYS) {
-            //move all players to trailer
+        if(day <= 3) {
             for (Player p : players) {
-                p.move(board.findLocation("Trailer"));
+                p.fly(board.findLocation("Trailer"));
             }
-            //discard all remaining cards
             for (Location l : board.getLocations()) {
                 Set s = l.getSet();
                 if (s != null)
                     s.discardCard();
             }
-            //distribute new cards
             distributeCards();
+            return true;
         }
         else {
             endGame();
+            return false;
         }
     }
 
     public void endGame(){
         System.out.println("The game is over!\n");
-        //TODO: (optional): sort players by score
-        int highPoints = 0;
-        int winningPlayer = 1;
-        for (int i = 0; i < players.length; i++) {
-            if (players[i].getVictoryPoints() > highPoints)
-                winningPlayer = i;
-        }
-        System.out.printf("Player %d is the winner!\n", winningPlayer);
+        Arrays.sort(players);
+        System.out.printf("Player %s is the winner!\n", players[0]);
+        System.out.println("Leaderboard: ");
+        for(int i = 0; i < players.length; i++)
+            System.out.printf("%d. %s - %d points\n", i+1, players[i], players[i].getVictoryPoints());
     }
 
     private void testingLocations() {

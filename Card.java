@@ -15,8 +15,8 @@ public class Card {
         this.budget = budget;
     }
 
-    public void printCard() {
-        System.out.printf("%s - \"%s\"\n", name, desc);
+    public String toString() {
+        return String.format("%s - \"%s\"\n", name, desc);
     }
 
     public String getName() {
@@ -29,6 +29,14 @@ public class Card {
 
     public ArrayList<StarringRole> getRoles() {
         return roles;
+    }
+
+    public boolean hasActor() {
+        for (Role r: roles) {
+            if(r.getFilled())
+                return true;
+        }
+        return false;
     }
 
     public int getBudget() {

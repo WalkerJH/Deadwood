@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Keeps track of the role info for for a Location
@@ -7,11 +8,13 @@ import java.util.ArrayList;
 public class Set {
     private Card card;
     private ArrayList<Role> localRoles;
+    private ArrayList<Player> localActors;
     private int shotCounters;
 
     public Set() {
         this.card = null;
         this.localRoles = new ArrayList<>();
+        this.localActors = new ArrayList<>();
     }
 
     public Set(int shotCounters, ArrayList<Role> localRoles) {
@@ -24,12 +27,61 @@ public class Set {
         this.shotCounters = shotCounters;
     }
 
+    public int getShotCounters() {
+        return shotCounters;
+    }
+
     public ArrayList<Role> getLocalRoles() {
         return localRoles;
     }
 
     public void addRole(Role r) {
         localRoles.add(r);
+    }
+
+    public void addActor(Player p) {
+        localActors.add(p);
+    }
+
+    public void wrap() {
+        System.out.println("Wrapping Scene:");
+        ArrayList<StarringRole> rolesOnCard = card.getRoles();
+        if(card.hasActor()) {
+            ArrayList<Integer> rolls = new ArrayList<>();
+            for(int i = 0; i < card.getBudget(); i++) {
+                rolls.add(Dice.rollDice());
+            }
+            Collections.sort(rolls);
+            Collections.reverse(rolls);
+            int rollsUsed = 0; //rolls index
+            int i = rolesOnCard.size() - 1; //roles index
+            while (rollsUsed < rolls.size()) {
+                payActor(rolls.get(rollsUsed), rolesOnCard.get(i));
+                rollsUsed++;
+                if(i > 0) {
+                    i--;
+                }
+                else {
+                    i = rolesOnCard.size() - 1;
+                }
+            }
+            for(Player p : localActors) {
+                for(Role r: localRoles){
+                    if(p.getCurrentRole().equals(r))
+                        p.pay(r.getRankRequirement());
+                }
+            }
+        }
+        discardCard();
+    }
+
+    public void payActor(int cash, Role role) {
+        if(role.getFilled()) {
+            for(Player p : localActors) {
+                if(p.getCurrentRole().equals(role))
+                    p.pay(cash);
+            }
+        }
     }
 
     public void setCard(Card card) { this.card = card; }
@@ -48,23 +100,11 @@ public class Set {
         return null;
     }
 
-    public void printRoles() {
-        for (Role r : localRoles) {
-            System.out.printf(" %s\n", r);
-        }
-        for (Role r : card.getRoles()) {
-            System.out.printf(" %s\n", r);
-        }
-        System.out.println();
-    }
-
-    public void wrap(){
-        //TODO
-    }
-
     public void removeShot(){
-        if (shotCounters > 0)
-            shotCounters --;
+        shotCounters --;
+        if(shotCounters == 0) {
+            wrap();
+        }
     }
 
     public Card getCard(){ return card; }

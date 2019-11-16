@@ -1,7 +1,7 @@
 /**
  * Implements player behaviors and stores player info
 **/
-public class Player {
+public class Player implements Comparable<Player> {
     private String name;
     private int rank;
     private int cash;
@@ -20,7 +20,7 @@ public class Player {
         this.credits = 0;
         this.rehearsalTokens = 0;
         this.currentLocation = location;
-        this.hasAction = false;
+        this.hasAction = true;
         this.working = false;
     }
 
@@ -29,7 +29,7 @@ public class Player {
     }
 
     public void printStatus() {
-        System.out.printf("Player %s, Rank %d\n" +
+        System.out.printf("%s, Rank %d\n" +
                 "Set: %s, Role: %s\n" +
                 "%d dollars, %d credits\n",
                 name, rank, currentLocation, currentRole, cash, credits);
@@ -41,11 +41,12 @@ public class Player {
 
     public void fly(Location destination) {
         currentLocation = destination;
-    }
+    } //move without restrictions
 
     public boolean move(Location destination) {
         if (currentLocation.hasNeighbor(destination)) {
             currentLocation = destination;
+            this.hasAction = false;
             return true;
         } else {
             return false;
@@ -53,8 +54,12 @@ public class Player {
     }
 
     public boolean takeRole(Role newRole) {
-        if(currentRole == null && rank >= newRole.getRankRequirement()) {
+        if(!newRole.getFilled() && rank >= newRole.getRankRequirement()) {
             this.currentRole = newRole;
+            this.working = true;
+            currentRole.setFilled(true);
+            this.hasAction = false;
+            currentLocation.getSet().addActor(this);
             return true;
         } else {
             return false;
@@ -63,6 +68,7 @@ public class Player {
 
     public int rehearse(){
         rehearsalTokens ++;
+        this.hasAction = false;
         return rehearsalTokens;
     }
 
@@ -73,6 +79,7 @@ public class Player {
         cash += p.getCash();
         if(success)
             currentLocation.getSet().removeShot();
+        this.hasAction = false;
         return p;
     }
 
@@ -86,6 +93,7 @@ public class Player {
             if(cash >= cost) {
                 cash -= cost;
                 rank = targetRank;
+                this.hasAction = false;
                 return true;
             }
         }
@@ -102,10 +110,15 @@ public class Player {
             if(credits >= cost) {
                 credits -= cost;
                 rank = targetRank;
+                this.hasAction = false;
                 return true;
             }
         }
         return false;
+    }
+
+    public int compareTo(Player o) {
+        return o.getVictoryPoints() - this.getVictoryPoints();
     }
 
     public int getVictoryPoints() {
@@ -133,6 +146,11 @@ public class Player {
         return cash;
     }
 
+    public void pay(int payment) {
+        System.out.println(this + " paid $" + payment);
+        cash += payment;
+    }
+
     public int getCredits() { return credits; }
 
     public boolean canMove() {
@@ -144,8 +162,7 @@ public class Player {
     }
 
     public boolean canTakeRole() {
-        //TODO: needs to be tinkered with
-        return (!working);
+        return (!working && currentRole == null && currentLocation.hasSet());
     }
 
     public boolean canRehearse() {
@@ -153,13 +170,16 @@ public class Player {
     }
 
     public boolean canRankUp() {
-        //TODO: return true if we are in the casting office and hasAction
-        return false;
+        return (hasAction && currentLocation.getName().equals("Casting Office"));
     }
 
     //Cheat code methods
     public void riches(int cheatCash, int cheatCredits) {
         cash += cheatCash;
         credits += cheatCredits;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 }

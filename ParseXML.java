@@ -1,7 +1,3 @@
-// Example Code for parsing XML file
-// Dr. Moushumi Sharmin
-// CSCI 345
-
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -11,6 +7,12 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.util.ArrayList;
+
+/**
+ * Parses XML files for Deadwood Resources
+ * courtesy of Deadwood © and ™ 1999, 2011 James Ernest and Cheapass Games: www.cheapass.com.
+ * Based on code from Dr. Moushumi Sharmin
+ */
 
 public class ParseXML{
 
@@ -126,7 +128,11 @@ public class ParseXML{
                 String sceneNum = children.item(1).getAttributes().getNamedItem("number").getNodeValue();
                 String flavorText = currentNode.getFirstChild().getNextSibling().getFirstChild().getNodeValue();
                 String desc = String.format("Scene %s: %s", sceneNum, flavorText);
+                //remove extra whitespace
                 desc = desc.replace("\n", "");
+                desc = desc.replace("      ", "");
+                desc = desc.replace("     ", "");
+                desc = desc.replace("    ", "");
                 for (int k = 3; k < children.getLength(); k+=2) {
                     Node role = children.item(k);
                     String roleName = role.getAttributes().getNamedItem("name").getNodeValue();
