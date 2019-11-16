@@ -1,0 +1,5 @@
+We chose this design to implement the small details of Deadwood such as Roles and Cards as relatively simple
+fields of the more complex classes such as GameSystem and Player, which control the logic of the game. We felt that the
+nature of the game warranted heavy use of aggregation because of all the different components that, for instance, a
+Location has (Cards, Roles of both types, and Set). The two types of Roles provided an obvious chance to utilize
+inheritance and polymorphism.
