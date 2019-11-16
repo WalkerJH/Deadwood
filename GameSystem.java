@@ -104,14 +104,11 @@ public class GameSystem {
 
     public void endGame(){
         System.out.println("The game is over!\n");
-        //TODO: (optional): sort players by score
-        int highPoints = 0;
-        int winningPlayer = 1;
-        for (int i = 0; i < players.length; i++) {
-            if (players[i].getVictoryPoints() > highPoints)
-                winningPlayer = i;
-        }
-        System.out.printf("Player %d is the winner!\n", winningPlayer);
+        Arrays.sort(players);
+        System.out.printf("Player %s is the winner!\n", players[0]);
+        System.out.println("Leaderboard: ");
+        for(int i = 0; i < players.length; i++)
+            System.out.printf("%d. %s - %d points", i+1, players[i], players[i].getVictoryPoints());
     }
 
     private void testingLocations() {

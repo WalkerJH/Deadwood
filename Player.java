@@ -1,7 +1,7 @@
 /**
  * Implements player behaviors and stores player info
 **/
-public class Player {
+public class Player implements Comparable<Player> {
     private String name;
     private int rank;
     private int cash;
@@ -106,6 +106,10 @@ public class Player {
             }
         }
         return false;
+    }
+
+    public int compareTo(Player o) {
+        return this.getVictoryPoints() - o.getVictoryPoints();
     }
 
     public int getVictoryPoints() {
