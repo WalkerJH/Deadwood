@@ -1,14 +1,13 @@
-/**
- * Plays the game Deadwood
- * Code Authors: Kai Broach and Walker Herring, Western Washington University
- * Deadwood is © and ™ 1999, 2011 James Ernest and Cheapass Games: www.cheapass.com.
- **/
-
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Deadwood {
 
+/**
+ * Plays the game Deadwood
+ * Code Authors: Kai Broach and Walker Herring, Western Washington University
+ * Deadwood is © and ™ 1999, 2011 James Ernest and Cheapass Games: www.cheapass.com.
+ **/
     private static GameSystem game;
     private static Scanner input;
     private static boolean gameRunning;
