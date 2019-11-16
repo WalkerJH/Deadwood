@@ -68,18 +68,21 @@ public class GameSystem {
         }
     }
 
-    public void nextTurn(){
+    public boolean nextTurn(){
         if (turn < numPlayers-1)
             turn ++;
         else
             turn = 0;
-        if(board.dayOver())
-            nextDay();
-        else
+        if(board.dayOver()) {
+            return nextDay();
+        }
+        else {
             players[turn].beginTurn();
+            return true;
+        }
     }
 
-    public void nextDay(){
+    public boolean nextDay() {
         day++;
         if(day <= 3) {
             for (Player p : players) {
@@ -91,9 +94,11 @@ public class GameSystem {
                     s.discardCard();
             }
             distributeCards();
+            return true;
         }
         else {
             endGame();
+            return false;
         }
     }
 

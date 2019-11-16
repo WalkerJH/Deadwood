@@ -138,9 +138,10 @@ public class Deadwood {
                     }
                     break;
                 case "end":
-                    game.nextTurn();
-                    if(game.getDay() <= 3)
+                    if(game.nextTurn())
                         System.out.printf("Ending turn. Now it is player %s's turn\n", game.getCurrentPlayer());
+                    else
+                        gameRunning = false;
                     break;
 
                 //Cheats for development purposes
