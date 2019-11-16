@@ -62,7 +62,7 @@ public class Deadwood {
                         String destination = input.nextLine();
                         if (!destination.equalsIgnoreCase("cancel")) {
                             Location l = game.findLocation(destination);
-                            if (l != null && currentPlayer.move(l) && currentPlayer.getCurrentRole() == null) {
+                            if (l != null && currentPlayer.move(l)) {
                                 System.out.printf("Moved to %s\n", destination);
                             } else {
                                 System.out.printf("Can't move to %s\n", destination);
@@ -71,12 +71,9 @@ public class Deadwood {
                     }
                     break;
                 case "role":
-                    //TODO: use currentPlayer.canTakeRole() here
-                    Set s = currentPlayer.getCurrentLocation().getSet();
-                    if (s != null) {
+                    if(currentPlayer.canTakeRole()) {
                         System.out.println("Which Role?");
-
-                        s.printRoles();
+                        Set s = currentPlayer.getCurrentLocation().getSet();
                         System.out.println("Enter role name to take role or 'cancel' to cancel taking a role");
                         String roleName = input.nextLine();
                         if (!roleName.equalsIgnoreCase("cancel")) {
@@ -84,10 +81,11 @@ public class Deadwood {
                             if (r != null && currentPlayer.takeRole(r))
                                 System.out.printf("You are now working on %s\n", r.getName());
                             else
-                                System.out.printf("Can't take role %s (Rank %d)\n", r.getName(), r.getRankRequirement());
+                                System.out.printf("Invalid Role");
                         }
-                    } else {
-                        System.out.println("There are no roles here");
+                    }
+                    else {
+                        System.out.println("Cannot take role right now");
                     }
                     break;
                 case "act":

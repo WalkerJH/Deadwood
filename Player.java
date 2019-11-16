@@ -144,8 +144,7 @@ public class Player {
     }
 
     public boolean canTakeRole() {
-        //TODO: needs to be tinkered with
-        return (!working);
+        return (!working && currentRole == null && currentLocation.hasSet());
     }
 
     public boolean canRehearse() {
@@ -153,8 +152,7 @@ public class Player {
     }
 
     public boolean canRankUp() {
-        //TODO: return true if we are in the casting office and hasAction
-        return false;
+        return (hasAction && currentLocation.getName().equals("Casting Office"));
     }
 
     //Cheat code methods
