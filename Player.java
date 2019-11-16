@@ -53,8 +53,10 @@ public class Player implements Comparable<Player> {
     }
 
     public boolean takeRole(Role newRole) {
-        if(currentRole == null && rank >= newRole.getRankRequirement()) {
+        if(!newRole.getFilled() && rank >= newRole.getRankRequirement()) {
             this.currentRole = newRole;
+            this.working = true;
+            currentRole.setFilled(true);
             return true;
         } else {
             return false;
