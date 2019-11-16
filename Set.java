@@ -46,23 +46,35 @@ public class Set {
     public void wrap() {
         ArrayList<StarringRole> rolesOnCard = card.getRoles();
         if(card.hasActor()) {
-            ArrayList<Integer> rolls = new ArrayList<>(card.getBudget());
-            for(int i = 0; i < rolls.size(); i++) {
+            ArrayList<Integer> rolls = new ArrayList<>();
+            for(int i = 0; i < card.getBudget(); i++) {
                 rolls.add(Dice.rollDice());
             }
             Collections.sort(rolls);
             Collections.reverse(rolls);
-            int rollsUsed = 0;
-            for(int i = rolesOnCard.size() - 1; i >= 0; i++) {
-                while (rollsUsed <= rolls.size()) {
-                    payLocalActor(rolls.get(rollsUsed), rolesOnCard.get(i));
+            int rollsUsed = 0; //rolls index
+            int i = rolesOnCard.size() - 1; //roles index
+            while (rollsUsed < rolls.size()) {
+                payActor(rolls.get(rollsUsed), rolesOnCard.get(i));
+                rollsUsed++;
+                if(i > 0) {
+                    i--;
+                }
+                else {
+                    i = rolesOnCard.size();
+                }
+            }
+            for(Player p : localActors) {
+                for(Role r: localRoles){
+                    if(p.getCurrentRole().equals(r))
+                        p.pay(r.getRankRequirement());
                 }
             }
         }
         discardCard();
     }
 
-    public void payLocalActor(int cash, Role role) {
+    public void payActor(int cash, Role role) {
         if(role.getFilled()) {
             for(Player p : localActors) {
                 if(p.getCurrentRole().equals(role))

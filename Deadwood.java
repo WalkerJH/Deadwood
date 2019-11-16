@@ -100,10 +100,13 @@ public class Deadwood {
                 case "act":
                     if (currentPlayer.canAct()) {
                         Payout p = currentPlayer.actAttempt();
-                        if (p.getSuccess())
+                        if (p.getSuccess()) {
                             System.out.printf("Success! + %d credits, + %d cash\n", p.getCredits(), p.getCash());
-                        else
+                            System.out.println(currentPlayer.getCurrentLocation().getSet().getShotCounters() + " shots left on set");
+                        }
+                        else {
                             System.out.printf("Failure! + %d credits, + %d cash\n", p.getCredits(), p.getCash());
+                        }
                     }
                     break;
                 case "rehearse":
@@ -165,6 +168,9 @@ public class Deadwood {
                     break;
                 case "cheat-riches":
                     currentPlayer.riches(10,10);
+                    break;
+                case "cheat-rank":
+                    currentPlayer.setRank(6);
                     break;
                 //End cheats
 

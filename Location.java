@@ -13,7 +13,12 @@ public class Location {
         neighbors = new ArrayList<Location>();
     }
 
-    public String toString() { return name; }
+    public String toString() {
+        if(hasSet())
+            return String.format("%s (Budget %d)", name, set.getCard().getBudget());
+        else
+            return name;
+    }
 
     public void addNeighbors(Location ... args) {
         for (int i = 0; i < args.length; i++) {

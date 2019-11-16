@@ -177,4 +177,8 @@ public class Player implements Comparable<Player> {
         cash += cheatCash;
         credits += cheatCredits;
     }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
 }
