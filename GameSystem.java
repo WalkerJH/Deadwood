@@ -29,6 +29,7 @@ public class GameSystem {
         cardDeck = parser.readCardData();
         cardDeck.shuffle();
         distributeCards();
+        testingLocations();
 
         players = new Player[numPlayers];
         for (int i = 0; i < numPlayers; i++) {

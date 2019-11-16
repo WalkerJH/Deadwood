@@ -22,7 +22,7 @@ public class Deadwood {
                 "rehearse -> rehearse your role" +
                 "rank -> pay cash or credits to increase your rank\n" +
                 "end -> end active player's turn\n" +
-                "help -> print this list of options");
+                "help -> print this list of options\n");
     }
 
     public static void main(String[] args) throws Exception{
