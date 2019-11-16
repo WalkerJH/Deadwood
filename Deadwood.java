@@ -4,6 +4,7 @@
  * Deadwood is © and ™ 1999, 2011 James Ernest and Cheapass Games: www.cheapass.com.
  **/
 
+import java.util.ArrayList;
 import java.util.Scanner;
 public class Deadwood {
 
@@ -74,6 +75,7 @@ public class Deadwood {
                     if(currentPlayer.canTakeRole()) {
                         System.out.println("Which Role?");
                         Set s = currentPlayer.getCurrentLocation().getSet();
+                        printRoles(s);
                         System.out.println("Enter role name to take role or 'cancel' to cancel taking a role");
                         String roleName = input.nextLine();
                         if (!roleName.equalsIgnoreCase("cancel")) {
@@ -171,5 +173,15 @@ public class Deadwood {
         for(int i = 0; i < 5; i++) {
             System.out.printf("%d\t\t%d\t\t\t%d\n", i + 2, game.RANK_UP_REQUIREMENTS_CREDITS[i], game.RANK_UP_REQUIREMENTS_CASH[i]);
         }
+    }
+
+    public static void printRoles(Set s) {
+        for (Role r : s.getLocalRoles()) {
+            System.out.printf(" %s\n", r);
+        }
+        for (Role r : s.getCard().getRoles()) {
+            System.out.printf(" %s\n", r);
+        }
+        System.out.println();
     }
 }

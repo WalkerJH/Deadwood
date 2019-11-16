@@ -52,20 +52,6 @@ public class Set {
         return null;
     }
 
-    public void printRoles() {
-        for (Role r : localRoles) {
-            System.out.printf(" %s\n", r);
-        }
-        for (Role r : card.getRoles()) {
-            System.out.printf(" %s\n", r);
-        }
-        System.out.println();
-    }
-
-    public void wrap(){
-        //TODO
-    }
-
     public void removeShot(){
         if (shotCounters > 0)
             shotCounters --;
