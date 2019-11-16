@@ -24,6 +24,10 @@ public class Set {
         this.shotCounters = shotCounters;
     }
 
+    public int getShotCounters() {
+        return shotCounters;
+    }
+
     public ArrayList<Role> getLocalRoles() {
         return localRoles;
     }

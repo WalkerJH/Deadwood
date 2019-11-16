@@ -25,9 +25,15 @@ public class Board {
         locations.add(newLocation);
     }
 
-    public void resetBoard(){
-        locations.clear();
-    }
-
     public ArrayList<Location> getLocations() { return locations; }
+
+    public boolean dayOver() {
+        int numWrapped = 0;
+        for(Location l: locations) {
+            if(l.hasSet() && l.getSet().getShotCounters() == 0) {
+                numWrapped++;
+            }
+        }
+        return (numWrapped == 9);
+    }
 }
