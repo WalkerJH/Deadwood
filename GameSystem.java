@@ -9,10 +9,9 @@ public class GameSystem {
     private int numPlayers;
     private Board board;
     private CardDeck cardDeck;
-
     private int day;
     private int turn;
-    private boolean action;
+
     private final int NUM_DAYS = 3;
     public static final int[] RANK_UP_REQUIREMENTS_CASH = {4, 10, 18, 28, 40};
     public static int[] RANK_UP_REQUIREMENTS_CREDITS = {5, 10, 15, 20, 25};
@@ -31,7 +30,6 @@ public class GameSystem {
         cardDeck = parser.readCardData();
         cardDeck.shuffle();
         distributeCards();
-        action = true;
 
         players = new Player[numPlayers];
         for (int i = 0; i < numPlayers; i++) {
@@ -51,14 +49,6 @@ public class GameSystem {
 
     public CardDeck getCardDeck() {
         return cardDeck;
-    }
-
-    public boolean hasAction() {
-        return action;
-    }
-
-    public void setAction(boolean action) {
-        this.action = action;
     }
 
     public Location findLocation(String locationName) {
@@ -84,7 +74,7 @@ public class GameSystem {
             turn ++;
         else
             turn = 0;
-        action = true;
+        players[turn].beginTurn();
         return turn;
     }
 
@@ -98,9 +88,8 @@ public class GameSystem {
             //discard all remaining cards
             for (Location l : board.getLocations()) {
                 Set s = l.getSet();
-                if (s != null) {
+                if (s != null)
                     s.discardCard();
-                }
             }
             //distribute new cards
             distributeCards();
@@ -112,7 +101,7 @@ public class GameSystem {
 
     public void endGame(){
         System.out.println("The game is over!\n");
-        //TODO: (optional): sortPlayersByPoints() to rank how players finished
+        //TODO: (optional): sort players by score
         int highPoints = 0;
         int winningPlayer = 1;
         for (int i = 0; i < players.length; i++) {
