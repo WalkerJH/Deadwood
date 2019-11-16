@@ -90,7 +90,7 @@ public class Deadwood {
                             if (r != null && currentPlayer.takeRole(r))
                                 System.out.printf("You are now working on %s\n", r.getName());
                             else
-                                System.out.printf("Invalid Role");
+                                System.out.println("Invalid Role");
                         }
                     }
                     else {
