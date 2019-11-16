@@ -44,6 +44,7 @@ public class Set {
     }
 
     public void wrap() {
+        System.out.println("Wrapping Scene:");
         ArrayList<StarringRole> rolesOnCard = card.getRoles();
         if(card.hasActor()) {
             ArrayList<Integer> rolls = new ArrayList<>();

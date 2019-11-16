@@ -14,11 +14,15 @@ public class Deadwood {
 
     public static void  printHelp() {
         System.out.print("player -> print player info\n" +
-                "where -> print current and neighboring locations, roles\n" +
+                "players -> print player info for all players\n" +
+                "where -> print locations of all players\n" +
                 "move -> move to a new location\n" +
                 "role -> take a role\n" +
                 "act -> act in current role\n" +
-                "end -> end active player's turn\n");
+                "rehearse -> rehearse your role" +
+                "rank -> pay cash or credits to increase your rank\n" +
+                "end -> end active player's turn\n" +
+                "help -> print this list of options");
     }
 
     public static void main(String[] args) throws Exception{
@@ -57,9 +61,11 @@ public class Deadwood {
                     game.printAllPlayersStatus();
                     break;
                 case "where":
-                    System.out.println(currentPlayer.getCurrentLocation());
-                    System.out.print("Neighboring Spaces:");
-                    currentPlayer.getCurrentLocation().printNeighbors();
+                    for(Player p: game.getPlayers()) {
+                        System.out.print(p + ": ");
+                        System.out.println(p.getCurrentLocation());
+                        System.out.println("Active Player: " + currentPlayer);
+                    }
                     break;
                 case "move":
                     if (currentPlayer.canMove()) {

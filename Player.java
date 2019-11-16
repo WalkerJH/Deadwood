@@ -147,6 +147,7 @@ public class Player implements Comparable<Player> {
     }
 
     public void pay(int payment) {
+        System.out.println(this + " paid $" + payment);
         cash += payment;
     }
 

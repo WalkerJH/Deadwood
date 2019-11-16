@@ -40,6 +40,10 @@ public class GameSystem {
         return players[turn];
     }
 
+    public Player[] getPlayers() {
+        return players;
+    }
+
     public int getDay() { return day; }
 
     public int getNumPlayers() {

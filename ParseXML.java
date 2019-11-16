@@ -131,7 +131,7 @@ public class ParseXML{
                 //remove extra whitespace
                 desc = desc.replace("\n", "");
                 desc = desc.replace("      ", "");
-                desc = desc.replace("        ", "");
+                desc = desc.replace("     ", "");
                 desc = desc.replace("    ", "");
                 for (int k = 3; k < children.getLength(); k+=2) {
                     Node role = children.item(k);
