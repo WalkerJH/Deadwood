@@ -31,6 +31,14 @@ public class Card {
         return roles;
     }
 
+    public boolean hasActor() {
+        for (Role r: roles) {
+            if(r.getFilled())
+                return true;
+        }
+        return false;
+    }
+
     public int getBudget() {
         return budget;
     }

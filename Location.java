@@ -39,7 +39,7 @@ public class Location {
     public Set getSet() { return set; }
 
     public boolean hasSet() {
-        return set != null;
+        return (set != null && set.getShotCounters() > 0);
     }
 
     public String getName() { return name; }

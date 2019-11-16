@@ -29,7 +29,7 @@ public class Player implements Comparable<Player> {
     }
 
     public void printStatus() {
-        System.out.printf("Player %s, Rank %d\n" +
+        System.out.printf("%s, Rank %d\n" +
                 "Set: %s, Role: %s\n" +
                 "%d dollars, %d credits\n",
                 name, rank, currentLocation, currentRole, cash, credits);
@@ -59,6 +59,7 @@ public class Player implements Comparable<Player> {
             this.working = true;
             currentRole.setFilled(true);
             this.hasAction = false;
+            currentLocation.getSet().addActor(this);
             return true;
         } else {
             return false;
@@ -117,7 +118,7 @@ public class Player implements Comparable<Player> {
     }
 
     public int compareTo(Player o) {
-        return this.getVictoryPoints() - o.getVictoryPoints();
+        return o.getVictoryPoints() - this.getVictoryPoints();
     }
 
     public int getVictoryPoints() {
@@ -143,6 +144,10 @@ public class Player implements Comparable<Player> {
 
     public int getCash() {
         return cash;
+    }
+
+    public void pay(int payment) {
+        cash += payment;
     }
 
     public int getCredits() { return credits; }

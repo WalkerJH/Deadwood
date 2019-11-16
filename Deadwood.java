@@ -148,7 +148,7 @@ public class Deadwood {
                     break;
                 case "end":
                     if(game.nextTurn())
-                        System.out.printf("Ending turn. Now it is player %s's turn\n", game.getCurrentPlayer());
+                        System.out.printf("Ending turn. Now it is %s's turn\n", game.getCurrentPlayer());
                     else
                         gameRunning = false;
                     break;
@@ -156,6 +156,7 @@ public class Deadwood {
                 //Cheats for development purposes
                 case "cheat-end-game":
                     game.endGame();
+                    gameRunning = false;
                     break;
                 case "cheat-fly":
                     String destination = input.nextLine();

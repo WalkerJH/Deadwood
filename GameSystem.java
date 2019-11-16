@@ -32,7 +32,7 @@ public class GameSystem {
 
         players = new Player[numPlayers];
         for (int i = 0; i < numPlayers; i++) {
-            players[i] = new Player(Integer.toString(i + 1), board.findLocation("Trailer"));
+            players[i] = new Player("Player " + Integer.toString(i + 1), board.findLocation("Trailer"));
         }
     }
 
@@ -65,6 +65,7 @@ public class GameSystem {
     public void printAllPlayersStatus() {
         for (Player p : players) {
             p.printStatus();
+            System.out.println();
         }
     }
 
@@ -108,7 +109,7 @@ public class GameSystem {
         System.out.printf("Player %s is the winner!\n", players[0]);
         System.out.println("Leaderboard: ");
         for(int i = 0; i < players.length; i++)
-            System.out.printf("%d. %s - %d points", i+1, players[i], players[i].getVictoryPoints());
+            System.out.printf("%d. %s - %d points\n", i+1, players[i], players[i].getVictoryPoints());
     }
 
     private void testingLocations() {
