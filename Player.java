@@ -41,7 +41,7 @@ public class Player {
 
     public void fly(Location destination) {
         currentLocation = destination;
-    }
+    } //move without restrictions
 
     public boolean move(Location destination) {
         if (currentLocation.hasNeighbor(destination)) {

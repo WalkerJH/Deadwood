@@ -12,7 +12,6 @@ public class GameSystem {
     private int day;
     private int turn;
 
-    private final int NUM_DAYS = 3;
     public static final int[] RANK_UP_REQUIREMENTS_CASH = {4, 10, 18, 28, 40};
     public static int[] RANK_UP_REQUIREMENTS_CREDITS = {5, 10, 15, 20, 25};
 
@@ -80,22 +79,16 @@ public class GameSystem {
 
     public void nextDay(){
         day++;
-        if(day <= NUM_DAYS) {
-            //move all players to trailer
+        if(day <= 3) {
             for (Player p : players) {
-                p.move(board.findLocation("Trailer"));
+                p.fly(board.findLocation("Trailer"));
             }
-            //discard all remaining cards
             for (Location l : board.getLocations()) {
                 Set s = l.getSet();
                 if (s != null)
                     s.discardCard();
             }
-            //distribute new cards
             distributeCards();
-        }
-        else {
-            endGame();
         }
     }
 
