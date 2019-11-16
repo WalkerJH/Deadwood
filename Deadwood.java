@@ -5,6 +5,7 @@
  **/
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Deadwood {
 
@@ -24,11 +25,17 @@ public class Deadwood {
     public static void main(String[] args) throws Exception{
         input = new Scanner(System.in);
         System.out.println("Welcome to Deadwood. 2 or 3 Players?");
-        game = new GameSystem(input.nextInt());
+        try {
+            game = new GameSystem(input.nextInt());
+        }
+        catch (InputMismatchException e) {
+            throw new InputMismatchException("\nInvalid Input. Cancelling Game.");
+        }
         game.setUpGame();
         System.out.printf("Initialized %d player game.\n--------------------\n",
                 game.getNumPlayers());
         gameRunning = true;
+        printHelp();
         while (gameRunning) {
             takeGameInput();
         }

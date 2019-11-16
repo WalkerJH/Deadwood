@@ -20,7 +20,7 @@ public class Player implements Comparable<Player> {
         this.credits = 0;
         this.rehearsalTokens = 0;
         this.currentLocation = location;
-        this.hasAction = false;
+        this.hasAction = true;
         this.working = false;
     }
 
@@ -46,6 +46,7 @@ public class Player implements Comparable<Player> {
     public boolean move(Location destination) {
         if (currentLocation.hasNeighbor(destination)) {
             currentLocation = destination;
+            this.hasAction = false;
             return true;
         } else {
             return false;
@@ -57,6 +58,7 @@ public class Player implements Comparable<Player> {
             this.currentRole = newRole;
             this.working = true;
             currentRole.setFilled(true);
+            this.hasAction = false;
             return true;
         } else {
             return false;
@@ -65,6 +67,7 @@ public class Player implements Comparable<Player> {
 
     public int rehearse(){
         rehearsalTokens ++;
+        this.hasAction = false;
         return rehearsalTokens;
     }
 
@@ -75,6 +78,7 @@ public class Player implements Comparable<Player> {
         cash += p.getCash();
         if(success)
             currentLocation.getSet().removeShot();
+        this.hasAction = false;
         return p;
     }
 
@@ -88,6 +92,7 @@ public class Player implements Comparable<Player> {
             if(cash >= cost) {
                 cash -= cost;
                 rank = targetRank;
+                this.hasAction = false;
                 return true;
             }
         }
@@ -104,6 +109,7 @@ public class Player implements Comparable<Player> {
             if(credits >= cost) {
                 credits -= cost;
                 rank = targetRank;
+                this.hasAction = false;
                 return true;
             }
         }
