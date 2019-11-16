@@ -61,7 +61,7 @@ public class Set {
                     i--;
                 }
                 else {
-                    i = rolesOnCard.size();
+                    i = rolesOnCard.size() - 1;
                 }
             }
             for(Player p : localActors) {
