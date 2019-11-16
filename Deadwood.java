@@ -193,6 +193,7 @@ public class Deadwood {
         for (Role r : s.getLocalRoles()) {
             System.out.printf(" %s\n", r);
         }
+        System.out.print(s.getCard());
         for (Role r : s.getCard().getRoles()) {
             System.out.printf(" %s\n", r);
         }

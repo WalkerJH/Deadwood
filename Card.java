@@ -15,8 +15,8 @@ public class Card {
         this.budget = budget;
     }
 
-    public void printCard() {
-        System.out.printf("%s - \"%s\"\n", name, desc);
+    public String toString() {
+        return String.format("%s - \"%s\"\n", name, desc);
     }
 
     public String getName() {
