@@ -46,7 +46,7 @@ public class Deadwood {
 
     public static void takeGameInput() {
         if (gameRunning) {
-            String in = input.nextLine();
+            String in = input.nextLine().toLowerCase();
             Player currentPlayer = game.getCurrentPlayer();
             switch (in) {
                 case "":
