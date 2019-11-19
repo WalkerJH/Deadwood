@@ -1,0 +1,24 @@
+Cohesion and Coupling Writeup
+
+The classes that are the best examples of strong cohesion are:
+Dice.java - It has a single method that would be tedious to rewrite whenever that functionality was needed.
+Payout.java - It stores data that could be easily used for different purposes.
+Role, ExtraRole, and StarringRole - These classes keep track of a few closely related fields, and use
+final variables that are easy to understand and modify.
+CardDeck- This is essentially just a Deck that can randomize its contents, and that doesn't give an error
+when pop is called. If we had implemented a Card interface, this class could be used in almost any project.
+
+Coupling Examples:
+We used mostly Functional cohesion in our classes. For instance, the methods in player are all either actions
+the player can do on their turn, or getters that return information about the player.
+Deadwood.java, GameSystem.java - These classes use sequential coupling to set up the game.
+ParseXML.java - This class uses communicational coupling because all the code in it operates on the same data set.
+Board.java - This class uses communicational coupling. The methods in board don't have that much to do with each
+other, except that they both use Location objects, which are easily accessible.
+
+Deadwood.java, GameSystem.java and Player.java use extensive control coupling. Deadwood.java stores the current player
+and calls numerous methods from it. These methods are named intuitively, and would be usable in a different context.
+Dice.java is an example of content coupling; it's simply a method that other classes can call.
+
+A weakness of our design is that GameSystem.java and Board.java are very tightly coupled. These classes must be used
+together to build any version of Deadwood using our design.
