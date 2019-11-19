@@ -5,5 +5,8 @@ import javax.swing.*;
  * Main View-level class
  */
 public class DeadwoodGUI {
-
+    public DeadwoodGUI() {
+        JFrame frame = new JFrame("Deadwood");
+        frame.setVisible(true);
+    }
 }
