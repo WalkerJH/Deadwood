@@ -9,41 +9,25 @@ public class Deadwood {
  * Deadwood is © and ™ 1999, 2011 James Ernest and Cheapass Games: www.cheapass.com.
  **/
     private static GameSystem game;
-    private static Scanner input;
     private static boolean gameRunning;
 
-    public static void  printHelp() {
-        System.out.print("player -> print player info\n" +
-                "players -> print player info for all players\n" +
-                "where -> print locations of all players\n" +
-                "move -> move to a new location\n" +
-                "role -> take a role\n" +
-                "act -> act in current role\n" +
-                "rehearse -> rehearse your role" +
-                "rank -> pay cash or credits to increase your rank\n" +
-                "end -> end active player's turn\n" +
-                "help -> print this list of options\n");
-    }
-
     public static void main(String[] args) throws Exception{
-        input = new Scanner(System.in);
-        System.out.println("Welcome to Deadwood. 2 or 3 Players?");
+        DeadwoodGUI gui = new DeadwoodGUI();
         try {
-            game = new GameSystem(input.nextInt());
+            //game = new GameSystem(input.nextInt());
         }
         catch (InputMismatchException e) {
             throw new InputMismatchException("\nInvalid Input. Cancelling Game.");
         }
+        /*
         game.setUpGame();
         System.out.printf("Initialized %d player game.\n--------------------\n",
                 game.getNumPlayers());
         gameRunning = true;
-        printHelp();
-        while (gameRunning) {
-            takeGameInput();
+         */
         }
-    }
 
+    /*
     public static void takeGameInput() {
         if (gameRunning) {
             String in = input.nextLine().toLowerCase();
@@ -185,23 +169,5 @@ public class Deadwood {
             }
         }
     }
-
-    public static void printRankRequirements() {
-        System.out.println("Cost per Rank:");
-        System.out.println("Rank\tCredits\t\tCash");
-        for(int i = 0; i < 5; i++) {
-            System.out.printf("%d\t\t%d\t\t\t%d\n", i + 2, game.RANK_UP_REQUIREMENTS_CREDITS[i], game.RANK_UP_REQUIREMENTS_CASH[i]);
-        }
-    }
-
-    public static void printRoles(Set s) {
-        for (Role r : s.getLocalRoles()) {
-            System.out.printf(" %s\n", r);
-        }
-        System.out.print(s.getCard());
-        for (Role r : s.getCard().getRoles()) {
-            System.out.printf(" %s\n", r);
-        }
-        System.out.println();
-    }
+    */
 }
