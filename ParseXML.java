@@ -62,11 +62,13 @@ public class ParseXML{
             Location trailer = new Location("trailer");
             trailer.addNeighbors(board.findLocation("Main Street"), board.findLocation("Saloon"),
                     board.findLocation("Hotel"));
+            trailer.setCoordinates(new Coordinates(991, 248, 201, 194));
             board.add(trailer);
             //hard code casting office
             Location office = new Location("office");
             office.addNeighbors(board.findLocation("Train Station"), board.findLocation("Ranch"),
                     board.findLocation("Secret Hideout"));
+            office.setCoordinates(new Coordinates(9, 459, 209, 208));
             board.add(office);
 
             //read in other data
@@ -104,6 +106,14 @@ public class ParseXML{
                     else if ("takes".equals(sub.getNodeName())) {
                         NodeList shots = sub.getChildNodes();
                         set.setShotCounters(shots.getLength()/2);
+                    }
+                    //read coordinates and area for GUI
+                    else if ("area".equals(sub.getNodeName())) {
+                        currentLocation.setCoordinates(new Coordinates(
+                                Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue()),
+                                Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue()),
+                                Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue()),
+                                Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue())));
                     }
                 }
                 currentLocation.setSet(set);
