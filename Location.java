@@ -7,7 +7,8 @@ public class Location {
     private String name;
     private ArrayList<Location> neighbors;
     private Set set;
-    private Coordinates coordinates;
+    private Coordinates totalArea;
+    private Coordinates[] offRoleCoordinates;
 
     public Location(String name) {
         this.name = name;
@@ -52,11 +53,29 @@ public class Location {
 
     public void setSet(Set set) { this.set = set; }
 
-    public Coordinates getCoordinates() {
-        return coordinates;
+    public Coordinates getTotalArea() {
+        return totalArea;
     }
 
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
+    public void setTotalArea(Coordinates totalArea) {
+        this.totalArea = totalArea;
+        Coordinates slot1 = new Coordinates(totalArea.getX() + totalArea.getW() - 165,
+                totalArea.getY() + totalArea.getH() - 165,
+                Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
+        Coordinates slot2 = new Coordinates(totalArea.getX() + totalArea.getW() - 110,
+                totalArea.getY() + totalArea.getH() - 110,
+                Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
+        Coordinates slot3 = new Coordinates(totalArea.getX() + totalArea.getW() - 55,
+                totalArea.getY() + totalArea.getH() - 55,
+                Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
+        offRoleCoordinates = new Coordinates[] {slot1, slot2, slot3};
+    }
+
+    public Coordinates[] getOffRoleCoordinates() {
+        return offRoleCoordinates;
+    }
+
+    public void setOffRoleCoordinates(Coordinates[] coordinates) {
+        this.offRoleCoordinates = coordinates;
     }
 }
