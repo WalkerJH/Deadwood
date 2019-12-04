@@ -19,6 +19,8 @@ public class DeadwoodGUI {
     private JButton actButton;
     private JButton rehearseButton;
     private JButton takeRoleButton;
+    private JButton upRankButton;
+    private JLabel activePlayerInfo;
     private JLabel player1Icon;
     private JLabel player2Icon;
     private JLabel player3Icon;
@@ -37,9 +39,17 @@ public class DeadwoodGUI {
         frame.setSize(boardWidth + 300, boardHeight + Deadwood.PLAYER_TOKEN_SIZE);
         pane.add(boardLabel, new Integer(0));
 
-        setUpButtons();
-
         frame.setVisible(true);
+    }
+
+    public void setUpGUI() {
+        setUpButtons();
+        setUpPlayerInfo();
+    }
+
+    public void update() {
+        updatePlayerInfo();
+        updateButtons();
     }
 
     public BufferedImage getImage(String fileName) {
@@ -91,6 +101,32 @@ public class DeadwoodGUI {
         rehearseButton.setBounds(boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 230, 200, Deadwood.PLAYER_TOKEN_SIZE);
         rehearseButton.setVisible(false);
         pane.add(rehearseButton);
+
+        upRankButton = new JButton("Upgrade Rank");
+        rehearseButton.setBounds(boardWidth + 50, 340, 200, 50);
+        rehearseButton.setVisible(false);
+        pane.add(rehearseButton);
+    }
+
+    private void updateButtons() {
+        moveButton.setVisible(Deadwood.getCurrentPlayer().canMove());
+        takeRoleButton.setVisible(Deadwood.getCurrentPlayer().canTakeRole());
+        actButton.setVisible(Deadwood.getCurrentPlayer().canAct());
+        rehearseButton.setVisible(Deadwood.getCurrentPlayer().canRehearse());
+        upRankButton.setVisible(Deadwood.getCurrentPlayer().canRankUp());
+    }
+
+    private void setUpPlayerInfo() {
+        activePlayerInfo = new JLabel();
+        activePlayerInfo.setText(Deadwood.getCurrentPlayer().getStatus());
+        activePlayerInfo.setBounds(boardWidth + 50, 400, 200, 60);
+        activePlayerInfo.setVisible(true);
+        pane.add(activePlayerInfo);
+    }
+
+    private void updatePlayerInfo() {
+        activePlayerInfo.setText(Deadwood.getCurrentPlayer().getStatus());
+        activePlayerInfo.setVisible(true);
     }
 
     public void setUpPlayers() {

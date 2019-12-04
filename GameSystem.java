@@ -70,8 +70,7 @@ public class GameSystem {
 
     public void printAllPlayersStatus() {
         for (Player p : players) {
-            p.printStatus();
-            System.out.println();
+            System.out.println(p.getStatus());
         }
     }
 
