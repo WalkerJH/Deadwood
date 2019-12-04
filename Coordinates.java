@@ -3,6 +3,7 @@ public class Coordinates {
     private int y;
     private int w;
     private int h;
+    private boolean occupied;
 
     public Coordinates(int x, int y, int w, int h) {
         this.x = x;
@@ -27,6 +28,10 @@ public class Coordinates {
         return h;
     }
 
+    public boolean isOccupied() {
+        return occupied;
+    }
+
     public void setX(int x) {
         this.x = x;
     }
@@ -41,5 +46,9 @@ public class Coordinates {
 
     public void setH(int h) {
         this.h = h;
+    }
+
+    public void setOccupied(boolean occupied) {
+        this.occupied = occupied;
     }
 }
