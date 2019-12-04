@@ -30,7 +30,6 @@ public class GameSystem {
         cardDeck = parser.readCardData();
         cardDeck.shuffle();
         distributeCards();
-        testingLocations();
 
         players = new Player[numPlayers];
         for (int i = 0; i < numPlayers; i++) {
@@ -108,30 +107,14 @@ public class GameSystem {
         }
     }
 
-    public void endGame(){
-        System.out.println("The game is over!\n");
+    public Player[] endGame(){
+        /*System.out.println("The game is over!\n");
         Arrays.sort(players);
         System.out.printf("Player %s is the winner!\n", players[0]);
         System.out.println("Leaderboard: ");
         for(int i = 0; i < players.length; i++)
-            System.out.printf("%d. %s - %d points\n", i+1, players[i], players[i].getVictoryPoints());
-    }
-
-    private void testingLocations() {
-        /*
-        Location flavortown = new Location("Flavortown");
-        Role fieri = new StarringRole("Guy Fieri", "We’re takin’ you on a road rockin’ trip down to Flavortown, " +
-                "where the gravitational force of bacon warps the laws of space and time.", 6);
-        Role chef = new ExtraRole("Chef", "Thanks Mr. Fieri, very cool.", 1);
-        ArrayList<Role> flavortownRoles = new ArrayList<>();
-        flavortownRoles.add(fieri);
-        flavortownRoles.add(chef);
-        flavortown.setSet(new Set(1, flavortownRoles));
-        board.add(flavortown);
-        Location pit = new Location("Pit of Despair");
-        board.add(pit);
-        Location jonesTruckRental = new Location("Jones Truck Rental and Storage");
-        board.add(jonesTruckRental);
-        */
+            System.out.printf("%d. %s - %d points\n", i+1, players[i], players[i].getVictoryPoints());*/
+        Arrays.sort(players);
+        return players;
     }
 }
