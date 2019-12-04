@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.imageio.*;
+import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -15,6 +16,10 @@ public class DeadwoodGUI {
     private JButton moveButton;
     private JButton actButton;
     private JButton rehearseButton;
+    private JButton takeRoleButton;
+    private JLabel player1Icon;
+    private JLabel player2Icon;
+    private JLabel player3Icon;
     private int boardWidth;
     private int boardHeight;
 
@@ -29,6 +34,8 @@ public class DeadwoodGUI {
         boardLabel.setBounds(0, 0, boardWidth, boardHeight);
         frame.setSize(boardWidth + 300, boardHeight + 50);
         pane.add(boardLabel, new Integer(0));
+
+        setUpPlayers();
         setUpButtons();
 
         frame.setVisible(true);
@@ -66,19 +73,31 @@ public class DeadwoodGUI {
 
     private void setUpButtons() {
         moveButton = new JButton("Move");
-        moveButton.setBounds(boardWidth + 50, 10, 200, 100);
-        pane.add(moveButton, new Integer(1));
+        moveButton.setBounds(boardWidth + 50, 10, 200, 50);
+        pane.add(moveButton);
+
+        takeRoleButton = new JButton("Take Role");
+        takeRoleButton.setBounds(boardWidth + 50, 120, 200, 50);
+        takeRoleButton.setVisible(false);
+        pane.add(takeRoleButton);
 
         actButton = new JButton("Act");
-        actButton.setBounds(boardWidth + 50, 120, 200, 100);
+        actButton.setBounds(boardWidth + 50, 120, 200, 50);
         actButton.setVisible(false);
-        pane.add(actButton, new Integer(1));
+        pane.add(actButton);
 
         rehearseButton = new JButton("Rehearse");
-        rehearseButton.setBounds(boardWidth + 50, 230, 200, 100);
+        rehearseButton.setBounds(boardWidth + 50, 230, 200, 50);
         rehearseButton.setVisible(false);
-        pane.add(rehearseButton, new Integer(1));
+        pane.add(rehearseButton);
+    }
 
-
+    private void setUpPlayers() {
+        player1Icon = new JLabel();
+        Image image1 = getImage("player1.png");
+        image1 = image1.getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        player1Icon.setIcon(new ImageIcon(image1));
+        player1Icon.setBounds(0, 0, 50, 50);
+        pane.add(player1Icon, new Integer(1));
     }
 }
