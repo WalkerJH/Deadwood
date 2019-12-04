@@ -16,12 +16,12 @@ public class DeadwoodGUI {
     private JFrame frame;
     private JLayeredPane pane;
     private MouseListener listener;
-    private JButton moveButton;
-    private JButton actButton;
-    private JButton rehearseButton;
-    private JButton takeRoleButton;
-    private JButton upRankButton;
-    private JButton endTurnButton;
+    private DeadwoodJButton moveButton;
+    private DeadwoodJButton actButton;
+    private DeadwoodJButton rehearseButton;
+    private DeadwoodJButton takeRoleButton;
+    private DeadwoodJButton upRankButton;
+    private DeadwoodJButton endTurnButton;
     private JLabel activePlayerInfo;
     private JLabel[] playerIcons;
     private int boardWidth;
@@ -94,8 +94,7 @@ public class DeadwoodGUI {
     }
 
     private void setUpButtons() {
-        moveButton = new JButton("Move");
-        moveButton.setBounds(boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 10, 200, Deadwood.PLAYER_TOKEN_SIZE);
+        moveButton = new DeadwoodJButton("Move", boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 10);
         moveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -105,8 +104,7 @@ public class DeadwoodGUI {
         pane.add(moveButton);
 
 
-        takeRoleButton = new JButton("Take Role");
-        takeRoleButton.setBounds(boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 120, 200, Deadwood.PLAYER_TOKEN_SIZE);
+        takeRoleButton = new DeadwoodJButton("Take Role",boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 120);
         takeRoleButton.setVisible(false);
         moveButton.addActionListener(new ActionListener() {
             @Override
@@ -118,8 +116,7 @@ public class DeadwoodGUI {
         });
         pane.add(takeRoleButton);
 
-        actButton = new JButton("Act");
-        actButton.setBounds(boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 120, 200, Deadwood.PLAYER_TOKEN_SIZE);
+        actButton = new DeadwoodJButton("Act", boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 120);
         actButton.setVisible(false);
         actButton.addActionListener(new ActionListener() {
             @Override
@@ -129,8 +126,7 @@ public class DeadwoodGUI {
         });
         pane.add(actButton);
 
-        rehearseButton = new JButton("Rehearse");
-        rehearseButton.setBounds(boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 230, 200, Deadwood.PLAYER_TOKEN_SIZE);
+        rehearseButton = new DeadwoodJButton("Rehearse", boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 230);
         rehearseButton.setVisible(false);
         rehearseButton.addActionListener(new ActionListener() {
             @Override
@@ -140,8 +136,7 @@ public class DeadwoodGUI {
         });
         pane.add(rehearseButton);
 
-        upRankButton = new JButton("Upgrade Rank");
-        upRankButton.setBounds(boardWidth + 50, 340, 200, 50);
+        upRankButton = new DeadwoodJButton("Upgrade Rank", boardWidth + 50, 340);
         upRankButton.setVisible(false);
         upRankButton.addActionListener(new ActionListener() {
             @Override
@@ -151,8 +146,7 @@ public class DeadwoodGUI {
         });
         pane.add(upRankButton);
 
-        endTurnButton = new JButton("End Turn");
-        endTurnButton.setBounds(boardWidth + 50, 450, 200, 50);
+        endTurnButton = new DeadwoodJButton("End Turn", boardWidth + 50, 450);
         endTurnButton.setVisible(true);
         endTurnButton.addActionListener(new ActionListener() {
             @Override

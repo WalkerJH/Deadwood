@@ -30,9 +30,9 @@ public class Player implements Comparable<Player> {
 
     public String getStatus() {
         String s = String.format("<html>%s, Rank %d<br>" +
-                "Set: %s, Role: %s<br>" +
-                "%d dollars, %d credits<br><html>",
-                name, rank, currentLocation, currentRole, cash, credits);
+            "Set: %s<br>Role: %s<br>" +
+            "%d dollars, %d credits<br><html>",
+            name, rank, currentLocation, currentRole, cash, credits);
         return s;
     }
 
@@ -148,7 +148,6 @@ public class Player implements Comparable<Player> {
     }
 
     public void pay(int payment) {
-        System.out.println(this + " paid $" + payment);
         cash += payment;
     }
 
