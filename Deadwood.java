@@ -11,6 +11,7 @@ public class Deadwood {
     private static GameSystem game;
     private static boolean gameRunning;
     public static int numPlayers;
+    public static final int PLAYER_TOKEN_SIZE = 50;
 
     public static void main(String[] args) throws Exception{
         DeadwoodGUI gui = new DeadwoodGUI();
@@ -21,9 +22,13 @@ public class Deadwood {
         gameRunning = true;
     }
 
-    public static Coordinates getLocation (String locationName) {
+    public static Coordinates getLocationArea(String locationName) {
         Location l = game.findLocation(locationName);
-        return l.getCoordinates();
+        return l.getTotalArea();
+    }
+    public static Coordinates[] getOffRoleCoordinates (String locationName) {
+        Location l = game.findLocation(locationName);
+        return l.getOffRoleCoordinates();
     }
 
     /*
