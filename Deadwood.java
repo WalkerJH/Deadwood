@@ -21,8 +21,14 @@ public class Deadwood {
         }
 
         game.setUpGame();
+        gui.setUpPlayers();
         gameRunning = true;
-        }
+    }
+
+    public static Coordinates getLocation (String locationName) {
+        Location l = game.findLocation(locationName);
+        return l.getCoordinates();
+    }
 
     /*
     public static void takeGameInput() {

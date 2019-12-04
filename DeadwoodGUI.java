@@ -10,6 +10,7 @@ import java.io.*;
  * Main View-level class
  */
 public class DeadwoodGUI {
+
     private JFrame frame;
     private JLayeredPane pane;
     private MouseListener listener;
@@ -35,7 +36,6 @@ public class DeadwoodGUI {
         frame.setSize(boardWidth + 300, boardHeight + 50);
         pane.add(boardLabel, new Integer(0));
 
-        setUpPlayers();
         setUpButtons();
 
         frame.setVisible(true);
@@ -92,12 +92,13 @@ public class DeadwoodGUI {
         pane.add(rehearseButton);
     }
 
-    private void setUpPlayers() {
+    public void setUpPlayers() {
         player1Icon = new JLabel();
         Image image1 = getImage("player1.png");
         image1 = image1.getScaledInstance(50, 50, Image.SCALE_DEFAULT);
         player1Icon.setIcon(new ImageIcon(image1));
-        player1Icon.setBounds(0, 0, 50, 50);
+        Coordinates start = Deadwood.getLocation("Trailer");
+        player1Icon.setBounds(start.getX() + 5, start.getY() + 5, 50, 50);
         pane.add(player1Icon, new Integer(1));
     }
 }

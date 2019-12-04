@@ -7,6 +7,7 @@ public class Location {
     private String name;
     private ArrayList<Location> neighbors;
     private Set set;
+    private Coordinates coordinates;
 
     public Location(String name) {
         this.name = name;
@@ -51,4 +52,11 @@ public class Location {
 
     public void setSet(Set set) { this.set = set; }
 
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
 }
