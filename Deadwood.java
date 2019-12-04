@@ -9,12 +9,13 @@ public class Deadwood {
  * Deadwood is © and ™ 1999, 2011 James Ernest and Cheapass Games: www.cheapass.com.
  **/
     private static GameSystem game;
+    private static DeadwoodGUI gui;
     private static boolean gameRunning;
     public static int numPlayers;
     public static final int PLAYER_TOKEN_SIZE = 50;
 
     public static void main(String[] args) throws Exception{
-        DeadwoodGUI gui = new DeadwoodGUI();
+        gui = new DeadwoodGUI();
         numPlayers = gui.promptNumPlayers();
         game = new GameSystem(numPlayers);
         game.setUpGame();
@@ -35,6 +36,27 @@ public class Deadwood {
 
     public static Player getCurrentPlayer() {
         return game.getCurrentPlayer();
+    }
+
+    public static void endTurn() {
+        game.nextTurn();
+        gui.update();
+    }
+
+    public static void rankUp() {
+    }
+
+    public static void rehearse() {
+    }
+
+    public static void act() {
+    }
+
+    public static void move() {
+    }
+
+    public static void takeRole(String chosenRole) {
+        
     }
 
     /*
