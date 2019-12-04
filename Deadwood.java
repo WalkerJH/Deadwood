@@ -10,22 +10,21 @@ public class Deadwood {
  **/
     private static GameSystem game;
     private static boolean gameRunning;
+    public static int numPlayers;
 
     public static void main(String[] args) throws Exception{
         DeadwoodGUI gui = new DeadwoodGUI();
-        try {
-            //game = new GameSystem(input.nextInt());
-        }
-        catch (InputMismatchException e) {
-            throw new InputMismatchException("\nInvalid Input. Cancelling Game.");
-        }
-        /*
+        numPlayers = gui.promptNumPlayers();
+        game = new GameSystem(numPlayers);
         game.setUpGame();
-        System.out.printf("Initialized %d player game.\n--------------------\n",
-                game.getNumPlayers());
+        gui.setUpPlayers();
         gameRunning = true;
-         */
-        }
+    }
+
+    public static Coordinates getLocation (String locationName) {
+        Location l = game.findLocation(locationName);
+        return l.getCoordinates();
+    }
 
     /*
     public static void takeGameInput() {

@@ -77,7 +77,7 @@ public class Player implements Comparable<Player> {
         Payout p = currentRole.payout(success);
         credits += p.getCredits();
         cash += p.getCash();
-        if(success)
+        if(success && currentLocation.getSet().getShotCounters() > 0)
             currentLocation.getSet().removeShot();
         this.hasAction = false;
         return p;
