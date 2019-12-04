@@ -13,13 +13,7 @@ public class Deadwood {
 
     public static void main(String[] args) throws Exception{
         DeadwoodGUI gui = new DeadwoodGUI();
-        try {
-            game = new GameSystem(gui.promptNumPlayers());
-        }
-        catch (Exception e) {
-            throw new InputMismatchException("\nInvalid Input. Cancelling Game.");
-        }
-
+        game = new GameSystem(gui.promptNumPlayers());
         game.setUpGame();
         gui.setUpPlayers();
         gameRunning = true;

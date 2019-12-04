@@ -1,6 +1,7 @@
 /**
  * Keeps track of game state and performs basic game operations
  */
+import javax.xml.parsers.ParserConfigurationException;
 import java.util.*;
 
 public class GameSystem {
@@ -19,7 +20,7 @@ public class GameSystem {
         this.numPlayers = numPlayers;
     }
 
-    public void setUpGame() throws Exception{
+    public void setUpGame() throws Exception {
         day = 1;
         turn = 0;
         cardDeck = new CardDeck();
