@@ -9,6 +9,8 @@ import java.io.*;
  * Main View-level class
  */
 public class DeadwoodGUI {
+    private JFrame frame;
+
     public DeadwoodGUI() {
         JFrame frame = new JFrame("Deadwood");
         frame.setSize(1920, 1080);
@@ -29,5 +31,10 @@ public class DeadwoodGUI {
             e.printStackTrace();
         }
         return image;
+    }
+
+    public int promptNumPlayers() {
+        return Integer.parseInt(JOptionPane.showInputDialog(frame, "Please enter number of Players",
+                "New Game", JOptionPane.QUESTION_MESSAGE));
     }
 }

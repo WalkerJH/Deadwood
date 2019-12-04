@@ -14,17 +14,14 @@ public class Deadwood {
     public static void main(String[] args) throws Exception{
         DeadwoodGUI gui = new DeadwoodGUI();
         try {
-            //game = new GameSystem(input.nextInt());
+            game = new GameSystem(gui.promptNumPlayers());
         }
         catch (InputMismatchException e) {
             throw new InputMismatchException("\nInvalid Input. Cancelling Game.");
         }
-        /*
+
         game.setUpGame();
-        System.out.printf("Initialized %d player game.\n--------------------\n",
-                game.getNumPlayers());
         gameRunning = true;
-         */
         }
 
     /*
