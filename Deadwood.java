@@ -16,7 +16,7 @@ public class Deadwood {
         try {
             game = new GameSystem(gui.promptNumPlayers());
         }
-        catch (InputMismatchException e) {
+        catch (Exception e) {
             throw new InputMismatchException("\nInvalid Input. Cancelling Game.");
         }
 

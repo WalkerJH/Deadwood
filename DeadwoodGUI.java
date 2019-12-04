@@ -34,7 +34,20 @@ public class DeadwoodGUI {
     }
 
     public int promptNumPlayers() {
-        return Integer.parseInt(JOptionPane.showInputDialog(frame, "Please enter number of Players",
-                "New Game", JOptionPane.QUESTION_MESSAGE));
-    }
+        try {
+            return Integer.parseInt(JOptionPane.showInputDialog(frame, "Please enter number of Players",
+                    "New Game", JOptionPane.QUESTION_MESSAGE));
+        }
+        catch (Exception ex) {
+            displayException(ex);
+            return -1;
+        }
+   }
+
+   public void displayException(Exception ex) {
+       JOptionPane.showMessageDialog(frame, ex,"Error", JOptionPane.WARNING_MESSAGE);
+       System.exit(-1);
+       frame.dispose();
+       frame.setVisible(false);
+   }
 }
