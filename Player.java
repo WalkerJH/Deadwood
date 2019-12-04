@@ -28,11 +28,12 @@ public class Player implements Comparable<Player> {
         return name;
     }
 
-    public void printStatus() {
-        System.out.printf("%s, Rank %d\n" +
-                "Set: %s, Role: %s\n" +
-                "%d dollars, %d credits\n",
+    public String getStatus() {
+        String s = String.format("<html>%s, Rank %d<br>" +
+                "Set: %s, Role: %s<br>" +
+                "%d dollars, %d credits<br><html>",
                 name, rank, currentLocation, currentRole, cash, credits);
+        return s;
     }
 
     public void beginTurn() {

@@ -18,12 +18,18 @@ public class Deadwood {
         game = new GameSystem(numPlayers);
         game.setUpGame();
         gui.setUpPlayers();
+        gui.setUpGUI();
         gameRunning = true;
+        gui.update();
     }
 
     public static Coordinates getLocation (String locationName) {
         Location l = game.findLocation(locationName);
         return l.getCoordinates();
+    }
+
+    public static Player getCurrentPlayer() {
+        return game.getCurrentPlayer();
     }
 
     /*
