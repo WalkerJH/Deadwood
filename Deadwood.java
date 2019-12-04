@@ -10,10 +10,12 @@ public class Deadwood {
  **/
     private static GameSystem game;
     private static boolean gameRunning;
+    public static int numPlayers;
 
     public static void main(String[] args) throws Exception{
         DeadwoodGUI gui = new DeadwoodGUI();
-        game = new GameSystem(gui.promptNumPlayers());
+        numPlayers = gui.promptNumPlayers();
+        game = new GameSystem(numPlayers);
         game.setUpGame();
         gui.setUpPlayers();
         gameRunning = true;

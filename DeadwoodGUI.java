@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.InputMismatchException;
 
 /**
  * Displays GUI for a Deadwood game run through Deadwood.java
@@ -99,6 +100,27 @@ public class DeadwoodGUI {
         player1Icon.setIcon(new ImageIcon(image1));
         Coordinates start = Deadwood.getLocation("Trailer");
         player1Icon.setBounds(start.getX() + 5, start.getY() + 5, 50, 50);
-        pane.add(player1Icon, new Integer(1));
+        pane.add(player1Icon, new Integer (1));
+
+        if(Deadwood.numPlayers == 2 || Deadwood.numPlayers == 3) {
+            player2Icon = new JLabel();
+            Image image2 = getImage("player2.png");
+            image2 = image2.getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+            player2Icon.setIcon(new ImageIcon(image2));
+            player2Icon.setBounds(start.getX() + 60, start.getY() + 5, 50, 50);
+            pane.add(player2Icon, new Integer(1));
+        }
+        else {
+            displayException(new InputMismatchException("Invalid Number of Players"));
+        }
+
+        if(Deadwood.numPlayers == 3) {
+            player3Icon = new JLabel();
+            Image image3 = getImage("player3.png");
+            image3 = image3.getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+            player3Icon.setIcon(new ImageIcon(image3));
+            player3Icon.setBounds(start.getX() + 115, start.getY() + 5, 50, 50);
+            pane.add(player3Icon, new Integer(1));
+        }
     }
 }
