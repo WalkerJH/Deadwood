@@ -41,6 +41,10 @@ public class GameSystem {
         return players[turn];
     }
 
+    public int getTurn() {
+        return turn;
+    }
+
     public Player[] getPlayers() {
         return players;
     }

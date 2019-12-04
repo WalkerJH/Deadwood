@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 /**
@@ -22,9 +23,7 @@ public class DeadwoodGUI {
     private JButton upRankButton;
     private JButton endTurnButton;
     private JLabel activePlayerInfo;
-    private JLabel player1Icon;
-    private JLabel player2Icon;
-    private JLabel player3Icon;
+    private JLabel[] playerIcons;
     private int boardWidth;
     private int boardHeight;
 
@@ -50,7 +49,18 @@ public class DeadwoodGUI {
 
     public void update() {
         updatePlayerInfo();
+        updatePlayerIcons();
         updateButtons();
+    }
+
+    private void updatePlayerIcons() {
+        for(int i = 0; i < Deadwood.numPlayers; i ++) {
+            if(i == Deadwood.getTurn()) {
+                Coordinates[] slots = Deadwood.getCurrentPlayer().getCurrentLocation().getOffRoleCoordinates();
+                Coordinates c = slots[i];
+                playerIcons[i].setBounds(c.getX(), c.getY(), Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
+            }
+        }
     }
 
     public BufferedImage getImage(String fileName) {
@@ -89,7 +99,7 @@ public class DeadwoodGUI {
         moveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Deadwood.move();
+                Deadwood.move(promptMove());
             }
         });
         pane.add(moveButton);
@@ -177,36 +187,47 @@ public class DeadwoodGUI {
     public void setUpPlayers() {
 
         Coordinates[] start = Deadwood.getOffRoleCoordinates("Trailer");
+        playerIcons = new JLabel[Deadwood.numPlayers];
 
-        player1Icon = new JLabel();
+        playerIcons[0] = new JLabel();
         Image image1 = getImage("player1.png");
         image1 = image1.getScaledInstance(Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE, Image.SCALE_DEFAULT);
-        player1Icon.setIcon(new ImageIcon(image1));
-        player1Icon.setBounds(start[0].getX(), start[0].getY(), Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
+        playerIcons[0].setIcon(new ImageIcon(image1));
+        playerIcons[0].setBounds(start[0].getX(), start[0].getY(), Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
         start[0].setOccupied(true);
-        pane.add(player1Icon, new Integer (1));
+        pane.add(playerIcons[0], new Integer (1));
 
         if(Deadwood.numPlayers == 2 || Deadwood.numPlayers == 3) {
-            player2Icon = new JLabel();
+            playerIcons[1] = new JLabel();
             Image image2 = getImage("player2.png");
             image2 = image2.getScaledInstance(Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE, Image.SCALE_DEFAULT);
-            player2Icon.setIcon(new ImageIcon(image2));
-            player2Icon.setBounds(start[1].getX(), start[1].getY(), Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
+            playerIcons[1].setIcon(new ImageIcon(image2));
+            playerIcons[1].setBounds(start[1].getX(), start[1].getY(), Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
             start[1].setOccupied(true);
-            pane.add(player2Icon, new Integer(1));
+            pane.add(playerIcons[1], new Integer(1));
         }
         else {
             displayException(new InputMismatchException("Invalid Number of Players"));
         }
 
         if(Deadwood.numPlayers == 3) {
-            player3Icon = new JLabel();
+            playerIcons[2] = new JLabel();
             Image image3 = getImage("player3.png");
             image3 = image3.getScaledInstance(Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE, Image.SCALE_DEFAULT);
-            player3Icon.setIcon(new ImageIcon(image3));
-            player3Icon.setBounds(start[2].getX(), start[2].getY(), Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
+            playerIcons[2].setIcon(new ImageIcon(image3));
+            playerIcons[2].setBounds(start[2].getX(), start[2].getY(), Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
             start[2].setOccupied(true);
-            pane.add(player3Icon, new Integer(1));
+            pane.add(playerIcons[2], new Integer(1));
         }
+    }
+
+    public String promptMove () {
+        ArrayList<Location> targets = Deadwood.getMoveTargets();
+        Object[] options = new Object[targets.size()];
+        for(int i = 0; i < targets.size(); i++) {
+            options[i] = targets.get(i).getName();
+        }
+        return (String)JOptionPane.showInputDialog(null, "Where would you like to move?",
+                    "Move", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
     }
 }
