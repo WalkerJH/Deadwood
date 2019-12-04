@@ -38,6 +38,14 @@ public class Deadwood {
         return game.getCurrentPlayer();
     }
 
+    public static ArrayList<Location> getMoveTargets() {
+        return game.getCurrentPlayer().getCurrentLocation().getNeighbors();
+    }
+
+    public static int getTurn() {
+        return game.getTurn();
+    }
+
     public static void endTurn() {
         game.nextTurn();
         gui.update();
@@ -52,7 +60,9 @@ public class Deadwood {
     public static void act() {
     }
 
-    public static void move() {
+    public static void move(String locationName) {
+        getCurrentPlayer().move(game.findLocation(locationName));
+        gui.update();
     }
 
     public static void takeRole(String chosenRole) {

@@ -39,6 +39,10 @@ public class Location {
         return (neighbors.contains(destination));
     }
 
+    public ArrayList<Location> getNeighbors() {
+        return neighbors;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
