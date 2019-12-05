@@ -15,7 +15,7 @@ public abstract class Role {
     }
 
     public String toString() {
-        return String.format("%s - \"%s\" (Rank %d)", name, desc, rankRequirement);
+        return String.format("%s (Rank %d)", name, rankRequirement);
     }
 
     public String getName() {
