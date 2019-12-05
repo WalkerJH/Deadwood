@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class Card {
     private String name;
     private String desc;
-    private ArrayList<StarringRole> roles;
+    private ArrayList<Role> roles;
     private int budget;
 
-    public Card(String name, String desc, ArrayList<StarringRole> roles, int budget) {
+    public Card(String name, String desc, ArrayList<Role> roles, int budget) {
         this.name = name;
         this.desc = desc;
         this.roles = roles;
@@ -27,7 +27,7 @@ public class Card {
         return desc;
     }
 
-    public ArrayList<StarringRole> getRoles() {
+    public ArrayList<Role> getRoles() {
         return roles;
     }
 

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
 public class Deadwood {
 
@@ -42,6 +43,27 @@ public class Deadwood {
         return game.getCurrentPlayer().getCurrentLocation().getNeighbors();
     }
 
+    public static ArrayList<Role> getAvailableRoles() {
+        int rank = game.getCurrentPlayer().getRank();
+        ArrayList<Role> roles = game.getCurrentPlayer().getCurrentLocation().getSet().getLocalRoles();
+        ArrayList<Role> cardRoles = game.getCurrentPlayer().getCurrentLocation().getSet().getCard().getRoles();
+        roles.addAll(cardRoles);
+        Iterator<Role> itr = roles.iterator();
+        while (itr.hasNext()) {
+            Role r = itr.next();
+            if ((r.getRankRequirement() > game.getCurrentPlayer().getRank()) || r.getFilled()) {
+                itr.remove();
+            }
+        }
+        for (int i = 0; i < roles.size(); i++) {
+            if (roles.get(i).getRankRequirement() > game.getCurrentPlayer().getRank() || roles.get(i).getFilled()) {
+                roles.remove(i);
+                i--;
+            }
+        }
+        return roles;
+    }
+
     public static int getTurn() {
         return game.getTurn();
     }
@@ -52,12 +74,18 @@ public class Deadwood {
     }
 
     public static void rankUp() {
+
+        gui.update();
     }
 
     public static void rehearse() {
+        game.getCurrentPlayer().rehearse();
+        gui.update();
     }
 
     public static void act() {
+        game.getCurrentPlayer().actAttempt();
+        gui.update();
     }
 
     public static void move(String locationName) {
@@ -65,8 +93,9 @@ public class Deadwood {
         gui.update();
     }
 
-    public static void takeRole(String chosenRole) {
-        
+    public static void takeRole(Role chosenRole) {
+        getCurrentPlayer().takeRole(chosenRole);
+        gui.update();
     }
 
     /*

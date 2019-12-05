@@ -3,6 +3,8 @@
 **/
 public class Player implements Comparable<Player> {
     private String name;
+    private int number;
+
     private int rank;
     private int cash;
     private int credits;
@@ -13,8 +15,9 @@ public class Player implements Comparable<Player> {
     private boolean hasAction;
     private boolean working;
 
-    public Player(String name, Location location) {
-        this.name = name;
+    public Player(int playerNumber, Location location) {
+        this.number = playerNumber;
+        this.name = "Player " + Integer.toString(playerNumber + 1);
         this.rank = 1;
         this.cash = 0;
         this.credits = 0;
@@ -24,15 +27,15 @@ public class Player implements Comparable<Player> {
         this.working = false;
     }
 
-    public String toString() {
-        return name;
-    }
+    public String toString() { return name; }
+
+    public int getNumber() { return number; }
 
     public String getStatus() {
         String s = String.format("<html>%s, Rank %d<br>" +
-                "Set: %s, Role: %s<br>" +
-                "%d dollars, %d credits<br><html>",
-                name, rank, currentLocation, currentRole, cash, credits);
+            "Set: %s<br>Role: %s<br>" +
+            "%d dollars, %d credits<br>%d rehearsal tokens<html>",
+            name, rank, currentLocation.getName(), currentRole, cash, credits, rehearsalTokens);
         return s;
     }
 
@@ -148,7 +151,6 @@ public class Player implements Comparable<Player> {
     }
 
     public void pay(int payment) {
-        System.out.println(this + " paid $" + payment);
         cash += payment;
     }
 
@@ -163,7 +165,7 @@ public class Player implements Comparable<Player> {
     }
 
     public boolean canTakeRole() {
-        return (!working && currentRole == null && currentLocation.hasSet());
+        return (!working && currentRole == null && currentLocation.hasSet() && Deadwood.getAvailableRoles().size() > 0);
     }
 
     public boolean canRehearse() {
