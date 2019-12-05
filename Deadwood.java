@@ -45,7 +45,9 @@ public class Deadwood {
 
     public static ArrayList<Role> getAvailableRoles() {
         int rank = game.getCurrentPlayer().getRank();
-        ArrayList<Role> roles = game.getCurrentPlayer().getCurrentLocation().getSet().getLocalRoles();
+
+        ArrayList<Role> roles = new ArrayList<Role>();
+        roles.addAll(game.getCurrentPlayer().getCurrentLocation().getSet().getLocalRoles());
         ArrayList<Role> cardRoles = game.getCurrentPlayer().getCurrentLocation().getSet().getCard().getRoles();
         roles.addAll(cardRoles);
         Iterator<Role> itr = roles.iterator();
@@ -53,12 +55,6 @@ public class Deadwood {
             Role r = itr.next();
             if ((r.getRankRequirement() > game.getCurrentPlayer().getRank()) || r.getFilled()) {
                 itr.remove();
-            }
-        }
-        for (int i = 0; i < roles.size(); i++) {
-            if (roles.get(i).getRankRequirement() > game.getCurrentPlayer().getRank() || roles.get(i).getFilled()) {
-                roles.remove(i);
-                i--;
             }
         }
         return roles;
