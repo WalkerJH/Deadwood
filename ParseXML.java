@@ -96,10 +96,15 @@ public class ParseXML{
                             Node role = roles.item(k);
                             String name = role.getAttributes().getNamedItem("name").getNodeValue();
                             int rank = Integer.parseInt(role.getAttributes().getNamedItem("level").getNodeValue());
-                            NodeList roleDetails = role.getChildNodes();
                             Node line = role.getFirstChild().getNextSibling().getNextSibling().getNextSibling().getFirstChild();
                             String desc = line.getNodeValue();
-                            set.addRole(new ExtraRole(name, desc, rank));
+                            Node area = role.getFirstChild().getNextSibling();
+                            Coordinates coord = new Coordinates(
+                                    Integer.parseInt(area.getAttributes().getNamedItem("x").getNodeValue()),
+                                    Integer.parseInt(area.getAttributes().getNamedItem("y").getNodeValue()),
+                                    Integer.parseInt(area.getAttributes().getNamedItem("w").getNodeValue()),
+                                    Integer.parseInt(area.getAttributes().getNamedItem("h").getNodeValue()));
+                            set.addRole(new ExtraRole(name, desc, rank, coord));
                         }
                     }
                     //read number of shot counters
@@ -149,7 +154,13 @@ public class ParseXML{
                     int rank = Integer.parseInt(role.getAttributes().getNamedItem("level").getNodeValue());
                     Node line = role.getFirstChild().getNextSibling().getNextSibling().getNextSibling().getFirstChild();
                     String roleDesc = line.getNodeValue();
-                    roles.add(new StarringRole(roleName, roleDesc, rank));
+                    Node area = role.getFirstChild().getNextSibling();
+                    Coordinates coord = new Coordinates(
+                            Integer.parseInt(area.getAttributes().getNamedItem("x").getNodeValue()),
+                            Integer.parseInt(area.getAttributes().getNamedItem("y").getNodeValue()),
+                            Integer.parseInt(area.getAttributes().getNamedItem("w").getNodeValue()),
+                            Integer.parseInt(area.getAttributes().getNamedItem("h").getNodeValue()));
+                    roles.add(new StarringRole(roleName, roleDesc, rank, coord));
                 }
                 currentCard = new Card(name, desc, roles, budget);
                 deck.addCard(currentCard);

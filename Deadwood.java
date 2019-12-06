@@ -13,7 +13,6 @@ public class Deadwood {
     private static DeadwoodGUI gui;
     private static boolean gameRunning;
     public static int numPlayers;
-    public static final int PLAYER_TOKEN_SIZE = 50;
 
     public static void main(String[] args) throws Exception{
         gui = new DeadwoodGUI();
@@ -92,6 +91,18 @@ public class Deadwood {
     public static void takeRole(Role chosenRole) {
         getCurrentPlayer().takeRole(chosenRole);
         gui.update();
+    }
+
+    public static boolean currentPlayerHasRole() {
+        return game.getCurrentPlayer().getCurrentRole() != null;
+    }
+
+    public static Coordinates getCurrentRoleCoordinates() {
+        return game.getCurrentPlayer().getCurrentRole().getCoordinates();
+    }
+
+    public static Coordinates[] getCurrentOffRoleCoordinates() {
+        return game.getCurrentPlayer().getCurrentLocation().getOffRoleCoordinates();
     }
 
     /*
