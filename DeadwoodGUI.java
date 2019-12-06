@@ -198,10 +198,13 @@ public class DeadwoodGUI {
         cards = new ArrayList<>();
         ArrayList<Coordinates> locations = Deadwood.getLocationAreas();
         for(int i = 0; i < locations.size(); i++) {
-            Coordinates c = locations.get(i);
-            CardJLabel cjl = new CardJLabel(i + 1, this, c);
-            pane.add(cjl, 0);
-            cards.add(cjl);
+            Coordinates coord = locations.get(i);
+            int id = Deadwood.getCardId(coord);
+            if(id != -1) {
+                CardJLabel cjl = new CardJLabel(id, this, coord);
+                pane.add(cjl, 0);
+                cards.add(cjl);
+            }
         }
     }
 

@@ -1,7 +1,6 @@
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Iterator;
-import java.util.Scanner;
+
 public class Deadwood {
 
 /**
@@ -26,7 +25,7 @@ public class Deadwood {
 
     public static Coordinates getLocationArea(String locationName) {
         Location l = game.findLocation(locationName);
-        return l.getTotalArea();
+        return l.getCardArea();
     }
     public static Coordinates[] getOffRoleCoordinates (String locationName) {
         Location l = game.findLocation(locationName);
@@ -107,9 +106,18 @@ public class Deadwood {
     public static ArrayList<Coordinates> getLocationAreas() {
         ArrayList<Coordinates> coordinates = new ArrayList<>();
         for(Location l : game.getBoard().getLocations()) {
-            coordinates.add(l.getTotalArea());
+            coordinates.add(l.getCardArea());
         }
         return coordinates;
+    }
+
+    public static int getCardId(Coordinates location) {
+        for(Location l: game.getBoard().getLocations()) {
+            if(l.hasSet() && l.getCardArea().equals(location)) {
+                return l.getSet().getCard().getId();
+            }
+        }
+        return -1;
     }
 
     /*
