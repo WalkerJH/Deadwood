@@ -7,7 +7,7 @@ public class Location {
     private String name;
     private ArrayList<Location> neighbors;
     private Set set;
-    private Coordinates totalArea;
+    private Coordinates cardArea;
     private Coordinates[] offRoleCoordinates;
 
     public Location(String name) {
@@ -57,21 +57,21 @@ public class Location {
 
     public void setSet(Set set) { this.set = set; }
 
-    public Coordinates getTotalArea() {
-        return totalArea;
+    public Coordinates getCardArea() {
+        return cardArea;
     }
 
     public void setCoordinates(Coordinates totalArea) {
-        this.totalArea = totalArea;
+        this.cardArea = totalArea;
         Coordinates slot1 = new Coordinates(totalArea.getX() + totalArea.getW() - 200,
                 totalArea.getY() + totalArea.getH() - 55,
-                Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
+                DeadwoodGUI.PLAYER_TOKEN_SIZE, DeadwoodGUI.PLAYER_TOKEN_SIZE);
         Coordinates slot2 = new Coordinates(totalArea.getX() + totalArea.getW() - 145,
                 totalArea.getY() + totalArea.getH() - 55,
-                Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
+                DeadwoodGUI.PLAYER_TOKEN_SIZE, DeadwoodGUI.PLAYER_TOKEN_SIZE);
         Coordinates slot3 = new Coordinates(totalArea.getX() + totalArea.getW() - 90,
                 totalArea.getY() + totalArea.getH() - 55,
-                Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
+                DeadwoodGUI.PLAYER_TOKEN_SIZE, DeadwoodGUI.PLAYER_TOKEN_SIZE);
         offRoleCoordinates = new Coordinates[] {slot1, slot2, slot3};
     }
 

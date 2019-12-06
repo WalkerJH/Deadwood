@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
@@ -20,10 +21,10 @@ public class DeadwoodGUI {
             new Color(207, 20, 43),
             new Color(79, 156, 137),
             new Color(59, 73, 110)};
+    public static final int PLAYER_TOKEN_SIZE = 40;
 
     private JFrame frame;
     private JLayeredPane pane;
-    private MouseListener listener;
     private DeadwoodJButton moveButton;
     private DeadwoodJButton actButton;
     private DeadwoodJButton rehearseButton;
@@ -32,6 +33,7 @@ public class DeadwoodGUI {
     private DeadwoodJButton endTurnButton;
     private JLabel activePlayerInfo;
     private JLabel[] playerIcons;
+    private ArrayList<CardJLabel> cards;
     private int boardWidth;
     private int boardHeight;
 
@@ -49,7 +51,7 @@ public class DeadwoodGUI {
         boardWidth = boardLabel.getIcon().getIconWidth();
         boardHeight = boardLabel.getIcon().getIconHeight();
         boardLabel.setBounds(0, 0, boardWidth, boardHeight);
-        frame.setSize(boardWidth + 300, boardHeight + Deadwood.PLAYER_TOKEN_SIZE);
+        frame.setSize(boardWidth + 300, boardHeight);
 
         pane.add(bkgLabel, -1);
         pane.add(boardLabel, 0);
@@ -58,8 +60,10 @@ public class DeadwoodGUI {
     }
 
     public void setUpGUI() {
+        setUpPlayers();
         setUpButtons();
         setUpPlayerInfo();
+        setUpCards();
     }
 
     public void update() {
@@ -70,10 +74,15 @@ public class DeadwoodGUI {
 
     private void updatePlayerIcons() {
         for(int i = 0; i < Deadwood.numPlayers; i ++) {
+            Coordinates c;
             if(i == Deadwood.getTurn()) {
-                Coordinates[] slots = Deadwood.getCurrentPlayer().getCurrentLocation().getOffRoleCoordinates();
-                Coordinates c = slots[i];
-                playerIcons[i].setBounds(c.getX(), c.getY(), Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
+                if(Deadwood.currentPlayerHasRole()) {
+                    c = Deadwood.getCurrentRoleCoordinates();
+                }
+                else {
+                    c = Deadwood.getCurrentOffRoleCoordinates()[i];
+                }
+                playerIcons[i].setBounds(c.getX(), c.getY(), PLAYER_TOKEN_SIZE, PLAYER_TOKEN_SIZE);
             }
         }
     }
@@ -84,8 +93,7 @@ public class DeadwoodGUI {
         try {
             image = ImageIO.read(file);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            displayException(e);
         }
         return image;
     }
@@ -114,7 +122,7 @@ public class DeadwoodGUI {
     }
 
     private void setUpButtons() {
-        moveButton = new DeadwoodJButton("Move", boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 10);
+        moveButton = new DeadwoodJButton("Move", boardWidth + PLAYER_TOKEN_SIZE, 10);
         moveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -124,7 +132,7 @@ public class DeadwoodGUI {
         pane.add(moveButton, 1);
 
 
-        takeRoleButton = new DeadwoodJButton("Take Role",boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 120);
+        takeRoleButton = new DeadwoodJButton("Take Role",boardWidth + PLAYER_TOKEN_SIZE, 120);
         takeRoleButton.setEnabled(false);
         takeRoleButton.addActionListener(new ActionListener() {
             @Override
@@ -136,7 +144,7 @@ public class DeadwoodGUI {
         });
         pane.add(takeRoleButton, 1);
 
-        actButton = new DeadwoodJButton("Act", boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 230);
+        actButton = new DeadwoodJButton("Act", boardWidth + PLAYER_TOKEN_SIZE, 230);
         actButton.setEnabled(false);
         actButton.addActionListener(new ActionListener() {
             @Override
@@ -146,7 +154,7 @@ public class DeadwoodGUI {
         });
         pane.add(actButton, 1);
 
-        rehearseButton = new DeadwoodJButton("Rehearse", boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 340);
+        rehearseButton = new DeadwoodJButton("Rehearse", boardWidth + PLAYER_TOKEN_SIZE, 340);
         rehearseButton.setEnabled(false);
         rehearseButton.addActionListener(new ActionListener() {
             @Override
@@ -156,7 +164,7 @@ public class DeadwoodGUI {
         });
         pane.add(rehearseButton, 1);
 
-        upRankButton = new DeadwoodJButton("Upgrade Rank", boardWidth + 50, 450);
+        upRankButton = new DeadwoodJButton("Upgrade Rank", boardWidth + PLAYER_TOKEN_SIZE, 450);
         upRankButton.setEnabled(false);
         upRankButton.addActionListener(new ActionListener() {
             @Override
@@ -166,7 +174,7 @@ public class DeadwoodGUI {
         });
         pane.add(upRankButton, 1);
 
-        endTurnButton = new DeadwoodJButton("End Turn", boardWidth + 50, 560);
+        endTurnButton = new DeadwoodJButton("End Turn", boardWidth + PLAYER_TOKEN_SIZE, 560);
         endTurnButton.setEnabled(true);
         endTurnButton.addActionListener(new ActionListener() {
             @Override
@@ -184,6 +192,20 @@ public class DeadwoodGUI {
         rehearseButton.setEnabled(Deadwood.getCurrentPlayer().canRehearse());
         upRankButton.setEnabled(Deadwood.getCurrentPlayer().canRankUp());
 
+    }
+
+    private void setUpCards() {
+        cards = new ArrayList<>();
+        ArrayList<Coordinates> locations = Deadwood.getLocationAreas();
+        for(int i = 0; i < locations.size(); i++) {
+            Coordinates coord = locations.get(i);
+            int id = Deadwood.getCardId(coord);
+            if(id != -1) {
+                CardJLabel cjl = new CardJLabel(id, this, coord);
+                pane.add(cjl, 0);
+                cards.add(cjl);
+            }
+        }
     }
 
     private void setUpPlayerInfo() {
@@ -212,19 +234,17 @@ public class DeadwoodGUI {
 
         playerIcons[0] = new JLabel();
         Image image1 = getImage("player1.png");
-        image1 = image1.getScaledInstance(Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE, Image.SCALE_DEFAULT);
+        image1 = image1.getScaledInstance(PLAYER_TOKEN_SIZE, PLAYER_TOKEN_SIZE, Image.SCALE_DEFAULT);
         playerIcons[0].setIcon(new ImageIcon(image1));
-        playerIcons[0].setBounds(start[0].getX(), start[0].getY(), Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
-        start[0].setOccupied(true);
+        playerIcons[0].setBounds(start[0].getX(), start[0].getY(), PLAYER_TOKEN_SIZE, PLAYER_TOKEN_SIZE);
         pane.add(playerIcons[0], new Integer (1));
 
         if(Deadwood.numPlayers == 2 || Deadwood.numPlayers == 3) {
             playerIcons[1] = new JLabel();
             Image image2 = getImage("player2.png");
-            image2 = image2.getScaledInstance(Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE, Image.SCALE_DEFAULT);
+            image2 = image2.getScaledInstance(PLAYER_TOKEN_SIZE, PLAYER_TOKEN_SIZE, Image.SCALE_DEFAULT);
             playerIcons[1].setIcon(new ImageIcon(image2));
-            playerIcons[1].setBounds(start[1].getX(), start[1].getY(), Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
-            start[1].setOccupied(true);
+            playerIcons[1].setBounds(start[1].getX(), start[1].getY(), PLAYER_TOKEN_SIZE, PLAYER_TOKEN_SIZE);
             pane.add(playerIcons[1], new Integer(1));
         }
         else {
@@ -234,10 +254,9 @@ public class DeadwoodGUI {
         if(Deadwood.numPlayers == 3) {
             playerIcons[2] = new JLabel();
             Image image3 = getImage("player3.png");
-            image3 = image3.getScaledInstance(Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE, Image.SCALE_DEFAULT);
+            image3 = image3.getScaledInstance(PLAYER_TOKEN_SIZE, PLAYER_TOKEN_SIZE, Image.SCALE_DEFAULT);
             playerIcons[2].setIcon(new ImageIcon(image3));
-            playerIcons[2].setBounds(start[2].getX(), start[2].getY(), Deadwood.PLAYER_TOKEN_SIZE, Deadwood.PLAYER_TOKEN_SIZE);
-            start[2].setOccupied(true);
+            playerIcons[2].setBounds(start[2].getX(), start[2].getY(), PLAYER_TOKEN_SIZE, PLAYER_TOKEN_SIZE);
             pane.add(playerIcons[2], new Integer(1));
         }
     }

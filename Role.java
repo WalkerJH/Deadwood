@@ -6,12 +6,14 @@ public abstract class Role {
     protected String desc;
     protected int rankRequirement;
     protected boolean filled;
+    protected Coordinates coordinates;
 
-    public Role(String name, String desc, int rankRequirement) {
+    public Role(String name, String desc, int rankRequirement, Coordinates coordinates) {
         this.name = name;
         this.desc = desc;
         this.rankRequirement = rankRequirement;
         this.filled = false;
+        this.coordinates = coordinates;
     }
 
     public String toString() {
@@ -23,6 +25,10 @@ public abstract class Role {
     }
 
     public boolean getFilled() { return filled; }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
 
     public void setFilled(boolean b) { filled = b; }
 

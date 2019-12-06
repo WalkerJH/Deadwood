@@ -1,7 +1,6 @@
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Iterator;
-import java.util.Scanner;
+
 public class Deadwood {
 
 /**
@@ -13,14 +12,12 @@ public class Deadwood {
     private static DeadwoodGUI gui;
     private static boolean gameRunning;
     public static int numPlayers;
-    public static final int PLAYER_TOKEN_SIZE = 50;
 
     public static void main(String[] args) throws Exception{
         gui = new DeadwoodGUI();
         numPlayers = gui.promptNumPlayers();
         game = new GameSystem(numPlayers);
         game.setUpGame();
-        gui.setUpPlayers();
         gui.setUpGUI();
         gameRunning = true;
         gui.update();
@@ -28,7 +25,7 @@ public class Deadwood {
 
     public static Coordinates getLocationArea(String locationName) {
         Location l = game.findLocation(locationName);
-        return l.getTotalArea();
+        return l.getCardArea();
     }
     public static Coordinates[] getOffRoleCoordinates (String locationName) {
         Location l = game.findLocation(locationName);
@@ -92,6 +89,41 @@ public class Deadwood {
     public static void takeRole(Role chosenRole) {
         getCurrentPlayer().takeRole(chosenRole);
         gui.update();
+    }
+
+    public static boolean currentPlayerHasRole() {
+        return game.getCurrentPlayer().getCurrentRole() != null;
+    }
+
+    public static Coordinates getCurrentRoleCoordinates() {
+        Role role = game.getCurrentPlayer().getCurrentRole();
+        if (role.toString().startsWith("\u2605")) {
+            return role.getCoordinates().addXY(game.getCurrentPlayer().getCurrentLocation().getCardArea());
+        }
+        else {
+            return role.getCoordinates();
+        }
+    }
+
+    public static Coordinates[] getCurrentOffRoleCoordinates() {
+        return game.getCurrentPlayer().getCurrentLocation().getOffRoleCoordinates();
+    }
+
+    public static ArrayList<Coordinates> getLocationAreas() {
+        ArrayList<Coordinates> coordinates = new ArrayList<>();
+        for(Location l : game.getBoard().getLocations()) {
+            coordinates.add(l.getCardArea());
+        }
+        return coordinates;
+    }
+
+    public static int getCardId(Coordinates location) {
+        for(Location l: game.getBoard().getLocations()) {
+            if(l.hasSet() && l.getCardArea().equals(location)) {
+                return l.getSet().getCard().getId();
+            }
+        }
+        return -1;
     }
 
     /*

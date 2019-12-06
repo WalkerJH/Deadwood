@@ -15,7 +15,7 @@ public class DeadwoodJButton extends JButton {
         super(text);
         setBackground(DeadwoodGUI.LIGHTBROWN);
         setFont(this.getFont().deriveFont(16.0f));
-        setBounds(xPosition, yPosition, 200, Deadwood.PLAYER_TOKEN_SIZE);
+        setBounds(xPosition, yPosition, 200, DeadwoodGUI.PLAYER_TOKEN_SIZE);
 
         loweredBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
         normalBorder = BorderFactory.createLineBorder(Color.black);
