@@ -7,12 +7,14 @@ public class Card {
     private String desc;
     private ArrayList<Role> roles;
     private int budget;
+    private int id;
 
-    public Card(String name, String desc, ArrayList<Role> roles, int budget) {
+    public Card(String name, String desc, ArrayList<Role> roles, int budget, int id) {
         this.name = name;
         this.desc = desc;
         this.roles = roles;
         this.budget = budget;
+        this.id = id;
     }
 
     public String toString() {
@@ -41,5 +43,9 @@ public class Card {
 
     public int getBudget() {
         return budget;
+    }
+
+    public int getId() {
+        return id;
     }
 }

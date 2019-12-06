@@ -19,7 +19,6 @@ public class Deadwood {
         numPlayers = gui.promptNumPlayers();
         game = new GameSystem(numPlayers);
         game.setUpGame();
-        gui.setUpPlayers();
         gui.setUpGUI();
         gameRunning = true;
         gui.update();
@@ -103,6 +102,14 @@ public class Deadwood {
 
     public static Coordinates[] getCurrentOffRoleCoordinates() {
         return game.getCurrentPlayer().getCurrentLocation().getOffRoleCoordinates();
+    }
+
+    public static ArrayList<Coordinates> getLocationAreas() {
+        ArrayList<Coordinates> coordinates = new ArrayList<>();
+        for(Location l : game.getBoard().getLocations()) {
+            coordinates.add(l.getTotalArea());
+        }
+        return coordinates;
     }
 
     /*

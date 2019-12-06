@@ -162,7 +162,7 @@ public class ParseXML{
                             Integer.parseInt(area.getAttributes().getNamedItem("h").getNodeValue()));
                     roles.add(new StarringRole(roleName, roleDesc, rank, coord));
                 }
-                currentCard = new Card(name, desc, roles, budget);
+                currentCard = new Card(name, desc, roles, budget, i + 1);
                 deck.addCard(currentCard);
             }
             return deck;

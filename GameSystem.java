@@ -61,6 +61,10 @@ public class GameSystem {
         return cardDeck;
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
     public Location findLocation(String locationName) {
         return board.findLocation(locationName);
     }
@@ -70,12 +74,6 @@ public class GameSystem {
             Set s = board.getLocations().get(i).getSet();
             if (s != null)
                 s.setCard(cardDeck.drawCard());
-        }
-    }
-
-    public void printAllPlayersStatus() {
-        for (Player p : players) {
-            System.out.println(p.getStatus());
         }
     }
 

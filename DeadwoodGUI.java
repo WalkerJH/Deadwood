@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
@@ -32,6 +33,7 @@ public class DeadwoodGUI {
     private DeadwoodJButton endTurnButton;
     private JLabel activePlayerInfo;
     private JLabel[] playerIcons;
+    private ArrayList<CardJLabel> cards;
     private int boardWidth;
     private int boardHeight;
 
@@ -58,8 +60,10 @@ public class DeadwoodGUI {
     }
 
     public void setUpGUI() {
+        setUpPlayers();
         setUpButtons();
         setUpPlayerInfo();
+        setUpCards();
     }
 
     public void update() {
@@ -76,7 +80,7 @@ public class DeadwoodGUI {
                     c = Deadwood.getCurrentRoleCoordinates();
                 }
                 else {
-                    c = Deadwood.getCurrentPlayer().getCurrentLocation().getOffRoleCoordinates()[i];
+                    c = Deadwood.getCurrentOffRoleCoordinates()[i];
                 }
                 playerIcons[i].setBounds(c.getX(), c.getY(), PLAYER_TOKEN_SIZE, PLAYER_TOKEN_SIZE);
             }
@@ -89,8 +93,7 @@ public class DeadwoodGUI {
         try {
             image = ImageIO.read(file);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            displayException(e);
         }
         return image;
     }
@@ -191,6 +194,17 @@ public class DeadwoodGUI {
 
     }
 
+    private void setUpCards() {
+        cards = new ArrayList<>();
+        ArrayList<Coordinates> locations = Deadwood.getLocationAreas();
+        for(int i = 0; i < locations.size(); i++) {
+            Coordinates c = locations.get(i);
+            CardJLabel cjl = new CardJLabel(i + 1, this, c);
+            pane.add(cjl, 0);
+            cards.add(cjl);
+        }
+    }
+
     private void setUpPlayerInfo() {
         activePlayerInfo = new JLabel();
         activePlayerInfo.setText(Deadwood.getCurrentPlayer().getStatus());
@@ -220,7 +234,6 @@ public class DeadwoodGUI {
         image1 = image1.getScaledInstance(PLAYER_TOKEN_SIZE, PLAYER_TOKEN_SIZE, Image.SCALE_DEFAULT);
         playerIcons[0].setIcon(new ImageIcon(image1));
         playerIcons[0].setBounds(start[0].getX(), start[0].getY(), PLAYER_TOKEN_SIZE, PLAYER_TOKEN_SIZE);
-        start[0].setOccupied(true);
         pane.add(playerIcons[0], new Integer (1));
 
         if(Deadwood.numPlayers == 2 || Deadwood.numPlayers == 3) {
@@ -229,7 +242,6 @@ public class DeadwoodGUI {
             image2 = image2.getScaledInstance(PLAYER_TOKEN_SIZE, PLAYER_TOKEN_SIZE, Image.SCALE_DEFAULT);
             playerIcons[1].setIcon(new ImageIcon(image2));
             playerIcons[1].setBounds(start[1].getX(), start[1].getY(), PLAYER_TOKEN_SIZE, PLAYER_TOKEN_SIZE);
-            start[1].setOccupied(true);
             pane.add(playerIcons[1], new Integer(1));
         }
         else {
@@ -242,7 +254,6 @@ public class DeadwoodGUI {
             image3 = image3.getScaledInstance(PLAYER_TOKEN_SIZE, PLAYER_TOKEN_SIZE, Image.SCALE_DEFAULT);
             playerIcons[2].setIcon(new ImageIcon(image3));
             playerIcons[2].setBounds(start[2].getX(), start[2].getY(), PLAYER_TOKEN_SIZE, PLAYER_TOKEN_SIZE);
-            start[2].setOccupied(true);
             pane.add(playerIcons[2], new Integer(1));
         }
     }
