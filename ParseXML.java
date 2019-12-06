@@ -130,7 +130,7 @@ public class ParseXML{
             Card currentCard;
             for (int i = 0; i < cards.getLength(); i++) {
                 //reads data from the nodes
-                ArrayList<StarringRole> roles = new ArrayList<>();
+                ArrayList<Role> roles = new ArrayList<>();
                 Node currentNode = cards.item(i);
                 String name = currentNode.getAttributes().getNamedItem("name").getNodeValue();
                 int budget =  Integer.parseInt(currentNode.getAttributes().getNamedItem("budget").getNodeValue());

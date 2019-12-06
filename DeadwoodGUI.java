@@ -13,15 +13,23 @@ import java.util.InputMismatchException;
  */
 public class DeadwoodGUI {
 
+    public static final Color GRAYBROWN = new Color(242, 235, 228);
+    public static final Color LIGHTBROWN = new Color(246, 216, 158);
+    public static final Color REDBROWN = new Color(209, 112, 48);
+    public static final Color[] PLAYERCOLORS = {
+            new Color(207, 20, 43),
+            new Color(79, 156, 137),
+            new Color(59, 73, 110)};
+
     private JFrame frame;
     private JLayeredPane pane;
     private MouseListener listener;
-    private JButton moveButton;
-    private JButton actButton;
-    private JButton rehearseButton;
-    private JButton takeRoleButton;
-    private JButton upRankButton;
-    private JButton endTurnButton;
+    private DeadwoodJButton moveButton;
+    private DeadwoodJButton actButton;
+    private DeadwoodJButton rehearseButton;
+    private DeadwoodJButton takeRoleButton;
+    private DeadwoodJButton upRankButton;
+    private DeadwoodJButton endTurnButton;
     private JLabel activePlayerInfo;
     private JLabel[] playerIcons;
     private int boardWidth;
@@ -31,13 +39,14 @@ public class DeadwoodGUI {
         frame = new JFrame("Deadwood");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pane = frame.getLayeredPane();
+
         JLabel boardLabel = new JLabel();
         boardLabel.setIcon(new ImageIcon(getImage("board.jpg")));
         boardWidth = boardLabel.getIcon().getIconWidth();
         boardHeight = boardLabel.getIcon().getIconHeight();
         boardLabel.setBounds(0, 0, boardWidth, boardHeight);
         frame.setSize(boardWidth + 300, boardHeight + Deadwood.PLAYER_TOKEN_SIZE);
-        pane.add(boardLabel, new Integer(0));
+        pane.add(boardLabel, 0);
 
         frame.setVisible(true);
     }
@@ -83,19 +92,23 @@ public class DeadwoodGUI {
    }
 
     public int promptNumPlayers() {
+        int numPlayers;
         try {
-            return Integer.parseInt(JOptionPane.showInputDialog(frame, "Please enter number of Players",
-                    "New Game", JOptionPane.QUESTION_MESSAGE));
+            String[] options = {"Two Player Game", "Three Player Game"};
+            JPanel panel = new JPanel();
+            int opt = JOptionPane.showOptionDialog(null, "Welcome to Deadwood", "New Game",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, 0);
+            numPlayers = opt + 2;
         }
         catch (Exception ex) {
             displayException(ex);
             return -1;
         }
+        return numPlayers;
     }
 
     private void setUpButtons() {
-        moveButton = new JButton("Move");
-        moveButton.setBounds(boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 10, 200, Deadwood.PLAYER_TOKEN_SIZE);
+        moveButton = new DeadwoodJButton("Move", boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 10);
         moveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -105,22 +118,20 @@ public class DeadwoodGUI {
         pane.add(moveButton);
 
 
-        takeRoleButton = new JButton("Take Role");
-        takeRoleButton.setBounds(boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 120, 200, Deadwood.PLAYER_TOKEN_SIZE);
-        takeRoleButton.setVisible(false);
-        moveButton.addActionListener(new ActionListener() {
+        takeRoleButton = new DeadwoodJButton("Take Role",boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 120);
+        takeRoleButton.setEnabled(false);
+        takeRoleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String chosenRole = "";
-                //Player selects chosenRole
-                Deadwood.takeRole(chosenRole);
+                Role r = promptRole();
+                if (r != null)
+                    Deadwood.takeRole(r);
             }
         });
         pane.add(takeRoleButton);
 
-        actButton = new JButton("Act");
-        actButton.setBounds(boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 120, 200, Deadwood.PLAYER_TOKEN_SIZE);
-        actButton.setVisible(false);
+        actButton = new DeadwoodJButton("Act", boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 230);
+        actButton.setEnabled(false);
         actButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -129,9 +140,8 @@ public class DeadwoodGUI {
         });
         pane.add(actButton);
 
-        rehearseButton = new JButton("Rehearse");
-        rehearseButton.setBounds(boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 230, 200, Deadwood.PLAYER_TOKEN_SIZE);
-        rehearseButton.setVisible(false);
+        rehearseButton = new DeadwoodJButton("Rehearse", boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 340);
+        rehearseButton.setEnabled(false);
         rehearseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -140,9 +150,8 @@ public class DeadwoodGUI {
         });
         pane.add(rehearseButton);
 
-        upRankButton = new JButton("Upgrade Rank");
-        upRankButton.setBounds(boardWidth + 50, 340, 200, 50);
-        upRankButton.setVisible(false);
+        upRankButton = new DeadwoodJButton("Upgrade Rank", boardWidth + 50, 450);
+        upRankButton.setEnabled(false);
         upRankButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -151,9 +160,8 @@ public class DeadwoodGUI {
         });
         pane.add(upRankButton);
 
-        endTurnButton = new JButton("End Turn");
-        endTurnButton.setBounds(boardWidth + 50, 450, 200, 50);
-        endTurnButton.setVisible(true);
+        endTurnButton = new DeadwoodJButton("End Turn", boardWidth + 50, 560);
+        endTurnButton.setEnabled(true);
         endTurnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -164,24 +172,31 @@ public class DeadwoodGUI {
     }
 
     private void updateButtons() {
-        moveButton.setVisible(Deadwood.getCurrentPlayer().canMove());
-        takeRoleButton.setVisible(Deadwood.getCurrentPlayer().canTakeRole());
-        actButton.setVisible(Deadwood.getCurrentPlayer().canAct());
-        rehearseButton.setVisible(Deadwood.getCurrentPlayer().canRehearse());
-        upRankButton.setVisible(Deadwood.getCurrentPlayer().canRankUp());
+        moveButton.setEnabled(Deadwood.getCurrentPlayer().canMove());
+        takeRoleButton.setEnabled(Deadwood.getCurrentPlayer().canTakeRole());
+        actButton.setEnabled(Deadwood.getCurrentPlayer().canAct());
+        rehearseButton.setEnabled(Deadwood.getCurrentPlayer().canRehearse());
+        upRankButton.setEnabled(Deadwood.getCurrentPlayer().canRankUp());
+
     }
 
     private void setUpPlayerInfo() {
         activePlayerInfo = new JLabel();
         activePlayerInfo.setText(Deadwood.getCurrentPlayer().getStatus());
-        activePlayerInfo.setBounds(boardWidth + 50, 550, 200, 60);
-        activePlayerInfo.setVisible(true);
+        activePlayerInfo.setHorizontalAlignment(SwingConstants.CENTER);
+        activePlayerInfo.setBounds(boardWidth + 10, 700, 280, 160);
+        activePlayerInfo.setForeground(Color.white);
+        activePlayerInfo.setBackground(PLAYERCOLORS[0]);
+        activePlayerInfo.setOpaque(true);
         pane.add(activePlayerInfo);
+
     }
 
     private void updatePlayerInfo() {
         activePlayerInfo.setText(Deadwood.getCurrentPlayer().getStatus());
-        activePlayerInfo.setVisible(true);
+        activePlayerInfo.setHorizontalAlignment(SwingConstants.CENTER);
+        activePlayerInfo.setBackground(PLAYERCOLORS[Deadwood.getCurrentPlayer().getNumber()]);
+        activePlayerInfo.setOpaque(true);
     }
 
     public void setUpPlayers() {
@@ -229,5 +244,15 @@ public class DeadwoodGUI {
         }
         return (String)JOptionPane.showInputDialog(null, "Where would you like to move?",
                     "Move", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+    }
+
+    public Role promptRole () {
+        ArrayList<Role> availableRoles = Deadwood.getAvailableRoles();
+        Object[] options = new Object[availableRoles.size()];
+        for (int i = 0; i < availableRoles.size(); i++) {
+            options[i] = availableRoles.get(i);
+        }
+        return (Role)JOptionPane.showInputDialog(null, "Which role would you like to take?",
+                "Move", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
     }
 }

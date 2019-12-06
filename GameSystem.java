@@ -12,6 +12,7 @@ public class GameSystem {
     private CardDeck cardDeck;
     private int day;
     private int turn;
+    private boolean gameDone;
 
     public static final int[] RANK_UP_REQUIREMENTS_CASH = {4, 10, 18, 28, 40};
     public static int[] RANK_UP_REQUIREMENTS_CREDITS = {5, 10, 15, 20, 25};
@@ -21,6 +22,7 @@ public class GameSystem {
     }
 
     public void setUpGame() throws Exception {
+        gameDone = false;
         day = 1;
         turn = 0;
         cardDeck = new CardDeck();
@@ -33,7 +35,7 @@ public class GameSystem {
 
         players = new Player[numPlayers];
         for (int i = 0; i < numPlayers; i++) {
-            players[i] = new Player("Player " + Integer.toString(i + 1), board.findLocation("Trailer"));
+            players[i] = new Player(i, board.findLocation("Trailer"));
         }
     }
 
@@ -41,15 +43,15 @@ public class GameSystem {
         return players[turn];
     }
 
-    public int getTurn() {
-        return turn;
-    }
+    public int getTurn() { return turn; }
 
     public Player[] getPlayers() {
         return players;
     }
 
     public int getDay() { return day; }
+
+    public boolean isGameDone() { return gameDone; }
 
     public int getNumPlayers() {
         return numPlayers;
@@ -112,13 +114,8 @@ public class GameSystem {
     }
 
     public Player[] endGame(){
-        /*System.out.println("The game is over!\n");
         Arrays.sort(players);
-        System.out.printf("Player %s is the winner!\n", players[0]);
-        System.out.println("Leaderboard: ");
-        for(int i = 0; i < players.length; i++)
-            System.out.printf("%d. %s - %d points\n", i+1, players[i], players[i].getVictoryPoints());*/
-        Arrays.sort(players);
+        gameDone = true;
         return players;
     }
 }
