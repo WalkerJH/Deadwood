@@ -80,7 +80,7 @@ public class Set {
             for(Player p : localActors) {
                 if(p.getCurrentRole().equals(role)) {
                     p.pay(cash);
-                    //p.removeRole();
+                    p.removeRole();
                 }
             }
         }
