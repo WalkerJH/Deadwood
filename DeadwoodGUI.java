@@ -40,12 +40,18 @@ public class DeadwoodGUI {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pane = frame.getLayeredPane();
 
+        JLabel bkgLabel = new JLabel();
+        bkgLabel.setIcon(new ImageIcon(getImage("woodBackground.png")));
+        bkgLabel.setBounds(0, 0, bkgLabel.getIcon().getIconWidth(), bkgLabel.getIcon().getIconHeight());
+
         JLabel boardLabel = new JLabel();
         boardLabel.setIcon(new ImageIcon(getImage("board.jpg")));
         boardWidth = boardLabel.getIcon().getIconWidth();
         boardHeight = boardLabel.getIcon().getIconHeight();
         boardLabel.setBounds(0, 0, boardWidth, boardHeight);
         frame.setSize(boardWidth + 300, boardHeight + Deadwood.PLAYER_TOKEN_SIZE);
+
+        pane.add(bkgLabel, -1);
         pane.add(boardLabel, 0);
 
         frame.setVisible(true);
@@ -115,7 +121,7 @@ public class DeadwoodGUI {
                 Deadwood.move(promptMove());
             }
         });
-        pane.add(moveButton);
+        pane.add(moveButton, 1);
 
 
         takeRoleButton = new DeadwoodJButton("Take Role",boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 120);
@@ -128,7 +134,7 @@ public class DeadwoodGUI {
                     Deadwood.takeRole(r);
             }
         });
-        pane.add(takeRoleButton);
+        pane.add(takeRoleButton, 1);
 
         actButton = new DeadwoodJButton("Act", boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 230);
         actButton.setEnabled(false);
@@ -138,7 +144,7 @@ public class DeadwoodGUI {
                 Deadwood.act();
             }
         });
-        pane.add(actButton);
+        pane.add(actButton, 1);
 
         rehearseButton = new DeadwoodJButton("Rehearse", boardWidth + Deadwood.PLAYER_TOKEN_SIZE, 340);
         rehearseButton.setEnabled(false);
@@ -148,7 +154,7 @@ public class DeadwoodGUI {
                 Deadwood.rehearse();
             }
         });
-        pane.add(rehearseButton);
+        pane.add(rehearseButton, 1);
 
         upRankButton = new DeadwoodJButton("Upgrade Rank", boardWidth + 50, 450);
         upRankButton.setEnabled(false);
@@ -158,7 +164,7 @@ public class DeadwoodGUI {
                 Deadwood.rankUp();
             }
         });
-        pane.add(upRankButton);
+        pane.add(upRankButton, 1);
 
         endTurnButton = new DeadwoodJButton("End Turn", boardWidth + 50, 560);
         endTurnButton.setEnabled(true);
@@ -168,7 +174,7 @@ public class DeadwoodGUI {
                 Deadwood.endTurn();
             }
         });
-        pane.add(endTurnButton);
+        pane.add(endTurnButton, 1);
     }
 
     private void updateButtons() {
@@ -188,7 +194,7 @@ public class DeadwoodGUI {
         activePlayerInfo.setForeground(Color.white);
         activePlayerInfo.setBackground(PLAYERCOLORS[0]);
         activePlayerInfo.setOpaque(true);
-        pane.add(activePlayerInfo);
+        pane.add(activePlayerInfo, 1);
 
     }
 
