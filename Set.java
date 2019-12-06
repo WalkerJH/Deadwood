@@ -45,8 +45,8 @@ public class Set {
 
     public void wrap() {
         System.out.println("Wrapping Scene:");
-        ArrayList<Role> rolesOnCard = card.getRoles();
         if(card.hasActor()) {
+            ArrayList<Role> rolesOnCard = card.getRoles();
             ArrayList<Integer> rolls = new ArrayList<>();
             for(int i = 0; i < card.getBudget(); i++) {
                 rolls.add(Dice.rollDice());
@@ -70,8 +70,10 @@ public class Set {
                     if(p.getCurrentRole().equals(r))
                         p.pay(r.getRankRequirement());
                 }
-                p.removeRole();
             }
+        }
+        for(Player p : localActors) {
+            p.removeRole();
         }
         discardCard();
     }
