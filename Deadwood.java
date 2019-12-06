@@ -96,7 +96,13 @@ public class Deadwood {
     }
 
     public static Coordinates getCurrentRoleCoordinates() {
-        return game.getCurrentPlayer().getCurrentRole().getCoordinates();
+        Role role = game.getCurrentPlayer().getCurrentRole();
+        if (role.toString().startsWith("\u2605")) {
+            return role.getCoordinates().addXY(game.getCurrentPlayer().getCurrentLocation().getCardArea());
+        }
+        else {
+            return role.getCoordinates();
+        }
     }
 
     public static Coordinates[] getCurrentOffRoleCoordinates() {

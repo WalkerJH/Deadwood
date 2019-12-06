@@ -21,7 +21,7 @@ public class DeadwoodGUI {
             new Color(207, 20, 43),
             new Color(79, 156, 137),
             new Color(59, 73, 110)};
-    public static final int PLAYER_TOKEN_SIZE = 50;
+    public static final int PLAYER_TOKEN_SIZE = 40;
 
     private JFrame frame;
     private JLayeredPane pane;
@@ -51,7 +51,7 @@ public class DeadwoodGUI {
         boardWidth = boardLabel.getIcon().getIconWidth();
         boardHeight = boardLabel.getIcon().getIconHeight();
         boardLabel.setBounds(0, 0, boardWidth, boardHeight);
-        frame.setSize(boardWidth + 300, boardHeight + PLAYER_TOKEN_SIZE);
+        frame.setSize(boardWidth + 300, boardHeight);
 
         pane.add(bkgLabel, -1);
         pane.add(boardLabel, 0);

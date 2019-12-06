@@ -51,4 +51,10 @@ public class Coordinates {
     public void setOccupied(boolean occupied) {
         this.occupied = occupied;
     }
+
+    public Coordinates addXY (Coordinates other) {
+        int x = this.x + other.getX();
+        int y  = this.y + other.getY();
+        return new Coordinates(x, y, w, h);
+    }
 }
