@@ -53,10 +53,8 @@ public class DeadwoodGUI {
         boardLabel.setBounds(0, 0, boardWidth, boardHeight);
         frame.setSize(boardWidth + 300, boardHeight);
 
-        pane.add(bkgLabel, -1);
+        pane.add(bkgLabel, 0);
         pane.add(boardLabel, 0);
-        //JScrollPane scrollBar = new JScrollPane(pane, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        //frame.add(scrollBar);
 
         frame.setLayeredPane(pane);
         frame.setVisible(true);
