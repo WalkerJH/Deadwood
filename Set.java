@@ -78,8 +78,10 @@ public class Set {
     public void payActor(int cash, Role role) {
         if(role.getFilled()) {
             for(Player p : localActors) {
-                if(p.getCurrentRole().equals(role))
+                if(p.getCurrentRole().equals(role)) {
                     p.pay(cash);
+                    //p.removeRole();
+                }
             }
         }
     }

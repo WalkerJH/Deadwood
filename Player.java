@@ -81,8 +81,9 @@ public class Player implements Comparable<Player> {
         Payout p = currentRole.payout(success);
         credits += p.getCredits();
         cash += p.getCash();
-        if(success && currentLocation.getSet().getShotCounters() > 0)
-            currentLocation.getSet().removeShot();
+        if(success && currentLocation.getSet().getShotCounters() > 0) {
+                currentLocation.getSet().removeShot();
+        }
         this.hasAction = false;
         return p;
     }
@@ -152,6 +153,11 @@ public class Player implements Comparable<Player> {
 
     public void pay(int payment) {
         cash += payment;
+    }
+
+    public void removeRole() {
+        working = false;
+        currentRole = null;
     }
 
     public int getCredits() { return credits; }
