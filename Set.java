@@ -70,6 +70,7 @@ public class Set {
                     if(p.getCurrentRole().equals(r))
                         p.pay(r.getRankRequirement());
                 }
+                p.removeRole();
             }
         }
         discardCard();
@@ -80,7 +81,6 @@ public class Set {
             for(Player p : localActors) {
                 if(p.getCurrentRole().equals(role)) {
                     p.pay(cash);
-                    p.removeRole();
                 }
             }
         }
