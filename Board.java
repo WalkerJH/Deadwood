@@ -28,12 +28,12 @@ public class Board {
     public ArrayList<Location> getLocations() { return locations; }
 
     public boolean dayOver() {
-        int numWrapped = 0;
+        int numSets = 0;
         for(Location l: locations) {
-            if(l.hasSet() && l.getSet().getShotCounters() == 0) {
-                numWrapped++;
+            if(l.hasSet()) {
+                numSets++;
             }
         }
-        return (numWrapped == 9);
+        return (numSets == 1);
     }
 }

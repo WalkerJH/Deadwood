@@ -1,5 +1,5 @@
 /**
- * JLabel object specifically for a Deadwood card
+ * JLabel object specifically for a Deadwood shot counter token
  */
 
 import javax.swing.*;
@@ -15,7 +15,5 @@ public class CardJLabel extends JLabel{
         ImageIcon image = new ImageIcon(DeadwoodGUI.getImage(filename));
         setIcon(image);
         setBounds(coord.getX(), coord.getY(), 205, 115);
-        //setVisible(false);
     }
-
 }

@@ -59,6 +59,8 @@ public class DeadwoodGUI {
 
         frame.setLayeredPane(pane);
         frame.setVisible(true);
+
+        cards = new ArrayList<>();
     }
 
     public void setUpGUI() {
@@ -69,10 +71,14 @@ public class DeadwoodGUI {
         setUpShotCounters();
     }
 
-    public void update() {
+    public void update(boolean dayNotOver) {
         updatePlayerInfo();
         updatePlayerIcons();
         updateButtons();
+        if(!dayNotOver) {
+            setUpCards();
+            setUpShotCounters();
+        }
     }
 
     private void updatePlayerIcons() {
@@ -195,7 +201,10 @@ public class DeadwoodGUI {
     }
 
     private void setUpCards() {
-        cards = new ArrayList<>();
+        for(CardJLabel oldCard: cards) {
+            oldCard.setVisible(false);
+        }
+        cards.clear();
         ArrayList<Coordinates> locations = Deadwood.getLocationAreas();
         for(int i = 0; i < locations.size(); i++) {
             Coordinates coord = locations.get(i);
@@ -310,5 +319,13 @@ public class DeadwoodGUI {
         String[] options = {"Cash", "Credits"};
         return JOptionPane.showOptionDialog(null, "Please choose payment method for rank upgrade", "Payment Method",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, 0);
+    }
+
+    public void endGamePopUp(String[] results) {
+        String resultString = "";
+        for(String s: results) {
+            resultString += s;
+        }
+        JOptionPane.showMessageDialog(null, resultString, "Game Over", JOptionPane.INFORMATION_MESSAGE);
     }
 }

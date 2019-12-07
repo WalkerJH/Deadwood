@@ -11,25 +11,28 @@ public class Set {
     private ArrayList<Role> localRoles;
     private ArrayList<Player> localActors;
     private int shotCounters;
-    Stack<Coordinates> shotCounterSlots;
+    private int maxShots;
+    ArrayList<Coordinates> shotCounterSlots;
 
 
     public Set() {
         this.card = null;
         this.localRoles = new ArrayList<>();
         this.localActors = new ArrayList<>();
-        this.shotCounterSlots = new Stack<>();
+        this.shotCounterSlots = new ArrayList<>();
     }
 
     public Set(int shotCounters, ArrayList<Role> localRoles) {
         this.card = null;
         this.shotCounters = shotCounters;
         this.localRoles = localRoles;
-        this.shotCounterSlots = new Stack<>();
+        this.shotCounterSlots = new ArrayList<>();
+        this.maxShots = shotCounters;
     }
 
     public void setShotCounters(int shotCounters) {
         this.shotCounters = shotCounters;
+        this.maxShots = shotCounters;
     }
 
     public int getShotCounters() {
@@ -69,7 +72,7 @@ public class Set {
                     i = rolesOnCard.size() - 1;
                 }
             }
-            for(Player p : localActors) {
+            for(Player p: localActors) {
                 for(Role r: localRoles){
                     if(p.getCurrentRole().equals(r))
                         p.pay(r.getRankRequirement());
@@ -79,6 +82,7 @@ public class Set {
         for(Player p : localActors) {
             p.removeRole();
         }
+        localActors.clear();
         discardCard();
     }
 
@@ -116,14 +120,18 @@ public class Set {
     }
 
     public void addShotCounterSlot(Coordinates coord) {
-        shotCounterSlots.push(coord);
+        shotCounterSlots.add(coord);
     }
 
-    public Stack<Coordinates> getShotCounterSlots() {
+    public ArrayList<Coordinates> getShotCounterSlots() {
         return shotCounterSlots;
     }
 
     public Card getCard(){ return card; }
 
     public void discardCard(){ card = null; }
+
+    public int getMaxShots() {
+        return maxShots;
+    }
 }
