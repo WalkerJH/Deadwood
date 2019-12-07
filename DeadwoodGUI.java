@@ -41,7 +41,7 @@ public class DeadwoodGUI {
     public DeadwoodGUI() {
         frame = new JFrame("Deadwood");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        pane = frame.getLayeredPane();
+        pane = new JLayeredPane();
 
         JLabel bkgLabel = new JLabel();
         bkgLabel.setIcon(new ImageIcon(getImage("woodBackground.png")));
@@ -54,9 +54,10 @@ public class DeadwoodGUI {
         boardLabel.setBounds(0, 0, boardWidth, boardHeight);
         frame.setSize(boardWidth + 300, boardHeight);
 
-        pane.add(bkgLabel, -1);
+        pane.add(bkgLabel, 0);
         pane.add(boardLabel, 0);
 
+        frame.setLayeredPane(pane);
         frame.setVisible(true);
     }
 

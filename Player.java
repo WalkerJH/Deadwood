@@ -156,6 +156,11 @@ public class Player implements Comparable<Player> {
         cash += payment;
     }
 
+    public void removeRole() {
+        working = false;
+        currentRole = null;
+    }
+
     public int getCredits() { return credits; }
 
     public boolean canMove() {

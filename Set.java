@@ -49,8 +49,8 @@ public class Set {
 
     public void wrap() {
         System.out.println("Wrapping Scene:");
-        ArrayList<Role> rolesOnCard = card.getRoles();
         if(card.hasActor()) {
+            ArrayList<Role> rolesOnCard = card.getRoles();
             ArrayList<Integer> rolls = new ArrayList<>();
             for(int i = 0; i < card.getBudget(); i++) {
                 rolls.add(Dice.rollDice());
@@ -76,14 +76,18 @@ public class Set {
                 }
             }
         }
+        for(Player p : localActors) {
+            p.removeRole();
+        }
         discardCard();
     }
 
     public void payActor(int cash, Role role) {
         if(role.getFilled()) {
             for(Player p : localActors) {
-                if(p.getCurrentRole().equals(role))
+                if(p.getCurrentRole().equals(role)) {
                     p.pay(cash);
+                }
             }
         }
     }
