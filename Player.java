@@ -18,10 +18,10 @@ public class Player implements Comparable<Player> {
     public Player(int playerNumber, Location location) {
         this.number = playerNumber;
         this.name = "Player " + Integer.toString(playerNumber + 1);
-        this.rank = 6;
+        this.rank = 0;
         this.cash = 0;
         this.credits = 0;
-        this.rehearsalTokens = 6;
+        this.rehearsalTokens = 0;
         this.currentLocation = location;
         this.hasAction = true;
         this.working = false;
@@ -196,5 +196,9 @@ public class Player implements Comparable<Player> {
 
     public boolean isWorking() {
         return working;
+    }
+
+    public void setRehearsalTokens(int rehearsalTokens) {
+        this.rehearsalTokens = rehearsalTokens;
     }
 }
