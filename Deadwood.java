@@ -138,7 +138,7 @@ public class Deadwood {
     }
 
     public static void removeShot(Set set) {
-        gui.removeShotCounter(set.getShotCounterSlots().get(0));
+        gui.removeShotCounter(set.getShotCounterSlots().pop());
     }
 
     /*

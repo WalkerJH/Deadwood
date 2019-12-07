@@ -110,7 +110,7 @@ public class ParseXML{
                     //read number of shot counters
                     else if ("takes".equals(sub.getNodeName())) {
                         NodeList shots = sub.getChildNodes();
-                        for (int k = shots.getLength() - 2; k >= 1; k-=2) {
+                        for (int k = 1; k < shots.getLength(); k+=2) {
                             Node shot = shots.item(k).getFirstChild();
                             Coordinates coord = new Coordinates(
                                     Integer.parseInt(shot.getAttributes().getNamedItem("x").getNodeValue()),

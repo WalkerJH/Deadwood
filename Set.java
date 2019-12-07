@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Stack;
 import java.util.Collections;
 
 /**
@@ -10,21 +11,21 @@ public class Set {
     private ArrayList<Role> localRoles;
     private ArrayList<Player> localActors;
     private int shotCounters;
-    ArrayList<Coordinates> shotCounterSlots;
+    Stack<Coordinates> shotCounterSlots;
 
 
     public Set() {
         this.card = null;
         this.localRoles = new ArrayList<>();
         this.localActors = new ArrayList<>();
-        this.shotCounterSlots = new ArrayList<>();
+        this.shotCounterSlots = new Stack<>();
     }
 
     public Set(int shotCounters, ArrayList<Role> localRoles) {
         this.card = null;
         this.shotCounters = shotCounters;
         this.localRoles = localRoles;
-        this.shotCounterSlots = new ArrayList<>(shotCounters);
+        this.shotCounterSlots = new Stack<>();
     }
 
     public void setShotCounters(int shotCounters) {
@@ -48,7 +49,6 @@ public class Set {
     }
 
     public void wrap() {
-        System.out.println("Wrapping Scene:");
         if(card.hasActor()) {
             ArrayList<Role> rolesOnCard = card.getRoles();
             ArrayList<Integer> rolls = new ArrayList<>();
@@ -116,10 +116,10 @@ public class Set {
     }
 
     public void addShotCounterSlot(Coordinates coord) {
-        shotCounterSlots.add(coord);
+        shotCounterSlots.push(coord);
     }
 
-    public ArrayList<Coordinates> getShotCounterSlots() {
+    public Stack<Coordinates> getShotCounterSlots() {
         return shotCounterSlots;
     }
 
