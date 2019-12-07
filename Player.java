@@ -4,7 +4,6 @@
 public class Player implements Comparable<Player> {
     private String name;
     private int number;
-
     private int rank;
     private int cash;
     private int credits;
@@ -18,7 +17,7 @@ public class Player implements Comparable<Player> {
     public Player(int playerNumber, Location location) {
         this.number = playerNumber;
         this.name = "Player " + Integer.toString(playerNumber + 1);
-        this.rank = 0;
+        this.rank = 1;
         this.cash = 0;
         this.credits = 0;
         this.rehearsalTokens = 0;
