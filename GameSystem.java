@@ -35,7 +35,7 @@ public class GameSystem {
 
         players = new Player[numPlayers];
         for (int i = 0; i < numPlayers; i++) {
-            players[i] = new Player(i, board.findLocation("Trailer"));
+            players[i] = new Player(i, board.findLocation("Casting Office"));
         }
     }
 

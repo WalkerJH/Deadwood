@@ -58,6 +58,16 @@ public class Deadwood {
         return roles;
     }
 
+    public static ArrayList<Integer> getAvailableRanks() {
+        ArrayList<Integer> result = new ArrayList<>();
+        int rank = game.getCurrentPlayer().getRank();
+        for(int i = 2; i <=6; i ++) {
+            if(i > rank)
+                result.add(i);
+        }
+        return result;
+    }
+
     public static int getTurn() {
         return game.getTurn();
     }
@@ -68,7 +78,13 @@ public class Deadwood {
     }
 
     public static void rankUp() {
-
+        int desiredRank = gui.promptRankUp();
+        if(gui.promptPaymentMethod() == 0) {
+            game.getCurrentPlayer().rankUpWithCash(desiredRank);
+        }
+        else{
+            game.getCurrentPlayer().rankUpWithCredits(desiredRank);
+        }
         gui.update();
     }
 

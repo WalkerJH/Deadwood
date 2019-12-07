@@ -18,9 +18,9 @@ public class Player implements Comparable<Player> {
     public Player(int playerNumber, Location location) {
         this.number = playerNumber;
         this.name = "Player " + Integer.toString(playerNumber + 1);
-        this.rank = 6;
-        this.cash = 0;
-        this.credits = 0;
+        this.rank = 2;
+        this.cash = 500;
+        this.credits = 500;
         this.rehearsalTokens = 0;
         this.currentLocation = location;
         this.hasAction = true;

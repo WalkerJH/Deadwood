@@ -110,7 +110,6 @@ public class DeadwoodGUI {
         int numPlayers;
         try {
             String[] options = {"Two Player Game", "Three Player Game"};
-            JPanel panel = new JPanel();
             int opt = JOptionPane.showOptionDialog(null, "Welcome to Deadwood", "New Game",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, 0);
             numPlayers = opt + 2;
@@ -298,6 +297,18 @@ public class DeadwoodGUI {
             options[i] = availableRoles.get(i);
         }
         return (Role)JOptionPane.showInputDialog(null, "Which role would you like to take?",
-                "Move", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                "Role", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+    }
+
+    public int promptRankUp(){
+        Object[] options = Deadwood.getAvailableRanks().toArray();
+        return (Integer) JOptionPane.showInputDialog(null, "What level would you like to upgrade to?",
+                "Rank", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+    }
+
+    public int promptPaymentMethod() {
+        String[] options = {"Cash", "Credits"};
+        return JOptionPane.showOptionDialog(null, "Please choose payment method for rank upgrade", "Payment Method",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, 0);
     }
 }
