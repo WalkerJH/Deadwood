@@ -90,35 +90,24 @@ public class Player implements Comparable<Player> {
     }
 
     public boolean rankUpWithCash(int targetRank) {
-        int diff = targetRank - rank;
-        if(diff > 0 && rank != 6) {
-            int cost = 0;
-            for(int i = 0; i < diff; i++) {
-                cost += GameSystem.RANK_UP_REQUIREMENTS_CASH[rank - 1 + i];
-            }
-            if(cash >= cost) {
-                cash -= cost;
-                rank = targetRank;
-                this.hasAction = false;
-                return true;
-            }
+        int cost = GameSystem.RANK_UP_REQUIREMENTS_CASH[targetRank - 2];
+        if(cash >= cost) {
+            cash -= cost;
+            rank = targetRank;
+            this.hasAction = false;
+            return true;
         }
+
         return false;
     }
 
     public boolean rankUpWithCredits(int targetRank) {
-        int diff = targetRank - rank;
-        if(diff > 0 && rank != 6) {
-            int cost = 0;
-            for(int i = 0; i < diff; i++) {
-                cost += GameSystem.RANK_UP_REQUIREMENTS_CREDITS[rank - 1 + i];
-            }
-            if(credits >= cost) {
-                credits -= cost;
-                rank = targetRank;
-                this.hasAction = false;
-                return true;
-            }
+        int cost = GameSystem.RANK_UP_REQUIREMENTS_CREDITS[targetRank - 2];
+        if(credits >= cost) {
+            credits -= cost;
+            rank = targetRank;
+            this.hasAction = false;
+            return true;
         }
         return false;
     }
@@ -180,7 +169,7 @@ public class Player implements Comparable<Player> {
     }
 
     public boolean canRankUp() {
-        return (hasAction && currentLocation.getName().equals("Casting Office"));
+        return (currentLocation.getName().equals("Casting Office"));
     }
 
     //Cheat code methods
