@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -117,6 +118,16 @@ public class Deadwood {
         return coordinates;
     }
 
+    public static ArrayList<Coordinates> getAllShotAreas() {
+        ArrayList<Coordinates> result = new ArrayList<>();
+        for(Location l : game.getBoard().getLocations()) {
+            if(l.hasSet()) {
+                result.addAll(l.getSet().getShotCounterSlots());
+            }
+        }
+        return result;
+    }
+
     public static int getCardId(Coordinates location) {
         for(Location l: game.getBoard().getLocations()) {
             if(l.hasSet() && l.getCardArea().equals(location)) {
@@ -124,6 +135,10 @@ public class Deadwood {
             }
         }
         return -1;
+    }
+
+    public static void removeShot(Set set) {
+        gui.removeShotCounter(set.getShotCounterSlots().get(0));
     }
 
     /*

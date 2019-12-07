@@ -34,6 +34,7 @@ public class DeadwoodGUI {
     private JLabel activePlayerInfo;
     private JLabel[] playerIcons;
     private ArrayList<CardJLabel> cards;
+    private ArrayList<ShotCounterJLabel> shots;
     private int boardWidth;
     private int boardHeight;
 
@@ -65,6 +66,7 @@ public class DeadwoodGUI {
         setUpButtons();
         setUpPlayerInfo();
         setUpCards();
+        setUpShotCounters();
     }
 
     public void update() {
@@ -88,7 +90,7 @@ public class DeadwoodGUI {
         }
     }
 
-    public BufferedImage getImage(String fileName) {
+    public static BufferedImage getImage(String fileName) {
         BufferedImage image = null;
         File file = new File(fileName);
         try {
@@ -99,11 +101,9 @@ public class DeadwoodGUI {
         return image;
     }
 
-   public void displayException(Exception ex) {
-       JOptionPane.showMessageDialog(frame, ex,"Error", JOptionPane.WARNING_MESSAGE);
+   public static void displayException(Exception ex) {
+       JOptionPane.showMessageDialog(new JFrame(), ex,"Error", JOptionPane.WARNING_MESSAGE);
        System.exit(-1);
-       frame.dispose();
-       frame.setVisible(false);
    }
 
     public int promptNumPlayers() {
@@ -202,9 +202,28 @@ public class DeadwoodGUI {
             Coordinates coord = locations.get(i);
             int id = Deadwood.getCardId(coord);
             if(id != -1) {
-                CardJLabel cjl = new CardJLabel(id, this, coord);
-                pane.add(cjl, 0);
+                CardJLabel cjl = new CardJLabel(id, coord);
+                pane.add(cjl, new Integer(1));
                 cards.add(cjl);
+            }
+        }
+    }
+
+    private void setUpShotCounters () {
+        shots = new ArrayList<>();
+        ArrayList<Coordinates> allShots = Deadwood.getAllShotAreas();
+        for(Coordinates c: allShots) {
+            ShotCounterJLabel sjl = new ShotCounterJLabel(c);
+            shots.add(sjl);
+            pane.add(sjl, new Integer(1));
+        }
+    }
+
+    public void removeShotCounter(Coordinates c) {
+        for(ShotCounterJLabel sjl: shots) {
+            if(sjl.getX() == c.getX() && sjl.getY() == c.getY()) {
+                sjl.setVisible(false);
+                break;
             }
         }
     }

@@ -10,17 +10,21 @@ public class Set {
     private ArrayList<Role> localRoles;
     private ArrayList<Player> localActors;
     private int shotCounters;
+    ArrayList<Coordinates> shotCounterSlots;
+
 
     public Set() {
         this.card = null;
         this.localRoles = new ArrayList<>();
         this.localActors = new ArrayList<>();
+        this.shotCounterSlots = new ArrayList<>();
     }
 
     public Set(int shotCounters, ArrayList<Role> localRoles) {
         this.card = null;
         this.shotCounters = shotCounters;
         this.localRoles = localRoles;
+        this.shotCounterSlots = new ArrayList<>(shotCounters);
     }
 
     public void setShotCounters(int shotCounters) {
@@ -109,6 +113,14 @@ public class Set {
         if(shotCounters == 0) {
             wrap();
         }
+    }
+
+    public void addShotCounterSlot(Coordinates coord) {
+        shotCounterSlots.add(coord);
+    }
+
+    public ArrayList<Coordinates> getShotCounterSlots() {
+        return shotCounterSlots;
     }
 
     public Card getCard(){ return card; }
