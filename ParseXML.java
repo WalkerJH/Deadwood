@@ -62,13 +62,13 @@ public class ParseXML{
             Location trailer = new Location("trailer");
             trailer.addNeighbors(board.findLocation("Main Street"), board.findLocation("Saloon"),
                     board.findLocation("Hotel"));
-            trailer.setCoordinates(new Coordinates(991, 248, 201, 194));
+            trailer.setCardArea(new Coordinates(991, 248, 201, 194));
             board.add(trailer);
             //hard code casting office
             Location office = new Location("office");
             office.addNeighbors(board.findLocation("Train Station"), board.findLocation("Ranch"),
                     board.findLocation("Secret Hideout"));
-            office.setCoordinates(new Coordinates(9, 459, 209, 208));
+            office.setCardArea(new Coordinates(9, 459, 209, 208));
             board.add(office);
 
             //read in other data
@@ -110,11 +110,20 @@ public class ParseXML{
                     //read number of shot counters
                     else if ("takes".equals(sub.getNodeName())) {
                         NodeList shots = sub.getChildNodes();
+                        for (int k = 1; k < shots.getLength(); k+=2) {
+                            Node shot = shots.item(k).getFirstChild();
+                            Coordinates coord = new Coordinates(
+                                    Integer.parseInt(shot.getAttributes().getNamedItem("x").getNodeValue()),
+                                    Integer.parseInt(shot.getAttributes().getNamedItem("y").getNodeValue()),
+                                    Integer.parseInt(shot.getAttributes().getNamedItem("w").getNodeValue()),
+                                    Integer.parseInt(shot.getAttributes().getNamedItem("h").getNodeValue()));
+                            set.addShotCounterSlot(coord);
+                        }
                         set.setShotCounters(shots.getLength()/2);
                     }
                     //read coordinates and area for GUI
                     else if ("area".equals(sub.getNodeName())) {
-                        currentLocation.setCoordinates(new Coordinates(
+                        currentLocation.setCardArea(new Coordinates(
                                 Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue()),
                                 Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue()),
                                 Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue()),
@@ -167,4 +176,4 @@ public class ParseXML{
             }
             return deck;
         }
-}//class
+}

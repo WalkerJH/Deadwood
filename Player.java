@@ -21,7 +21,7 @@ public class Player implements Comparable<Player> {
         this.rank = 6;
         this.cash = 0;
         this.credits = 0;
-        this.rehearsalTokens = 0;
+        this.rehearsalTokens = 6;
         this.currentLocation = location;
         this.hasAction = true;
         this.working = false;
@@ -35,7 +35,7 @@ public class Player implements Comparable<Player> {
         String s = String.format("<html>%s, Rank %d<br>" +
             "Set: %s<br>Role: %s<br>" +
             "%d dollars, %d credits<br>%d rehearsal tokens<html>",
-            name, rank, currentLocation.getName(), currentRole, cash, credits, rehearsalTokens);
+            name, rank, currentLocation.getName(), getCurrentRole(), cash, credits, rehearsalTokens);
         return s;
     }
 
@@ -43,9 +43,10 @@ public class Player implements Comparable<Player> {
         hasAction = true;
     }
 
+    //move without restrictions
     public void fly(Location destination) {
         currentLocation = destination;
-    } //move without restrictions
+    }
 
     public boolean move(Location destination) {
         if (currentLocation.hasNeighbor(destination)) {
@@ -81,42 +82,33 @@ public class Player implements Comparable<Player> {
         Payout p = currentRole.payout(success);
         credits += p.getCredits();
         cash += p.getCash();
-        if(success && currentLocation.getSet().getShotCounters() > 0)
+        if(success && currentLocation.getSet().getShotCounters() > 0) {
+            Deadwood.removeShot(currentLocation.getSet());
             currentLocation.getSet().removeShot();
+        }
         this.hasAction = false;
         return p;
     }
 
     public boolean rankUpWithCash(int targetRank) {
-        int diff = targetRank - rank;
-        if(diff > 0 && rank != 6) {
-            int cost = 0;
-            for(int i = 0; i < diff; i++) {
-                cost += GameSystem.RANK_UP_REQUIREMENTS_CASH[rank - 1 + i];
-            }
-            if(cash >= cost) {
-                cash -= cost;
-                rank = targetRank;
-                this.hasAction = false;
-                return true;
-            }
+        int cost = GameSystem.RANK_UP_REQUIREMENTS_CASH[targetRank - 2];
+        if(cash >= cost) {
+            cash -= cost;
+            rank = targetRank;
+            this.hasAction = false;
+            return true;
         }
+
         return false;
     }
 
     public boolean rankUpWithCredits(int targetRank) {
-        int diff = targetRank - rank;
-        if(diff > 0 && rank != 6) {
-            int cost = 0;
-            for(int i = 0; i < diff; i++) {
-                cost += GameSystem.RANK_UP_REQUIREMENTS_CREDITS[rank - 1 + i];
-            }
-            if(credits >= cost) {
-                credits -= cost;
-                rank = targetRank;
-                this.hasAction = false;
-                return true;
-            }
+        int cost = GameSystem.RANK_UP_REQUIREMENTS_CREDITS[targetRank - 2];
+        if(credits >= cost) {
+            credits -= cost;
+            rank = targetRank;
+            this.hasAction = false;
+            return true;
         }
         return false;
     }
@@ -136,7 +128,14 @@ public class Player implements Comparable<Player> {
 
     public Location getCurrentLocation() { return currentLocation; }
 
-    public Role getCurrentRole() { return currentRole; }
+    public Role getCurrentRole() {
+        if(working) {
+            return currentRole;
+        }
+        else {
+            return null;
+        }
+    }
 
     public String getName() {
         return name;
@@ -154,6 +153,11 @@ public class Player implements Comparable<Player> {
         cash += payment;
     }
 
+    public void removeRole() {
+        working = false;
+        currentRole.setFilled(false);
+    }
+
     public int getCredits() { return credits; }
 
     public boolean canMove() {
@@ -165,7 +169,7 @@ public class Player implements Comparable<Player> {
     }
 
     public boolean canTakeRole() {
-        return (!working && currentRole == null && currentLocation.hasSet() && Deadwood.getAvailableRoles().size() > 0);
+        return (!working && currentLocation.hasSet() && Deadwood.getAvailableRoles().size() > 0);
     }
 
     public boolean canRehearse() {
@@ -173,7 +177,7 @@ public class Player implements Comparable<Player> {
     }
 
     public boolean canRankUp() {
-        return (hasAction && currentLocation.getName().equals("Casting Office"));
+        return (currentLocation.getName().equals("Casting Office") && rank < 6);
     }
 
     //Cheat code methods
@@ -184,5 +188,13 @@ public class Player implements Comparable<Player> {
 
     public void setRank(int rank) {
         this.rank = rank;
+    }
+
+    public void setWorking(boolean working) {
+        this.working = working;
+    }
+
+    public boolean isWorking() {
+        return working;
     }
 }

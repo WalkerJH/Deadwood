@@ -34,13 +34,14 @@ public class DeadwoodGUI {
     private JLabel activePlayerInfo;
     private JLabel[] playerIcons;
     private ArrayList<CardJLabel> cards;
+    private ArrayList<ShotCounterJLabel> shots;
     private int boardWidth;
     private int boardHeight;
 
     public DeadwoodGUI() {
         frame = new JFrame("Deadwood");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        pane = frame.getLayeredPane();
+        pane = new JLayeredPane();
 
         JLabel bkgLabel = new JLabel();
         bkgLabel.setIcon(new ImageIcon(getImage("woodBackground.png")));
@@ -53,10 +54,13 @@ public class DeadwoodGUI {
         boardLabel.setBounds(0, 0, boardWidth, boardHeight);
         frame.setSize(boardWidth + 300, boardHeight);
 
-        pane.add(bkgLabel, -1);
+        pane.add(bkgLabel, 0);
         pane.add(boardLabel, 0);
 
+        frame.setLayeredPane(pane);
         frame.setVisible(true);
+
+        cards = new ArrayList<>();
     }
 
     public void setUpGUI() {
@@ -64,12 +68,17 @@ public class DeadwoodGUI {
         setUpButtons();
         setUpPlayerInfo();
         setUpCards();
+        setUpShotCounters();
     }
 
-    public void update() {
+    public void update(boolean dayNotOver) {
         updatePlayerInfo();
         updatePlayerIcons();
         updateButtons();
+        if(!dayNotOver) {
+            setUpCards();
+            setUpShotCounters();
+        }
     }
 
     private void updatePlayerIcons() {
@@ -87,7 +96,7 @@ public class DeadwoodGUI {
         }
     }
 
-    public BufferedImage getImage(String fileName) {
+    public static BufferedImage getImage(String fileName) {
         BufferedImage image = null;
         File file = new File(fileName);
         try {
@@ -98,18 +107,15 @@ public class DeadwoodGUI {
         return image;
     }
 
-   public void displayException(Exception ex) {
-       JOptionPane.showMessageDialog(frame, ex,"Error", JOptionPane.WARNING_MESSAGE);
+   public static void displayException(Exception ex) {
+       JOptionPane.showMessageDialog(new JFrame(), ex,"Error", JOptionPane.WARNING_MESSAGE);
        System.exit(-1);
-       frame.dispose();
-       frame.setVisible(false);
    }
 
     public int promptNumPlayers() {
         int numPlayers;
         try {
             String[] options = {"Two Player Game", "Three Player Game"};
-            JPanel panel = new JPanel();
             int opt = JOptionPane.showOptionDialog(null, "Welcome to Deadwood", "New Game",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, 0);
             numPlayers = opt + 2;
@@ -195,15 +201,37 @@ public class DeadwoodGUI {
     }
 
     private void setUpCards() {
-        cards = new ArrayList<>();
+        for(CardJLabel oldCard: cards) {
+            oldCard.setVisible(false);
+        }
+        cards.clear();
         ArrayList<Coordinates> locations = Deadwood.getLocationAreas();
         for(int i = 0; i < locations.size(); i++) {
             Coordinates coord = locations.get(i);
             int id = Deadwood.getCardId(coord);
             if(id != -1) {
-                CardJLabel cjl = new CardJLabel(id, this, coord);
-                pane.add(cjl, 0);
+                CardJLabel cjl = new CardJLabel(id, coord);
+                pane.add(cjl, new Integer(1));
                 cards.add(cjl);
+            }
+        }
+    }
+
+    private void setUpShotCounters () {
+        shots = new ArrayList<>();
+        ArrayList<Coordinates> allShots = Deadwood.getAllShotAreas();
+        for(Coordinates c: allShots) {
+            ShotCounterJLabel sjl = new ShotCounterJLabel(c);
+            shots.add(sjl);
+            pane.add(sjl, new Integer(1));
+        }
+    }
+
+    public void removeShotCounter(Coordinates c) {
+        for(ShotCounterJLabel sjl: shots) {
+            if(sjl.getX() == c.getX() && sjl.getY() == c.getY()) {
+                sjl.setVisible(false);
+                break;
             }
         }
     }
@@ -278,6 +306,26 @@ public class DeadwoodGUI {
             options[i] = availableRoles.get(i);
         }
         return (Role)JOptionPane.showInputDialog(null, "Which role would you like to take?",
-                "Move", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                "Role", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+    }
+
+    public int promptRankUp(){
+        Object[] options = Deadwood.getAvailableRanks().toArray();
+        return (Integer) JOptionPane.showInputDialog(null, "What level would you like to upgrade to?",
+                "Rank", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+    }
+
+    public int promptPaymentMethod() {
+        String[] options = {"Cash", "Credits"};
+        return JOptionPane.showOptionDialog(null, "Please choose payment method for rank upgrade", "Payment Method",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, 0);
+    }
+
+    public void endGamePopUp(String[] results) {
+        String resultString = "";
+        for(String s: results) {
+            resultString += s;
+        }
+        JOptionPane.showMessageDialog(null, resultString, "Game Over", JOptionPane.INFORMATION_MESSAGE);
     }
 }

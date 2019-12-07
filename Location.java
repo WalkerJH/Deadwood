@@ -1,8 +1,7 @@
+import java.util.ArrayList;
 /**
  * Represents a location on the game board
  */
-import java.util.ArrayList;
-
 public class Location {
     private String name;
     private ArrayList<Location> neighbors;
@@ -61,7 +60,7 @@ public class Location {
         return cardArea;
     }
 
-    public void setCoordinates(Coordinates totalArea) {
+    public void setCardArea(Coordinates totalArea) {
         this.cardArea = totalArea;
         Coordinates slot1 = new Coordinates(totalArea.getX() + totalArea.getW() - 200,
                 totalArea.getY() + totalArea.getH() - 55,
@@ -75,11 +74,8 @@ public class Location {
         offRoleCoordinates = new Coordinates[] {slot1, slot2, slot3};
     }
 
+
     public Coordinates[] getOffRoleCoordinates() {
         return offRoleCoordinates;
-    }
-
-    public void setOffRoleCoordinates(Coordinates[] coordinates) {
-        this.offRoleCoordinates = coordinates;
     }
 }

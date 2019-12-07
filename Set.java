@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Stack;
 import java.util.Collections;
 
 /**
@@ -10,21 +11,28 @@ public class Set {
     private ArrayList<Role> localRoles;
     private ArrayList<Player> localActors;
     private int shotCounters;
+    private int maxShots;
+    ArrayList<Coordinates> shotCounterSlots;
+
 
     public Set() {
         this.card = null;
         this.localRoles = new ArrayList<>();
         this.localActors = new ArrayList<>();
+        this.shotCounterSlots = new ArrayList<>();
     }
 
     public Set(int shotCounters, ArrayList<Role> localRoles) {
         this.card = null;
         this.shotCounters = shotCounters;
         this.localRoles = localRoles;
+        this.shotCounterSlots = new ArrayList<>();
+        this.maxShots = shotCounters;
     }
 
     public void setShotCounters(int shotCounters) {
         this.shotCounters = shotCounters;
+        this.maxShots = shotCounters;
     }
 
     public int getShotCounters() {
@@ -44,9 +52,8 @@ public class Set {
     }
 
     public void wrap() {
-        System.out.println("Wrapping Scene:");
-        ArrayList<Role> rolesOnCard = card.getRoles();
         if(card.hasActor()) {
+            ArrayList<Role> rolesOnCard = card.getRoles();
             ArrayList<Integer> rolls = new ArrayList<>();
             for(int i = 0; i < card.getBudget(); i++) {
                 rolls.add(Dice.rollDice());
@@ -65,21 +72,26 @@ public class Set {
                     i = rolesOnCard.size() - 1;
                 }
             }
-            for(Player p : localActors) {
+            for(Player p: localActors) {
                 for(Role r: localRoles){
                     if(p.getCurrentRole().equals(r))
                         p.pay(r.getRankRequirement());
                 }
             }
         }
+        for(Player p : localActors) {
+            p.removeRole();
+        }
+        localActors.clear();
         discardCard();
     }
 
     public void payActor(int cash, Role role) {
         if(role.getFilled()) {
             for(Player p : localActors) {
-                if(p.getCurrentRole().equals(role))
+                if(p.getCurrentRole().equals(role)) {
                     p.pay(cash);
+                }
             }
         }
     }
@@ -107,7 +119,19 @@ public class Set {
         }
     }
 
+    public void addShotCounterSlot(Coordinates coord) {
+        shotCounterSlots.add(coord);
+    }
+
+    public ArrayList<Coordinates> getShotCounterSlots() {
+        return shotCounterSlots;
+    }
+
     public Card getCard(){ return card; }
 
     public void discardCard(){ card = null; }
+
+    public int getMaxShots() {
+        return maxShots;
+    }
 }
