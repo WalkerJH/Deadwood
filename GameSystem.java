@@ -20,7 +20,7 @@ public class GameSystem {
     }
 
     public void setUpGame() throws Exception {
-        day = 5;
+        day = 0;
         turn = 0;
         cardDeck = new CardDeck();
         ParseXML parser = new ParseXML("board.xml");

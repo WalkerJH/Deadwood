@@ -81,6 +81,7 @@ public class Set {
         }
         for(Player p : localActors) {
             p.removeRole();
+            p.setRehearsalTokens(0);
         }
         localActors.clear();
         discardCard();
